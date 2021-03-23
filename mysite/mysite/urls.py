@@ -16,6 +16,24 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-urlpatterns = [
+from django.urls import path
+from django.conf.urls import *
+from django.conf.urls import patterns, include, url
+
+
+from mysite.mysite import views
+
+urlpatterns = {
     path('admin/', admin.site.urls),
-]
+    path('', views.ana_sayfa),
+}
+
+
+
+
+from django.conf import settings
+from django.conf.urls.static import static
+
+
+
+

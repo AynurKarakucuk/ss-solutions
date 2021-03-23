@@ -23,7 +23,6 @@ git commit -am "<<yapılan değişikliğin tanım metni>>"
 
 Değişiklikleri sunucuya gönderir
 ```
-git push origin master
 ```
 
 
