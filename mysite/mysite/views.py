@@ -16,4 +16,5 @@ from django.views import generic
 
 def ana_sayfa(request):
 
-    return render('templates/anasayfa/anasayfa.html', request)
+    return render(request, 'anasayfa/base.html')
+
