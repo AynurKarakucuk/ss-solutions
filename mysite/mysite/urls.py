@@ -18,15 +18,28 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
-# from django.conf.urls import *
+from django.conf.urls import *
 # from django.conf.urls import patterns, include, url
 
-
+from django.urls import path
 from mysite import views
 
 urlpatterns = {
-    path('admin/', admin.site.urls),
-    path('', views.ana_sayfa),
+
+        path('admin/', admin.site.urls),
+        path('', views.login_view),
+
+        # ADMİN GİRİŞ
+        #path('login/', views.login_view),
+        path('logout/', views.logout_view),
+
+        # YÖNETİM GİRİŞ
+        path('yonetim/', views.admin_giris),
+        path('sifre/', views.sifre_view),
+        # path('hata_yetki/', views.yetki_yok),
+
+     # + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    # + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 }
 
 
