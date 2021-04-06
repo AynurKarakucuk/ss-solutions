@@ -1,6 +1,6 @@
 @import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css);
 body {
-  background-color: #fff;
+  background-color: #2f007;
   color: #fff;
   font-family: arial, helvetica, sans-serif;
   line-height: 1.4;
@@ -76,7 +76,7 @@ body {
   outline: 0;
   font-size: 12px;
   letter-spacing: 0.1em;
-  background-color: #457B9D;
+  background-color: #2f6275;
   color: #fff;
   border: none;
   border-radius: 3px;
@@ -88,12 +88,12 @@ body {
   border-bottom: 2px solid transparent;
 }
 .login-form-container button:hover {
-  border-bottom-color: #E63946;
+  border-bottom-color: #D8AF54;
 }
 input:-internal-autofill-selected {
     appearance: menulist-button;
-    background-color: #202731 !important;
-    background-image: #202731;
+    background-color: #D8AF54 !important;
+    background-image: #D8AF54;
 
 
 @-webkit-keyframes shake {

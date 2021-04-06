@@ -57,19 +57,19 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-
-            return redirect('/yonetim/')
+            return render(request, 'yonetim/ana_sayfa.html')
+            # return redirect('/yonetim')
 
     context = {
         "hata": True if request.POST else False,
     }
 
-    return render(request, 'anasayfa/login.html', context)
+    return render(request, 'yonetim/login.html', context)
 
 
 @login_required
 def admin_giris(request):
-    return render(request, 'admin/ana_sayfa.html')
+    return render(request, 'anasayfa/base.html')
 
 
 def logout_view(request):

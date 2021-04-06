@@ -30,7 +30,7 @@ urlpatterns = {
         path('', views.login_view),
 
         # ADMİN GİRİŞ
-        #path('login/', views.login_view),
+        path('login/', views.login_view),
         path('logout/', views.logout_view),
 
         # YÖNETİM GİRİŞ
