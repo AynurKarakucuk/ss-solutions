@@ -1,0 +1,38 @@
+{% extends "yonetim/base.html" %}
+
+{% block baslik %}{{baslik}}{% endblock %}
+
+{% block content %}
+<script>
+var btn_geri = function(){
+		window.history.back();
+}
+</script>
+
+<form method="post" enctype="multipart/form-data" >
+    {% csrf_token %}
+    {{ form.media }}
+
+    {{ form.non_field_errors }}
+
+    <table class="blueTable">
+        <thead>
+            <tr><th colspan="2">Ekip</th></tr>
+        </thead>
+        <tbody>
+
+        {{ form.as_table }}
+
+        </tbody>
+    </table>
+
+    <div>&nbsp;</div>
+    <div class="sag">
+        <button type="reset" class="push button red">Temizle</button>
+        <button type="submit" class="push button blue">Kaydet</button>
+        <button type="button" class="push button red" onclick="btn_geri()">Geri</button>
+    </div>
+</form>
+
+
+{% endblock %}

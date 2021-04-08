@@ -1,0 +1,60 @@
+{% extends "yonetim/base.html" %}
+
+{% block baslik %}Ekip Detay{% endblock %}
+
+{% block content %}
+
+<script>
+var btn_geri = function(){
+      window.history.back();
+}
+</script>
+
+    <div>
+        <table class="blueTable">
+            <thead>
+                <tr><th colspan="2" style=" text-transform: uppercase">{{ ekip.adisoyadi }}</th></tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td style="width:25%;">Unvan</td>
+                <td style="width:75%;">{{ ekip.unvan }}</td>
+            </tr>
+            <tr>
+                <td style="width:25%;">Telefon</td>
+                <td style="width:75%;">{{ ekip.tel }}</td>
+            </tr>
+            <tr>
+                <td style="width:25%;">e-posta</td>
+                <td style="width:75%;">{{ ekip.eposta }}</td>
+            </tr>
+            <tr>
+                <td style="width:25%;">Öz Geçmiş</td>
+                <td style="width:75%;">{{ ekip.icerik|safe }}</td>
+            </tr>
+            <tr>
+                <td style="width:25%;">Resim</td>
+                <td style="width:75%;">{% if ekip.img %}<img width="60" height="60" src="{{ekip.img.url}}" alt="{{ekip.adisoyadi}}" >{% endif %} </td>
+            </tr>
+            <tr>
+                <td style="width:25%;">Dosya</td>
+                 <td style="width:75%;">{% if ekip.dosya %}<a href="{{ekip.dosya.url}}">{{ekip.dosya}} </a> {% endif %} </td>
+            </tr>
+             <tr>
+                <td style="width:25%;">Sıra</td>
+                <td style="width:75%;">{{ ekip.sira }}</td>
+            </tr>
+             <tr>
+                <td style="width:25%;">Durum</td>
+                <td style="width:75%;">{% if ekip.durum %}Aktif{% else %}Pasif{% endif %} </td>
+            </tr>
+
+            </tbody>
+        </table>
+    <div>&nbsp;&nbsp;</div>
+    <div class="sag">
+        <button type="button" class="push button red" onclick="btn_geri()">Geri</button>
+    </div>
+    </div>
+
+{% endblock %}

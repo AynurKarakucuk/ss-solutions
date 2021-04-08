@@ -17,36 +17,54 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from django.urls import path
-from django.conf.urls import *
-# from django.conf.urls import patterns, include, url
+from django.conf.urls import include, url
 
-from django.urls import path
 from mysite import views
 
-urlpatterns = {
+urlpatterns = (
+        [
 
-        path('admin/', admin.site.urls),
-        path('', views.login_view),
+            path('admin/', admin.site.urls),
+            path('', views.login_view),
 
-        # ADMİN GİRİŞ
-        path('login/', views.login_view),
-        path('logout/', views.logout_view),
+            # ADMİN GİRİŞ
+            path('login/', views.login_view),
+            path('logout/', views.logout_view),
 
-        # YÖNETİM GİRİŞ
-        path('yonetim/', views.admin_giris),
-        path('sifre/', views.sifre_view),
-        # path('hata_yetki/', views.yetki_yok),
+            # YÖNETİM GİRİŞ
+            path('yonetim/', views.admin_giris),
+            path('sifre/', views.sifre_view),
+            # path('hata_yetki/', views.yetki_yok),
 
-     # + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-    # + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-}
+            # Solutions
+            path('yonetim/solutions/', views.solutions_liste),
+            path('yonetim/solutions/<int:pk>/', views.solutions_detay),
+            path('yonetim/solutions/duzenle', views.solutions_ekle),
+            path('yonetim/solutions/duzenle/<int:pk>/', views.solutions_ekle),
+            path('yonetim/solutions/sil/<int:pk>/', views.solutions_sil),
+            path('yonetim/solutions/detay/<int:pk>/', views.solutions_detay),
+
+            # Ekip
+            path('yonetim/ekip/', views.ekip_liste),
+            path('yonetim/ekip/<int:pk>/', views.ekip_detay),
+            path('yonetim/ekip/duzenle', views.ekip_ekle),
+            path('yonetim/ekip/duzenle/<int:pk>/', views.ekip_ekle),
+            path('yonetim/ekip/sil/<int:pk>/', views.ekip_sil),
+            path('yonetim/ekip/detay/<int:pk>/', views.ekip_detay),
+
+            #OnlineTakvim
+            path('yonetim/onlinetakvim/', views.onlinetakvim_liste),
+          #  path('yonetim/onlinetakvim/<int:pk>/', views.onlinetakvim_detay),
+            path('yonetim/onlinetakvim/duzenle', views.onlinetakvim_ekle),
+            path('yonetim/onlinetakvim/duzenle/<int:pk>/', views.onlinetakvim_ekle),
+            path('yonetim/onlinetakvim/sil/<int:pk>/', views.onlinetakvim_sil),
+           # path('yonetim/onlinetakvim/detay/<int:pk>/', views.onlinetakvim_detay),
 
 
-
-
-
-
-
-
-
+            # ckeditor
+            path('ckeditor/', include('ckeditor_uploader.urls')),
+        ]
+        + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+        + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    # url(r'^ckeditor/', include('ckeditor_uploader.urls')),
+)

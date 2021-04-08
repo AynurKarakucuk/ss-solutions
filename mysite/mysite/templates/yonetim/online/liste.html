@@ -1,0 +1,71 @@
+{% extends "yonetim/base.html" %}
+
+{% block baslik %}ONLİNE TAKVİM{% endblock %}
+
+
+{% block content %}
+
+
+<script>
+var btn_git	=function(){
+		window.location = "/yonetim/onlinetakvim/duzenle";
+}
+
+var btn_cik=function(){
+    window.location = "/logout";
+}
+
+</script>
+<div class="sol">
+    {% if request.user.is_superuser %}
+        <button type="button" onclick="btn_git()" class="push_button blue">Ekle</button>
+    {% else %}
+        <p></p>
+    {% endif %}
+
+
+</div>
+<div>
+&nbsp;
+    &nbsp;
+</div>
+
+<table class="blueTable" style="margin-top: 50px;">
+    <thead>
+    <tr>
+        <th>Tarih</th>
+        <th>Saat</th>
+        <th>Durum</th>
+
+    </tr>
+    </thead>
+    <tfoot>
+    <td colspan="6" style="height:30px; color:#1D3557">Online Takvim</td>
+    </tfoot>
+    <tbody>
+    <tr>
+        {% for onlinetakvim in onlinetakvim %}
+        <td>{{onlinetakvim.tarih}}</td>
+        <td>{{onlinetakvim.saat}}</td>
+        <td>{% if onlinetakvim.durum %}Aktif{% else %}Pasif{% endif %}</td>
+
+        <td>
+            <a href="/yonetim/onlinetakvim/duzenle/{{ ekip.id }}"><button>Düzenle</button></a>
+        </td>
+
+         {% if request.user.is_superuser %}
+        <td>
+            <a href="/yonetim/onlinetakvim/sil/{{ onlinetakvim.id }}"><button>Sil</button></a>
+        </td>
+        {% else %}
+        <td>
+            <a href="/yonetim/onlinetakvim/sil/{{ onlinetakvim.id }}" ><button disabled="disabled">Sil</button></a>
+        </td>
+        {% endif %}
+
+
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

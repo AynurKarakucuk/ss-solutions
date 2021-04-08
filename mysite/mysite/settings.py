@@ -25,8 +25,7 @@ SECRET_KEY = '50htbu=74o_509l1lm#4qs5b60ov3x5_b_9!8+)65&^h%fafqs'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -39,7 +38,9 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'whitenoise.runserver_nostatic',
     'mysite',
-
+    'ckeditor',
+    'ckeditor_uploader',
+    'datetimewidget',
 )
 
 MIDDLEWARE = [
@@ -51,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+
 ]
 
 ROOT_URLCONF = 'mysite.urls'
@@ -73,7 +75,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
@@ -84,25 +85,23 @@ DATABASES = {
     }
 }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
- #   {
- #      'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
- #   },
- #   {
- #       'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
- #   },
- #   {
- #       'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
- #   },
- #   {
- #       'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
- #   },
+    #   {
+    #      'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    #   },
+    #   {
+    #       'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    #   },
+    #   {
+    #       'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    #   },
+    #   {
+    #       'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    #   },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
@@ -117,18 +116,45 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
+
+STATIC_URL = '/static/'
+MEDIA_URL = "/media/"
 
 STATICFILES_DIRS = [
     BASE_DIR / "mysite/static",
 ]
 
-STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'static'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+
+
+CKEDITOR_UPLOAD_PATH = "uploads/"
+
+CKEDITOR_IMAGE_BACKEND = "pillow"
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'Custom',
+        'toolbar_Custom': [
+            ['Bold', 'Italic', 'Underline'],
+            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter',
+             'JustifyRight', 'JustifyBlock'],
+            ['Link', 'Unlink'],
+            ['RemoveFormat', 'Source']
+        ]
+    },
+    'awesome_ckeditor': {
+        'toolbar': 'Basic',
+    },
+}
+
+# datetimewidget komutları
+
+USE_L10N = True
+USE_TZ = True
+USE_I18N = True
 
 LOGIN_URL = '/login/'
-
-
