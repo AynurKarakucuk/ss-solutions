@@ -6,7 +6,7 @@ from datetimewidget.widgets import DateTimeWidget
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.forms import UserCreationForm, SetPasswordForm, PasswordChangeForm
 from django.contrib.auth.models import User
-
+from datetime import datetime
 import mysite.models
 
 """ Solutions Form"""
@@ -69,6 +69,7 @@ class OnlineTakvimForm(forms.ModelForm):
     class Meta:
         model = mysite.models.OnlineTakvim
         fields = ['tarih', 'saat', 'durum']
+
         widgets = {
             'tarih': DateTimeWidget(attrs={'id': "yourdatetimeid"}, usel10n=True, bootstrap_version=3),
             'saat':  DateTimeWidget(attrs={'id': "yourdatetimeid"}, usel10n=True, bootstrap_version=3)

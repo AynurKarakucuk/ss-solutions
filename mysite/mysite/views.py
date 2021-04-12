@@ -19,7 +19,7 @@ from django.core.paginator import Paginator
 from django.urls import reverse
 from django.views import generic
 from . import forms
-
+from datetime import datetime
 """
 Yönetim Sayfaları başlangıç
 """
@@ -260,7 +260,12 @@ def onlinetakvim_ekle(request, pk: int = None):
 def onlinetakvim_liste(request):
     onlinetakvim = OnlineTakvim.objects.all()
 
-    context = {'onlinetakvim': onlinetakvim}
+    context = {
+
+                'onlinetarih': datetime.strptime(onlinetakvim, "%d %m %yyyy"),
+                'onlinesaat': datetime.strptime(onlinetakvim, "%H:%M"),
+                'onlinetakvim': onlinetakvim,
+               }
 
     return render(request, 'yonetim/online/liste.html', context)
 

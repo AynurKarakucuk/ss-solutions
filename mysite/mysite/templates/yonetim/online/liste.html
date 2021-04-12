@@ -34,9 +34,12 @@ var btn_cik=function(){
     <thead>
     <tr>
         <th>Tarih</th>
+        <th></th>
         <th>Saat</th>
+        <th></th>
         <th>Durum</th>
-
+        <th>Düzenleme İşlemi</th>
+        <th>Silme İşlemi</th>
     </tr>
     </thead>
     <tfoot>
@@ -45,12 +48,14 @@ var btn_cik=function(){
     <tbody>
     <tr>
         {% for onlinetakvim in onlinetakvim %}
-        <td>{{onlinetakvim.tarih}}</td>
-        <td>{{onlinetakvim.saat}}</td>
+        <td>{{onlinetakvim.tarih.date}}</td>
+        <td>{{onlinetarih}}</td>
+        <td>{{onlinetakvim.tarih.time}}</td>
+        <td>{{onlinesaat}}</td>
         <td>{% if onlinetakvim.durum %}Aktif{% else %}Pasif{% endif %}</td>
 
         <td>
-            <a href="/yonetim/onlinetakvim/duzenle/{{ ekip.id }}"><button>Düzenle</button></a>
+            <a href="/yonetim/onlinetakvim/duzenle/{{ onlinetakvim.id }}"><button>Düzenle</button></a>
         </td>
 
          {% if request.user.is_superuser %}
