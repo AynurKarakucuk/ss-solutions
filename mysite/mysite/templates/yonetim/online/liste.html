@@ -49,9 +49,9 @@ var btn_cik=function(){
     <tr>
         {% for onlinetakvim in onlinetakvim %}
         <td>{{onlinetakvim.tarih.date}}</td>
-        <td>{{onlinetarih}}</td>
+       <!-- <td>{{datetime.strptime(onlinetakvim.tarih, "%d %m %yyyy")}}</td>   -->
         <td>{{onlinetakvim.tarih.time}}</td>
-        <td>{{onlinesaat}}</td>
+       <!--  <td>{{datetime.strptime(onlinetakvim.tarih, "%H:%M")}}</td> -->
         <td>{% if onlinetakvim.durum %}Aktif{% else %}Pasif{% endif %}</td>
 
         <td>

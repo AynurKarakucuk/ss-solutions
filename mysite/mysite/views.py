@@ -261,13 +261,11 @@ def onlinetakvim_liste(request):
     onlinetakvim = OnlineTakvim.objects.all()
 
     context = {
-
-                'onlinetarih': datetime.strptime(onlinetakvim, "%d %m %yyyy"),
-                'onlinesaat': datetime.strptime(onlinetakvim, "%H:%M"),
                 'onlinetakvim': onlinetakvim,
                }
 
     return render(request, 'yonetim/online/liste.html', context)
+
 
 
 @login_required(login_url=settings.LOGIN_URL)

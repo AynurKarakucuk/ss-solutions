@@ -62,4 +62,9 @@ class OnlineRandevu(models.Model):
     onlinetakvimid = models.IntegerField()
     tarih = models.DateTimeField()
     saat = models.DateTimeField()
-    durum = models.BooleanField(blank=True, null=True, verbose_name='Aktif')
+    adisoyadi = models.CharField(max_length=100, verbose_name='Adı Soyadı')
+    eposta = models.EmailField()
+    tel = models.IntegerField()
+
+
+
