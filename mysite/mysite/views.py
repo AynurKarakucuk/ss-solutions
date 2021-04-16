@@ -44,7 +44,7 @@ def sifre_view(request):
         'form': f,
     }
 
-    return render(request, 'admin/sifre.html', context)
+    return render(request, 'yonetim/sifre.html', context)
 
 
 def login_view(request):
@@ -73,6 +73,10 @@ def logout_view(request):
     logout(request)
 
     return redirect('/login')
+
+
+def yetki_yok(request):
+    return render(request, 'yonetim/hata.html')
 
 
 """ 
@@ -283,3 +287,62 @@ def onlinetakvim_sil(request, pk: int):
 
     return render(request, 'yonetim/online/sil.html', context)
 
+""" KULLANICILAR VİEWS"""
+
+
+@login_required
+def kullanici_detay(request, pk: int):
+    kullanici = User.objects.get(id=pk)
+
+    context = {
+        'kullanici': kullanici,
+    }
+
+    return render(request, 'yonetim/kullanici/duzenle.html', context)
+
+
+def kullanici_kayit(request, pk: int = None):
+    kullanici = User.objects.get(id=pk) if pk else None
+    if request.method == "POST":
+        f = forms.YoneticiForms(request.POST)
+        if f.is_valid():
+            f.save()
+
+            return redirect('/yonetim/kullanici/')
+    else:
+
+        f = forms.YoneticiForms(instance=kullanici)
+
+    context = {
+        'baslik': 'KULLANICI DÜZENLE' if pk else 'KULLANICI EKLE',
+        'form': f,
+    }
+
+    return render(request, 'yonetim/kullanici/duzenle.html', context)
+
+
+@login_required(login_url=settings.LOGIN_URL)
+@user_passes_test(lambda u: u.is_superuser, login_url=settings.YETKI_HATA_URL, redirect_field_name='')
+def kullanici_liste(request):
+    # xdkfldkjdkjkdjgkj
+    kullanici = User.objects.all()
+
+    context = {'kullanici': kullanici}
+
+    return render(request, 'yonetim/kullanici/liste.html', context)
+
+
+@login_required(login_url=settings.LOGIN_URL)
+def kullanici_sil(request, pk: int):
+    kullanici = User.objects.get(id=pk)
+
+    if request.method == 'POST':
+        kullanici.delete()
+
+        return redirect('/yonetim/kullanici/')
+
+    context = {
+        'kullanici': kullanici,
+    }
+
+    return render(request, 'yonetim/kullanici/sil.html', context)

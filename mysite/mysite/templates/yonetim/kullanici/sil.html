@@ -1,0 +1,42 @@
+{% extends "yonetim/base.html" %}
+
+{% block baslik %}KULLANICI SİL{% endblock %}
+
+{% block content %}
+
+<form method="post">
+    {% csrf_token %}
+    <div>
+        <table class="blueTable">
+            <thead>
+                <tr><th colspan="2">Kullanıcılar</th></tr>
+            </thead>
+            <tbody>
+            <tr>
+                    <td>Adı Soyadı</td>
+                    <td>{{kullanici.first_name}} {{kullanici.last_name}}</td>
+                </tr>
+                <tr>
+                    <td>Kullanıcı Adı</td>
+                    <td>{{kullanici.username}}</td>
+                </tr>
+                <tr>
+                    <td>Yetki</td>
+                    <td>{% if kullanici.is_superuser %} Yönetici {%else%} Kullanıcı {%endif%}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div>&nbsp;&nbsp;</div>
+    <div class="sag">
+        <button type="submit" onclick="onay()" class="push button red" id="sol"> &nbsp;&nbsp;Sil &nbsp; &nbsp;</button>
+        <button type="button" class="push button red" onclick="btn_geri()">Geri</button>
+    </div>
+    <script>
+        function onay()
+        {
+            return window.comfirm("Personel kaydını silmek istiyor musunuz?")
+        }
+    </script>
+</form>
+{% endblock %}

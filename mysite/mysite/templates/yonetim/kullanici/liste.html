@@ -1,0 +1,49 @@
+{% extends "yonetim/base.html" %}
+
+{% block baslik %}KULLANICILAR{% endblock %}
+
+
+{% block content %}
+
+
+<script>
+var btn_git	=function(){
+		window.location = "/yonetim/kullanici/duzenle";
+}
+
+</script>
+<div class="sol">
+    <button type="button" onclick="btn_git()" class="push_button blue" >Kullanıcı Ekle</button>
+
+</div>
+
+<table class="blueTable" style="margin-top: 80px;">
+    <thead>
+    <tr>
+        <th>Kullanici Adı</th>
+        <th>Durum</th>
+        <th>Yönetici</th>
+        <th>Düzenle</th>
+        <th>Sil</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+
+        {% for kullanici in kullanici %}
+        <td>{{kullanici.username}}</td>
+        <td>{% if kullanici.is_active %} Aktif {%else%} Pasif {%endif%}</td>
+        <td>{% if kullanici.is_superuser %} Yönetici {%else%} Kullanıcı {%endif%}</td>
+
+        <td>
+            <a href="/yonetim/kullanici/duzenle/{{ kullanici.id }}"><button>Düzenle</button></a>
+        </td>
+        <td>
+            <a href="/yonetim/kullanici/sil/{{ kullanici.id }}"><button >Sil</button></a>
+        </td>
+
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,4 +1,7 @@
 {% extends "yonetim/base.html" %}
+
+{% block baslik %}KULLANICILAR{% endblock %}
+
 {% block content %}
 
 <form method="post" enctype="multipart/form-data" >
@@ -6,11 +9,9 @@
 
     {{ form.non_field_errors }}
 
-    <table class="blueTable">
-        <thead>
-            <tr><th colspan="2">Şifre İşlemleri</th></tr>
-        </thead>
-        <tbody style="margin-top:20px;">
+    <table>
+
+        <tbody>
 
         {{ form.as_table }}
 
@@ -21,10 +22,8 @@
     <div class="sag">
         <button type="reset" class="push button red">Temizle</button>
         <button type="submit" class="push button blue">Kaydet</button>
-        <button class="push button red" onclick="btn_geri()">Geri</button>
+        <button type="button" class="push button red" onclick="btn_geri()">Geri</button>
     </div>
 </form>
-
-
 
 {% endblock %}

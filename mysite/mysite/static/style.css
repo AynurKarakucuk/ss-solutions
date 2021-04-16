@@ -1,10 +1,9 @@
 body {
 	font: normal .8em/1.5em Arial, Helvetica, sans-serif;
-	"background: #F0F4FA;"
+	background: #F0F4FA;
 	width: 80%;
 	margin: 20px auto;
 	color: #666;
-	background-image:url('/static/img/69.jpg');
     height:80%;
 }
 
@@ -27,7 +26,7 @@ div { color: line; }
     -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
     -moz-border-radius: 15px;
     -webkit-border-radius: 15px;
-    /*padding-left:100px;*/
+    padding-left:100px;
     color:#656A64;
     background:#1D3557;
 }

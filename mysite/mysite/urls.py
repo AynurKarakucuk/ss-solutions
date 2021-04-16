@@ -34,7 +34,7 @@ urlpatterns = (
             # YÖNETİM GİRİŞ
             path('yonetim/', views.admin_giris),
             path('sifre/', views.sifre_view),
-            # path('hata_yetki/', views.yetki_yok),
+            path('hata_yetki/', views.yetki_yok),
 
             # Solutions
             path('yonetim/solutions/', views.solutions_liste),
@@ -60,6 +60,13 @@ urlpatterns = (
             path('yonetim/onlinetakvim/sil/<int:pk>/', views.onlinetakvim_sil),
            # path('yonetim/onlinetakvim/detay/<int:pk>/', views.onlinetakvim_detay),
 
+            # """ Kullanıcılar """
+            path('yonetim/kullanici/', views.kullanici_liste),
+            path('yonetim/kullanici/<int:pk>/', views.kullanici_detay),
+            path('yonetim/kullanici/duzenle', views.kullanici_kayit),
+            path('yonetim/kullanici/duzenle/<int:pk>/', views.kullanici_kayit),
+            path('yonetim/kullanici/sil/<int:pk>/', views.kullanici_sil),
+            path('yonetim/kullanici/detay/<int:pk>/', views.kullanici_detay),
 
             # ckeditor
             path('ckeditor/', include('ckeditor_uploader.urls')),

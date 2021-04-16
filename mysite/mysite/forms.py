@@ -3,6 +3,7 @@ from __future__ import absolute_import
 from ckeditor_uploader.fields import RichTextUploadingFormField
 from django import forms
 from datetimewidget.widgets import DateTimeWidget
+from datetimewidget.widgets import TimeWidget
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.forms import UserCreationForm, SetPasswordForm, PasswordChangeForm
 from django.contrib.auth.models import User
@@ -70,9 +71,32 @@ class OnlineTakvimForm(forms.ModelForm):
         model = mysite.models.OnlineTakvim
         fields = ['tarih', 'saat', 'durum']
 
+        dateTimeOptions = {
+            'format': 'dd/mm/yyyy HH:ii',
+            'autoclose': True,
+            'showMeridian': True
+        }
+
         widgets = {
-            'tarih': DateTimeWidget(attrs={'id': "yourdatetimeid"}, usel10n=True, bootstrap_version=3),
-            'saat':  DateTimeWidget(attrs={'id': "yourdatetimeid"}, usel10n=True, bootstrap_version=3)
+            'tarih': DateTimeWidget(options=dateTimeOptions, usel10n=True, bootstrap_version=3),
+            'saat':  DateTimeWidget(attrs={'id': "yourdatetimeid"}, usel10n=True, bootstrap_version=3),
         }
 
 
+""" Şifre İşlemleri """
+
+
+class YoneticiForms(UserCreationForm):
+
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'username')
+
+class YoneticiSifreForms(PasswordChangeForm):
+    pass
+    # class Meta:
+    #     model = User
+    #     fields = ()
+
+class AdminSifreResetForms(SetPasswordForm):
+    pass

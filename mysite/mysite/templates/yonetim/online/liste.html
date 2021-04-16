@@ -34,12 +34,10 @@ var btn_cik=function(){
     <thead>
     <tr>
         <th>Tarih</th>
-        <th></th>
         <th>Saat</th>
-        <th></th>
         <th>Durum</th>
-        <th>Düzenleme İşlemi</th>
-        <th>Silme İşlemi</th>
+        <th>Düzenleme</th>
+        <th>Silme</th>
     </tr>
     </thead>
     <tfoot>
@@ -49,9 +47,7 @@ var btn_cik=function(){
     <tr>
         {% for onlinetakvim in onlinetakvim %}
         <td>{{onlinetakvim.tarih.date}}</td>
-       <!-- <td>{{datetime.strptime(onlinetakvim.tarih, "%d %m %yyyy")}}</td>   -->
         <td>{{onlinetakvim.tarih.time}}</td>
-       <!--  <td>{{datetime.strptime(onlinetakvim.tarih, "%H:%M")}}</td> -->
         <td>{% if onlinetakvim.durum %}Aktif{% else %}Pasif{% endif %}</td>
 
         <td>

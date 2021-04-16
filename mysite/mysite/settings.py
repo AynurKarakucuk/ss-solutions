@@ -41,6 +41,8 @@ INSTALLED_APPS = (
     'ckeditor',
     'ckeditor_uploader',
     'datetimewidget',
+  #  'datewidget',
+   # 'timewidget',
 )
 
 MIDDLEWARE = [
@@ -126,7 +128,7 @@ STATICFILES_DIRS = [
     BASE_DIR / "mysite/static",
 ]
 
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = BASE_DIR /'staticfiles'
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
@@ -158,3 +160,4 @@ USE_TZ = True
 USE_I18N = True
 
 LOGIN_URL = '/login/'
+YETKI_HATA_URL = '/hata_yetki/'
