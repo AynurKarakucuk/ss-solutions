@@ -113,7 +113,7 @@ def solutions_ekle(request, pk: int = None):
         if f.is_valid():
             f.save()
 
-            return redirect('/yonetim/solutions/')
+            return redirect('yonetim/solutions/')
 
     else:
 
@@ -130,8 +130,28 @@ def solutions_ekle(request, pk: int = None):
 @login_required(login_url=settings.LOGIN_URL)
 def solutions_liste(request):
     solutions = Solutions.objects.all()
+    blog = Solutions.objects.filter(altmenuadi="blog")
+    duyurular = Solutions.objects.filter(altmenuadi="duyurular")
+    sss = Solutions.objects.filter(altmenuadi="sss")
+    kocluk = Solutions.objects.filter(altmenuadi="kocluk")
+    hizmetler = Solutions.objects.filter(altmenuadi="hizmetler")
+    hakkimizda = Solutions.objects.filter(altmenuadi="hakkimizda")
+    iletisim = Solutions.objects.filter(altmenuadi="iletisim")
+    gizlilik = Solutions.objects.filter(altmenuadi="gizlilik")
+    egitim = Solutions.objects.filter(altmenuadi="egitim")
 
-    context = {'solutions': solutions}
+    context = {'solutions': solutions,
+               'egitim': egitim,
+               'blog': blog,
+               'duyurular': duyurular,
+               'sss': sss,
+               'kocluk': kocluk,
+               'hizmetler': hizmetler,
+               'hakkimizda': hakkimizda,
+               'iletisim': iletisim,
+               'gizlilik': gizlilik,
+
+               }
 
     return render(request, 'yonetim/solutions/liste.html', context)
 
@@ -143,7 +163,7 @@ def solutions_sil(request, pk: int):
     if request.method == 'POST':
         solutions.delete()
 
-        return redirect('/yonetim/solutions/')
+        return redirect('yonetim/solutions/')
 
     context = {
         'solutions': solutions,
@@ -182,7 +202,7 @@ def ekip_ekle(request, pk: int = None):
         if f.is_valid():
             f.save()
 
-            return redirect('/yonetim/ekip/')
+            return redirect('yonetim/ekip/')
 
     else:
 

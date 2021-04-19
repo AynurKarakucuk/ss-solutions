@@ -26,8 +26,10 @@ class SolutionsForm(forms.ModelForm):
             ("duyurular", "Duyurular"),
             ("gizlilik", "Gizlilik Politikası"),
             ("iletisim", "Bize Ulaşın"),
-            ("egitim", "Kurumsal Eğitimler"),
+            ("egitim", "Eğitimler"),
             ("blog", "Blog"),
+            ("kocluk", "Koçluk"),
+            ("hizmetler", "Hizmetlerimiz"),
 
         ],
 
@@ -70,7 +72,7 @@ class OnlineTakvimForm(forms.ModelForm):
     class Meta:
         model = mysite.models.OnlineTakvim
         fields = ['tarih', 'saat', 'durum']
-
+        ordering = ['tarih']
         dateTimeOptions = {
             'format': 'dd/mm/yyyy HH:ii',
             'autoclose': True,

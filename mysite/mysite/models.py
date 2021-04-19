@@ -56,6 +56,9 @@ class OnlineTakvim(models.Model):
     saat = models.DateTimeField()
     durum = models.BooleanField(blank=True, null=True, verbose_name='Aktif')
 
+    class Meta:
+        ordering = ['tarih']
+
 
 class OnlineRandevu(models.Model):
     id = models.IntegerField(primary_key=True)
@@ -65,6 +68,3 @@ class OnlineRandevu(models.Model):
     adisoyadi = models.CharField(max_length=100, verbose_name='Adı Soyadı')
     eposta = models.EmailField()
     tel = models.IntegerField()
-
-
-
