@@ -7,8 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}{% endblock %}</title>
     <link href='https://fonts.googleapis.com/css?family=Lato:400,900' rel='stylesheet' type='text/css'>
-  <!--  <link href="{% static 'style.css' %}" rel="stylesheet" type="text/css" /> -->
+    <link href="{% static 'style_anasayfa.css' %}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://kit.fontawesome.com/ab5a159688.js" crossorigin="anonymous"/>
 </head>
 <title></title>
 <body>
@@ -18,19 +19,19 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 
-<div class="container-fluid" >
+<div class="container" >
     <div class="row">
         <div class="col-sm" >
-                <nav class="navbar navbar-expand-lg navbar-dark " role="navigation" style="background-color: #2F6275;" >
-                    <div class="navbar-header">
+                <nav class="navbar navbar-expand-lg navbar-dark " role="navigation" style="background-color: #2F6275; " >
+                    <div class="navbar-header" >
 
-                            <a class="navbar-brand " href="#">SS Solutions & Coaching</a>
+                            <a class="navbar-brand " style="color: #ffff;" href="#"> <i class="fas fa-home"></i>SS Solutions & Coaching</a>
 
                     </div>
 
 
-                    <div class="collapse navbar-collapse  d-flex" >
-                        <ul class="nav navbar-nav navbar-right">
+                    <div class="collapse navbar-collapse  d-flex navbar-right" >
+                        <ul class="nav justify-content-end">
 
                             <li>
                                 <a class="navbar-brand" href="#">
@@ -65,11 +66,14 @@
                 </nav>
      </div>
     </div>
-    <div class="row">
+</div>
+
+<div class="container">
+<div class="row">
         <div class="col-sm" >
 
 
-            <nav class="navbar navbar-expand-lg navbar-light " style="color: #2F6275;" >
+            <nav class="navbar navbar-expand-lg navbar-light " >
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon">
 
@@ -77,7 +81,7 @@
 
                     </button>
 
-                    <div class="collapse navbar-collapse navbar-center" id="navbarTogglerDemo03">
+                    <div class="collapse navbar-collapse navbar-center" id="navbarTogglerDemo03"  style="color: #2F6275;" >
                         <ul class="navbar-nav navbar-center ">
                             <li class="nav-item active">
                                 <a class="nav-link " href="#">Ana Sayfa <span class="sr-only">(current)</span></a>
@@ -86,7 +90,7 @@
                             <li class="nav-item dropdown "  >
                                 <a class="nav-link " data-toggle="dropdown" href="#" >Solutions & Coaching</a>
                                  <ul class="dropdown-menu " aria-labelledby="navbarDropdownMenuLink">
-                                    <li ><a class="dropdown-item text-dark " style="$dropdown-link-hover-color:#fff;" href="#" >Hakkımızda</a></li>
+                                    <li ><a class="dropdown-item text-dark " href="#" >Hakkımızda</a></li>
                                     <li ><a class="dropdown-item text-dark" href="#" >Çözüm Ortakları</a></li>
                                     <li ><a class="dropdown-item text-dark" href="#" >SSS</a></li>
                                     <li ><a class="dropdown-item text-dark" href="#" >Duyurular</a></li>

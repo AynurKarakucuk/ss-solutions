@@ -12,7 +12,7 @@ class Solutions(models.Model):
     img = models.ImageField(blank=True, null=True, )
     durum = models.BooleanField(blank=True, null=True, verbose_name='Aktif')
     dosya = models.FileField(blank=True, null=True, )
-    sira = models.IntegerField(blank=True)
+    sira = models.PositiveSmallIntegerField(blank=True)
 
 
 class Egitim(models.Model):

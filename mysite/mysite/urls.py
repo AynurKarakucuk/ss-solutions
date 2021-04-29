@@ -25,7 +25,7 @@ urlpatterns = (
         [
 
             path('admin/', admin.site.urls),
-            path('', views.login_view),
+            path('', views.anasayfa),
 
             # ADMİN GİRİŞ
             path('login/', views.login_view),

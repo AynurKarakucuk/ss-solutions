@@ -84,8 +84,6 @@ Login bitiş
 """
 
 
-def anasayfa(request):
-    return render(request, 'anasayfa/base.html')
 
 
 """
@@ -130,26 +128,16 @@ def solutions_ekle(request, pk: int = None):
 @login_required(login_url=settings.LOGIN_URL)
 def solutions_liste(request):
     solutions = Solutions.objects.all()
-    blog = Solutions.objects.filter(altmenuadi="blog")
-    duyurular = Solutions.objects.filter(altmenuadi="duyurular")
-    sss = Solutions.objects.filter(altmenuadi="sss")
-    kocluk = Solutions.objects.filter(altmenuadi="kocluk")
+    blog = Solutions.objects.filter(altmenuadi__in=['blog', 'kocluk', 'sss', 'hakkimizda', 'iletisim', 'gizlilik'])
+    duyurular = Solutions.objects.filter(altmenuadi='duyurular')
     hizmetler = Solutions.objects.filter(altmenuadi="hizmetler")
-    hakkimizda = Solutions.objects.filter(altmenuadi="hakkimizda")
-    iletisim = Solutions.objects.filter(altmenuadi="iletisim")
-    gizlilik = Solutions.objects.filter(altmenuadi="gizlilik")
     egitim = Solutions.objects.filter(altmenuadi="egitim")
 
     context = {'solutions': solutions,
                'egitim': egitim,
                'blog': blog,
                'duyurular': duyurular,
-               'sss': sss,
-               'kocluk': kocluk,
                'hizmetler': hizmetler,
-               'hakkimizda': hakkimizda,
-               'iletisim': iletisim,
-               'gizlilik': gizlilik,
 
                }
 
@@ -366,3 +354,8 @@ def kullanici_sil(request, pk: int):
     }
 
     return render(request, 'yonetim/kullanici/sil.html', context)
+
+""" WEB SAYFASI"""
+
+def anasayfa(request):
+    return render(request, 'anasayfa/base.html')

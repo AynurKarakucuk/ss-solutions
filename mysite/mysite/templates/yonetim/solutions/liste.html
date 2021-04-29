@@ -87,7 +87,7 @@ var btn_cik=function(){
 <table class="blueTable" style="margin-top: 50px;">
     <thead>
     <tr>
-        <th>BLOG</th>
+        <th>Alt Menü</th>
         <th>Başlık</th>
         <th>Durum</th>
         <th>Detay</th>
@@ -135,7 +135,6 @@ var btn_cik=function(){
     <thead>
     <tr>
         <th>DUYURULAR</th>
-        <th>Başlık</th>
         <th>Durum</th>
         <th>Detay</th>
         <th>Düzenle&nbsp;</th>
@@ -148,7 +147,6 @@ var btn_cik=function(){
     <tbody>
     <tr>
         {% for duyurular in duyurular  %}
-        <td>{{duyurular.altmenuadi}}</td>
         <td>{{duyurular.baslik}}</td>
         <td>{% if duyurular.durum %}Aktif{% else %}Pasif{% endif %}</td>
         <td>
@@ -178,105 +176,8 @@ var btn_cik=function(){
 
 </div>
 
-<div>
-
-    <table class="blueTable" style="margin-top: 50px;">
-    <thead>
-    <tr>
-        <th>SSS</th>
-        <th>Başlık</th>
-        <th>Durum</th>
-        <th>Detay</th>
-        <th>Düzenle&nbsp;</th>
-        <th>Sil</th>
-    </tr>
-    </thead>
-    <tfoot>
-    <td colspan="6" style="height:30px; color:#1D3557">Solutions</td>
-    </tfoot>
-    <tbody>
-    <tr>
-        {% for sss in sss  %}
-        <td>{{sss.altmenuadi}}</td>
-        <td>{{sss.baslik}}</td>
-        <td>{% if sss.durum %}Aktif{% else %}Pasif{% endif %}</td>
-        <td>
-            <a href="/yonetim/solutions/detay/{{ sss.id }}"><button>Detay</button></a>
-        </td>
-        <td>
-            <a href="/yonetim/solutions/duzenle/{{ sss.id }}"><button>Düzenle</button></a>
-        </td>
-
-         {% if request.user.is_superuser %}
-        <td>
-            <a href="/yonetim/solutions/sil/{{ sss.id }}"><button>Sil</button></a>
-        </td>
-        {% else %}
-        <td>
-            <a href="/yonetim/solutions/sil/{{ sss.id }}" ><button disabled="disabled">Sil</button></a>
-        </td>
-        {% endif %}
 
 
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
-
-
-
-</div>
-
-
-
-<div>
-
-    <table class="blueTable" style="margin-top: 50px;">
-    <thead>
-    <tr>
-        <th>KOÇLUK</th>
-        <th>Başlık</th>
-        <th>Durum</th>
-        <th>Detay</th>
-        <th>Düzenle&nbsp;</th>
-        <th>Sil</th>
-    </tr>
-    </thead>
-    <tfoot>
-    <td colspan="6" style="height:30px; color:#1D3557">Solutions</td>
-    </tfoot>
-    <tbody>
-    <tr>
-        {% for kocluk in kocluk  %}
-        <td>{{kocluk.altmenuadi}}</td>
-        <td>{{kocluk.baslik}}</td>
-        <td>{% if kocluk.durum %}Aktif{% else %}Pasif{% endif %}</td>
-        <td>
-            <a href="/yonetim/solutions/detay/{{ kocluk.id }}"><button>Detay</button></a>
-        </td>
-        <td>
-            <a href="/yonetim/solutions/duzenle/{{ kocluk.id }}"><button>Düzenle</button></a>
-        </td>
-
-         {% if request.user.is_superuser %}
-        <td>
-            <a href="/yonetim/solutions/sil/{{ kocluk.id }}"><button>Sil</button></a>
-        </td>
-        {% else %}
-        <td>
-            <a href="/yonetim/solutions/sil/{{ kocluk.id }}" ><button disabled="disabled">Sil</button></a>
-        </td>
-        {% endif %}
-
-
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
-
-
-
-</div>
 
 <div>
 
@@ -284,7 +185,6 @@ var btn_cik=function(){
     <thead>
     <tr>
         <th>HİZMETLER</th>
-        <th>Başlık</th>
         <th>Durum</th>
         <th>Detay</th>
         <th>Düzenle&nbsp;</th>
@@ -297,7 +197,6 @@ var btn_cik=function(){
     <tbody>
     <tr>
         {% for hizmetler in hizmetler  %}
-        <td>{{hizmetler.altmenuadi}}</td>
         <td>{{hizmetler.baslik}}</td>
         <td>{% if hizmetler.durum %}Aktif{% else %}Pasif{% endif %}</td>
         <td>
@@ -333,7 +232,6 @@ var btn_cik=function(){
     <thead>
     <tr>
         <th>Eğitimler</th>
-        <th>Başlık</th>
         <th>Durum</th>
         <th>Detay</th>
         <th>Düzenle&nbsp;</th>
@@ -346,7 +244,7 @@ var btn_cik=function(){
     <tbody>
     <tr>
         {% for egitim in egitim  %}
-    <td>{{egitim.altmenuadi}}</td>
+
         <td>{{egitim.baslik}}</td>
         <td>{% if egitim.durum %}Aktif{% else %}Pasif{% endif %}</td>
         <td>
@@ -377,152 +275,6 @@ var btn_cik=function(){
 </div>
 
 
-<div>
 
-    <table class="blueTable" style="margin-top: 50px;">
-    <thead>
-    <tr>
-        <th>HAKKIMIZDA</th>
-        <th>Başlık</th>
-        <th>Durum</th>
-        <th>Detay</th>
-        <th>Düzenle&nbsp;</th>
-        <th>Sil</th>
-    </tr>
-    </thead>
-    <tfoot>
-    <td colspan="6" style="height:30px; color:#1D3557">Solutions</td>
-    </tfoot>
-    <tbody>
-    <tr>
-        {% for hakkimizda in hakkimizda  %}
-    <td>{{hakkimizda.altmenuadi}}</td>
-        <td>{{hakkimizda.baslik}}</td>
-        <td>{% if hakkimizda.durum %}Aktif{% else %}Pasif{% endif %}</td>
-        <td>
-            <a href="/yonetim/solutions/detay/{{ hakkimizda.id }}"><button>Detay</button></a>
-        </td>
-        <td>
-            <a href="/yonetim/solutions/duzenle/{{ hakkimizda.id }}"><button>Düzenle</button></a>
-        </td>
-
-         {% if request.user.is_superuser %}
-        <td>
-            <a href="/yonetim/solutions/sil/{{ hakkimizda.id }}"><button>Sil</button></a>
-        </td>
-        {% else %}
-        <td>
-            <a href="/yonetim/solutions/sil/{{ hakkimizda.id }}" ><button disabled="disabled">Sil</button></a>
-        </td>
-        {% endif %}
-
-
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
-
-
-
-</div>
-
-
-<div>
-
-    <table class="blueTable" style="margin-top: 50px;">
-    <thead>
-    <tr>
-        <th>İLETİŞİM</th>
-        <th>Başlık</th>
-        <th>Durum</th>
-        <th>Detay</th>
-        <th>Düzenle&nbsp;</th>
-        <th>Sil</th>
-    </tr>
-    </thead>
-    <tfoot>
-    <td colspan="6" style="height:30px; color:#1D3557">Solutions</td>
-    </tfoot>
-    <tbody>
-    <tr>
-        {% for iletisim in iletisim  %}
-        <td>{{iletisim.altmenuadi}}</td>
-        <td>{{iletisim.baslik}}</td>
-        <td>{% if iletisim.durum %}Aktif{% else %}Pasif{% endif %}</td>
-        <td>
-            <a href="/yonetim/solutions/detay/{{ iletisim.id }}"><button>Detay</button></a>
-        </td>
-        <td>
-            <a href="/yonetim/solutions/duzenle/{{ iletisim.id }}"><button>Düzenle</button></a>
-        </td>
-
-         {% if request.user.is_superuser %}
-        <td>
-            <a href="/yonetim/solutions/sil/{{ iletisim.id }}"><button>Sil</button></a>
-        </td>
-        {% else %}
-        <td>
-            <a href="/yonetim/solutions/sil/{{ iletisim.id }}" ><button disabled="disabled">Sil</button></a>
-        </td>
-        {% endif %}
-
-
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
-
-
-
-</div>
-
-<div>
-
-    <table class="blueTable" style="margin-top: 50px;">
-    <thead>
-    <tr>
-        <th>GİZLİLİK POLİTİKASI<th>
-        <th>Başlık</th>
-        <th>Durum</th>
-        <th>Detay</th>
-        <th>Düzenle&nbsp;</th>
-        <th>Sil</th>
-    </tr>
-    </thead>
-    <tfoot>
-    <td colspan="6" style="height:30px; color:#1D3557">Solutions</td>
-    </tfoot>
-    <tbody>
-    <tr>
-        {% for gizlilik in gizlilik  %}
-        <td>{{gizlilik.altmenuadi}}</td>
-        <td>{{gizlilik.baslik}}</td>
-        <td>{% if gizlilik.durum %}Aktif{% else %}Pasif{% endif %}</td>
-        <td>
-            <a href="/yonetim/solutions/detay/{{ gizlilik.id }}"><button>Detay</button></a>
-        </td>
-        <td>
-            <a href="/yonetim/solutions/duzenle/{{ gizlilik.id }}"><button>Düzenle</button></a>
-        </td>
-
-         {% if request.user.is_superuser %}
-        <td>
-            <a href="/yonetim/solutions/sil/{{ gizlilik.id }}"><button>Sil</button></a>
-        </td>
-        {% else %}
-        <td>
-            <a href="/yonetim/solutions/sil/{{ gizlilik.id }}" ><button disabled="disabled">Sil</button></a>
-        </td>
-        {% endif %}
-
-
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
-
-
-
-</div>
 
 {% endblock %}
