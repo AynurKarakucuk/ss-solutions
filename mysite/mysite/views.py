@@ -357,5 +357,27 @@ def kullanici_sil(request, pk: int):
 
 """ WEB SAYFASI"""
 
+
 def anasayfa(request):
-    return render(request, 'anasayfa/base.html')
+    #sayfa = request.GET.get('sayfa', 1)
+
+    hizmet = Solutions.objects.filter(altmenuadi="hizmetler", durum=True)
+    hizmetler = hizmet.order_by('sira')
+
+
+    duyuru = Solutions.objects.filter(altmenuadi="duyurular", durum=True)
+    duyurular = duyuru.order_by('sira')
+
+    iletisim = Solutions.objects.filter(altmenuadi="iletisim")
+
+    gizlilik = Solutions.objects.filter(altmenuadi="gizlilik")
+
+    context = {
+        'hizmetler': hizmetler,
+        'duyurular': duyurular,
+        'iletisim': iletisim,
+        'gizlilik': gizlilik,
+    }
+    return render(request, 'anasayfa/anasayfa.html', context)
+
+
