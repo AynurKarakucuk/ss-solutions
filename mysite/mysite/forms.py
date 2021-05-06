@@ -2,7 +2,7 @@ from __future__ import absolute_import
 
 from ckeditor_uploader.fields import RichTextUploadingFormField
 from django import forms
-from datetimewidget.widgets import DateTimeWidget
+from datetimewidget.widgets import DateTimeWidget, DateWidget
 from datetimewidget.widgets import TimeWidget
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.forms import UserCreationForm, SetPasswordForm, PasswordChangeForm
@@ -39,7 +39,7 @@ class SolutionsForm(forms.ModelForm):
 
     class Meta:
         model = mysite.models.Solutions
-        fields = ['altmenuadi', 'baslik', 'icerik', 'durum', 'dosya', 'img', 'sira']
+        fields = ['altmenuadi', 'baslik', 'icerik', 'aciklama', 'durum', 'dosya', 'img', 'sira']
 
 
 """ Ekip Form"""
@@ -71,18 +71,56 @@ class OnlineTakvimForm(forms.ModelForm):
 
     class Meta:
         model = mysite.models.OnlineTakvim
-        fields = ['tarih', 'saat', 'durum']
+        fields = ['tarih', 'saat0', 'saat1', 'saat2', 'saat3', 'saat4', 'saat5', 'saat6', 'saat7', 'durum']
         ordering = ['tarih']
+        dateDateOptions = {
+            'format': 'dd/mm/yyyy HH:ii',
+            'autoclose': True,
+            'showMeridian': True
+        }
         dateTimeOptions = {
+            'format': 'HH:ii:ss P',
+            'autoclose': True,
+            'showMeridian': True
+        }
+
+        widgets = {
+            'tarih': DateWidget(options=dateDateOptions, usel10n=True, bootstrap_version=3),
+            'saat0': TimeWidget(usel10n=True, bootstrap_version=3),
+            'saat1': TimeWidget(usel10n=True, bootstrap_version=3),
+            'saat2': TimeWidget(usel10n=True, bootstrap_version=3),
+            'saat3': TimeWidget(usel10n=True, bootstrap_version=3),
+            'saat4': TimeWidget(usel10n=True, bootstrap_version=3),
+            'saat5': TimeWidget(usel10n=True, bootstrap_version=3),
+            'saat6': TimeWidget(usel10n=True, bootstrap_version=3),
+            'saat7': TimeWidget(usel10n=True, bootstrap_version=3),
+        }
+
+
+
+class OnlineRandevuForm(forms.ModelForm):
+
+    durum = forms.BooleanField(required=False, label="Aktif")
+
+
+    class Meta:
+        model = mysite.models.OnlineRandevu
+        fields = ['tarih', 'saat', 'adisoyadi', 'eposta', 'tel']
+        ordering = ['tarih']
+        dateDateOptions = {
             'format': 'dd/mm/yyyy HH:ii',
             'autoclose': True,
             'showMeridian': True
         }
 
         widgets = {
-            'tarih': DateTimeWidget(options=dateTimeOptions, usel10n=True, bootstrap_version=3),
-            'saat':  DateTimeWidget(attrs={'id': "yourdatetimeid"}, usel10n=True, bootstrap_version=3),
+            'tarih': DateWidget(options=dateDateOptions, usel10n=True, bootstrap_version=3),
+            'saat': TimeWidget(usel10n=True, bootstrap_version=3),
         }
+
+
+
+
 
 
 """ Şifre İşlemleri """

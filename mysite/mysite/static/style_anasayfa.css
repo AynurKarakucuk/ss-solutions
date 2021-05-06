@@ -1,5 +1,5 @@
 .main-nav {
-  border-bottom: 2px solid #8db863;
+  border-bottom: 2px solid #2F6275;
   background: #fff;
 }
 
@@ -162,4 +162,9 @@ body {
 
 .demo-text a {
   color: #999;
+}
+
+
+.nav-brand:hover {
+    color: #333;
 }

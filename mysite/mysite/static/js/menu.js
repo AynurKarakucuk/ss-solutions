@@ -1,6 +1,8 @@
+$( document ).ready(function() {
+    console.log( "ready!" );
+
 // SmartMenus init
 $(function() {
- const $ = django.jQuery;
   $('#main-menu').smartmenus({
     subMenusSubOffsetX: 6,
     subMenusSubOffsetY: -8
@@ -9,7 +11,6 @@ $(function() {
 
 // SmartMenus mobile menu toggle button
 $(function() {
- const $ = django.jQuery;
   var $mainMenuState = $('#main-menu-state');
   if ($mainMenuState.length) {
     // animate mobile menu
@@ -28,4 +29,6 @@ $(function() {
       }
     });
   }
+});
+
 });

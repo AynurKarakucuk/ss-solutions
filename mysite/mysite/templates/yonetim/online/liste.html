@@ -34,20 +34,34 @@ var btn_cik=function(){
     <thead>
     <tr>
         <th>Tarih</th>
-        <th>Saat</th>
+        <th>1. Saat</th>
+        <th>2. Saat</th>
+        <th>3. Saat</th>
+        <th>4. Saat</th>
+        <th>5. Saat</th>
+        <th>6. Saat</th>
+        <th>7. Saat</th>
+        <th>8. Saat</th>
         <th>Durum</th>
         <th>Düzenleme</th>
         <th>Silme</th>
     </tr>
     </thead>
     <tfoot>
-    <td colspan="6" style="height:30px; color:#1D3557">Online Takvim</td>
+    <td colspan="12" style="height:30px; color:#1D3557">Online Takvim</td>
     </tfoot>
     <tbody>
     <tr>
         {% for onlinetakvim in onlinetakvim %}
         <td>{{onlinetakvim.tarih.date}}</td>
-        <td>{{onlinetakvim.tarih.time}}</td>
+        <td>{{onlinetakvim.saat0}}</td>
+        <td>{{onlinetakvim.saat1}}</td>
+        <td>{{onlinetakvim.saat2}}</td>
+        <td>{{onlinetakvim.saat3}}</td>
+        <td>{{onlinetakvim.saat4}}</td>
+        <td>{{onlinetakvim.saat5}}</td>
+        <td>{{onlinetakvim.saat6}}</td>
+        <td>{{onlinetakvim.saat7}}</td>
         <td>{% if onlinetakvim.durum %}Aktif{% else %}Pasif{% endif %}</td>
 
         <td>

@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'ckeditor',
     'ckeditor_uploader',
     'datetimewidget',
+    'phonenumber_field',
   #  'datewidget',
    # 'timewidget',
 )

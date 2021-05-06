@@ -20,6 +20,9 @@ from django.urls import reverse
 from django.views import generic
 from . import forms
 from datetime import datetime
+
+from .models import Solutions, OnlineTakvim, OnlineRandevu
+
 """
 Yönetim Sayfaları başlangıç
 """
@@ -55,7 +58,7 @@ def login_view(request):
         if user is not None:
             login(request, user)
             return render(request, 'yonetim/ana_sayfa.html')
-            # return redirect('/yonetim')
+
 
     context = {
         "hata": True if request.POST else False,
@@ -111,7 +114,7 @@ def solutions_ekle(request, pk: int = None):
         if f.is_valid():
             f.save()
 
-            return redirect('yonetim/solutions/')
+            return redirect('/yonetim/solutions/')
 
     else:
 
@@ -151,7 +154,7 @@ def solutions_sil(request, pk: int):
     if request.method == 'POST':
         solutions.delete()
 
-        return redirect('yonetim/solutions/')
+        return redirect('/yonetim/solutions/')
 
     context = {
         'solutions': solutions,
@@ -253,11 +256,8 @@ def onlinetakvim_ekle(request, pk: int = None):
 
         if f.is_valid():
             f.save()
-
             return redirect('/yonetim/onlinetakvim/')
-
     else:
-
         f = forms.OnlineTakvimForm(instance=onlinetakvim)
 
     context = {
@@ -355,29 +355,113 @@ def kullanici_sil(request, pk: int):
 
     return render(request, 'yonetim/kullanici/sil.html', context)
 
+
 """ WEB SAYFASI"""
 
 
-def anasayfa(request):
-    #sayfa = request.GET.get('sayfa', 1)
+def anasayfa_home(request):
 
-    hizmet = Solutions.objects.filter(altmenuadi="hizmetler", durum=True)
-    hizmetler = hizmet.order_by('sira')
+    hizmetler = Solutions.objects.filter(altmenuadi="hizmetler", durum=True).order_by('sira')
+    duyurular = Solutions.objects.filter(altmenuadi="duyurular", durum=True).order_by('sira')
+    iletisim = Solutions.objects.filter(altmenuadi="iletisim").first()
+    gizlilik = Solutions.objects.filter(altmenuadi="gizlilik").first()
 
-
-    duyuru = Solutions.objects.filter(altmenuadi="duyurular", durum=True)
-    duyurular = duyuru.order_by('sira')
-
-    iletisim = Solutions.objects.filter(altmenuadi="iletisim")
-
-    gizlilik = Solutions.objects.filter(altmenuadi="gizlilik")
+    ds = []
+    i = 0
+    for d in duyurular:
+        _d = d.__dict__
+        _d.update({"active": i == 0, "sira": str(i)})
+        ds.append(_d)
+        i += 1
 
     context = {
         'hizmetler': hizmetler,
-        'duyurular': duyurular,
+        'duyurular': ds,
         'iletisim': iletisim,
         'gizlilik': gizlilik,
     }
     return render(request, 'anasayfa/anasayfa.html', context)
 
+def solutions_goster(request, baslik, pk: int):
+    bilgi = Solutions.objects.filter(id=pk, durum=True).first()
+
+    if bilgi is None:
+        context = {'baslik': "Güncelleniyor",
+                   'bilgi': bilgi,
+                   }
+
+        return render(request, 'anasayfa/solutions_detay.html', context)
+    else:
+
+        context = {
+            'bilgi': bilgi,
+            'baslik': baslik,
+            # 'post.title': alan,
+        }
+        return render(request, 'anasayfa/solutions_detay.html', context)
+
+def iletisim(request):
+    bilgi = Solutions.objects.filter(altmenuadi="iletisim").first()
+    return solutions_goster(request, "İLETİŞİM", bilgi.id)
+
+def hakkimizda(request):
+    bilgi = Solutions.objects.filter(altmenuadi="hakkimizda").first()
+    return solutions_goster(request, "HAKKIMIZDA", bilgi.id)
+
+def sss(request):
+    bilgi = Solutions.objects.filter(altmenuadi="sss").first()
+    return solutions_goster(request, "SIKÇA SORULAN SORULAR", bilgi.id)
+
+def gizlilik(request):
+    bilgi = Solutions.objects.filter(altmenuadi="gizlilik").first()
+    return solutions_goster(request, "GİZLİLİK POLİTİKASI", bilgi.id)
+
+def blog(request):
+    bilgi = Solutions.objects.filter(altmenuadi="blog").first()
+    return solutions_goster(request, "BLOG", bilgi.id)
+
+def koc(request):
+    bilgi = Solutions.objects.filter(altmenuadi="kocluk").first()
+    return solutions_goster(request, "KOÇLUK", bilgi.id)
+
+def hizmet_goster(request, pk: int = None):
+    if pk:
+        bilgi = Solutions.objects.get(id=pk)
+        context = {
+            'bilgi': bilgi,
+            'veri': "hizmet",
+        }
+        return render(request, 'anasayfa/solutions_detay.html', context)
+    else:
+        bilgi1 = Solutions.objects.filter(durum=True, altmenuadi="hizmetler")
+        bilgi = bilgi1.order_by('sira')
+
+        context = {
+            'bilgi': bilgi,
+            'baslik': "HİZMETLERİMİZ",
+            'veri.id': bilgi[0].id,
+
+        }
+
+        return render(request, 'anasayfa/solutions_liste.html', context)
+
+def takvim_goster(request, pk: int = None):
+    if pk:
+        bilgi = OnlineTakvim.objects.get(id=pk)
+        kisi = OnlineRandevu.objects.all()
+        context = {
+            'bilgi': bilgi,
+            'kisi' : kisi,
+            'baslik': "ONLİNE RANDEVU AL",
+        }
+        return render(request, 'anasayfa/onlinerandevu_ekle.html', context)
+    else:
+        bilgi1 = OnlineTakvim.objects.filter(durum=True)
+        bilgi = bilgi1.order_by('tarih')
+        context = {
+            'bilgi': bilgi,
+            'baslik': "ONLİNE RANDEVU",
+            'tarih.id': bilgi[0].id,
+        }
+        return render(request, 'anasayfa/onlinerandevu.html', context)
 

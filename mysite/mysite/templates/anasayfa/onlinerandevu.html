@@ -1,0 +1,59 @@
+{% extends "anasayfa/base.html" %}
+   {% block baslik %}
+    <div class="container text-center">
+    </div>
+{{baslik}}
+
+
+{% endblock %}
+{% block content %}
+<div class="container">
+
+   {% for bilgi in bilgi %}
+      <p style="margin-top:20px;">
+      <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapse{{bilgi.id}}" role="button" aria-expanded="false" aria-controls="collapse{{bilgi.id}}">
+          {{bilgi.tarih.date}}
+      </a>
+
+      </p>
+      <div class="collapse" id="collapse{{bilgi.id}}">
+          <div class="card card-body" style="width:500px;">
+              <table class="table table-striped table-hover" style="width:400px;">
+                  <tr>
+                      <td><a href="#">{% if bilgi.saat0 %}{{bilgi.saat0}}{% else %}{% endif %}</a></td>
+                      <td><a href="#">{% if bilgi.saat1 %}{{bilgi.saat1}}{% else %}{% endif %}</a></td>
+                      <td><a href="#">{% if bilgi.saat2 %}{{bilgi.saat2}}{% else %}{% endif %}</a></td>
+                      <td><a href="#">{% if bilgi.saat3 %}{{bilgi.saat3}}{% else %}{% endif %}</a></td>
+                  </tr>
+                  <tr>
+                      <td><a href="#">{% if bilgi.saat4 %}{{bilgi.saat4}}{% else %}{% endif %}</a></td>
+                      <td><a href="#">{% if bilgi.saat5 %}{{bilgi.saat5}}{% else %}{% endif %}</a></td>
+                      <td><a href="#">{% if bilgi.saat6 %}{{bilgi.saat6}}{% else %}{% endif %}</a></td>
+                      <td><a href="#">{% if bilgi.saat7 %}{{bilgi.saat7}}{% else %}{% endif %}</a></td>
+                  </tr>
+
+              </table>
+
+          </div>
+      </div>
+  {% endfor %}
+
+
+
+</div>
+
+
+
+
+
+
+
+{% endblock %}
+
+
+
+
+
+
+
+

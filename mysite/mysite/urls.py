@@ -23,11 +23,23 @@ from mysite import views
 
 urlpatterns = (
         [
-
+            #ANASAYFA
             path('admin/', admin.site.urls),
-            path('', views.anasayfa),
+            path('', views.anasayfa_home),
+            path('hakkimizda/', views.hakkimizda),
+            path('sss/', views.sss),
+            path('gizlilik/', views.gizlilik),
+            path('iletisim/', views.iletisim),
+            path('koc/', views.koc),
 
-            # ADMİN GİRİŞ
+            path('hizmet/<int:pk>', views.hizmet_goster),
+            path('hizmet/', views.hizmet_goster),
+            path('onlinerandevu/', views.takvim_goster),
+            #path('duyuru/<int:pk>', views.duyuru),
+            #path('egitim/<int:pk>', views.egitim),
+            #path('blog/<int:pk>', views.blog),
+
+            # ADMIN GİRİŞ
             path('login/', views.login_view),
             path('logout/', views.logout_view),
 
