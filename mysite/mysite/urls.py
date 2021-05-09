@@ -31,6 +31,11 @@ urlpatterns = (
             path('gizlilik/', views.gizlilik),
             path('iletisim/', views.iletisim),
             path('koc/', views.koc),
+            path('onlinerandevu/<int:pk>/<str:saat>', views.onlinerandevu_ekle),
+            path('onlinebilgi/', views.onlinerandevu_ekle),
+            path('onlinesatis/', views.onlinesatis_list),
+            path('onlinesatis/<int:pk>/', views.onlinesatis_list),
+            path('onlinesatis_satis/<int:pk>/', views.siparis_ekle),
 
             path('hizmet/<int:pk>', views.hizmet_goster),
             path('hizmet/', views.hizmet_goster),
@@ -79,6 +84,15 @@ urlpatterns = (
             path('yonetim/kullanici/duzenle/<int:pk>/', views.kullanici_kayit),
             path('yonetim/kullanici/sil/<int:pk>/', views.kullanici_sil),
             path('yonetim/kullanici/detay/<int:pk>/', views.kullanici_detay),
+
+            # URUN
+            path('yonetim/urun/', views.urun_liste),
+            path('yonetim/urun/<int:pk>/', views.urun_detay),
+            path('yonetim/urun/duzenle', views.urun_ekle),
+            path('yonetim/urun/duzenle/<int:pk>/', views.urun_ekle),
+            path('yonetim/urun/sil/<int:pk>/', views.urun_sil),
+            path('yonetim/urun/detay/<int:pk>/', views.urun_detay),
+
 
             # ckeditor
             path('ckeditor/', include('ckeditor_uploader.urls')),

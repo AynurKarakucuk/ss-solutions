@@ -55,7 +55,6 @@ class EkipForm(forms.ModelForm):
 
     durum = forms.BooleanField(required=False, label="Aktif")
 
-
     class Meta:
         model = mysite.models.Ekip
         fields = ['adisoyadi', 'unvan', 'tel', 'eposta', 'img', 'icerik', 'dosya', 'sira', 'durum']
@@ -65,9 +64,7 @@ class EkipForm(forms.ModelForm):
 
 
 class OnlineTakvimForm(forms.ModelForm):
-
     durum = forms.BooleanField(required=False, label="Aktif")
-
 
     class Meta:
         model = mysite.models.OnlineTakvim
@@ -97,40 +94,30 @@ class OnlineTakvimForm(forms.ModelForm):
         }
 
 
-
 class OnlineRandevuForm(forms.ModelForm):
-
-    durum = forms.BooleanField(required=False, label="Aktif")
-
+    tarih = forms.CharField(required=False)
+    saat = forms.CharField(required=False)
 
     class Meta:
         model = mysite.models.OnlineRandevu
-        fields = ['tarih', 'saat', 'adisoyadi', 'eposta', 'tel']
-        ordering = ['tarih']
-        dateDateOptions = {
-            'format': 'dd/mm/yyyy HH:ii',
-            'autoclose': True,
-            'showMeridian': True
-        }
+        fields = ['tarih', 'saat', 'adisoyadi', 'eposta', 'tel', 'onlinetakvimid']
 
-        widgets = {
-            'tarih': DateWidget(options=dateDateOptions, usel10n=True, bootstrap_version=3),
-            'saat': TimeWidget(usel10n=True, bootstrap_version=3),
-        }
+    def clean_tarih(self):
+        return ""
 
-
-
-
-
+    # def validate(self, value):
+    #     for tarih in value:
+    #         return []
+    #     super().validate(value)
 
 """ Şifre İşlemleri """
 
 
 class YoneticiForms(UserCreationForm):
-
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'username')
+
 
 class YoneticiSifreForms(PasswordChangeForm):
     pass
@@ -138,5 +125,33 @@ class YoneticiSifreForms(PasswordChangeForm):
     #     model = User
     #     fields = ()
 
+
 class AdminSifreResetForms(SetPasswordForm):
     pass
+
+""" URUN FORMS"""
+
+
+class UrunForm(forms.ModelForm):
+    aciklama = RichTextUploadingFormField(
+        # config_name="my-custom-toolbar",
+        label="Tanıtım",
+        required=False,
+
+    )
+
+    class Meta:
+        model = mysite.models.Urun
+        fields = ['urunadi', 'urunfiyat', 'aciklama', 'img']
+
+""" Satış Form"""
+
+
+class SiparisForm(forms.ModelForm):
+
+    urunid = forms.IntegerField(required=False)
+
+    class Meta:
+        model = mysite.models.Siparis
+        fields = ['adsoyad', 'tel', 'eposta', 'adres', 'urunid', 'kkno', 'kkad', 'kksonkt', 'kkcvv']
+

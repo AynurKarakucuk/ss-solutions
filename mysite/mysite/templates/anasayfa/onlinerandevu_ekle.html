@@ -1,18 +1,75 @@
 {% extends "anasayfa/base.html" %}
-   {% block baslik %}
-    <div class="container text-center">
-    </div>
-{{baslik}}
 
+    {% block baslik %}
+        <div class="container text-center" >
+            {{baslik}}
+        </div>
+    {% endblock %}
 
-{% endblock %}
 {% block content %}
-<div class="container">
 
 
+<div  class="container" style="width:500px;">
+
+ <form method="post" action="" class="row g-3" style="margin-top:30px;">
+     {% csrf_token %}
+
+     {{ errors }}
+
+    {{ form.non_field_errors }}
+     <div class="row g-3">
+        <div class="col-7">
+            <input type="text" readonly="readonly" class="form-control" name="tarih" placeholder="{{bilgi.tarih.date}}" aria-label="Tarih" value="{{bilgi.tarih.date}}">
+        </div>
+        <div class="col-sm">
+            <input type="text" readonly="readonly" class="form-control" name="saat" placeholder="{{saat}}" aria-label="Saat" value="{{saat}}">
+        </div>
+        </div>
+
+        <div class="row g-3">
+         <div class="col-7">
+            <input type="text" class="form-control" name="adisoyadi" placeholder="Adı Soyadı" aria-label="Adı Soyadı">
+         </div>
+     </div>
+     <div class="row g-3">
+         <div class="col-7">
+             <input type="email" class="form-control" name="eposta" placeholder="E Posta" aria-label="E Posta">
+         </div>
+         <div class="col-sm">
+            <input type="tel" class="form-control" name="tel" pattern="[0-9]{4}[0-9]{3}[0-9]{4}" placeholder="0(___)(___)(____)" aria-label="Telefon">
+         </div>
+        </div>
+        <div class="col-sm">
+            <input type="text" class="form-control" name="onlinetakvimid" placeholder="{{bilgi.id}}" aria-label="onlinetakvimid" value="{{bilgi.id}}" style="display: block">
+        </div>
+        <!-- <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="width:100px;">Randevu Al</button> -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+          Randevu Al
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Randevu Onayı</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                {{bilgi.tarih.date}} tarihinde saat: {{saat}} 'de ki randevunuzu onaylıyor musunuz?
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                <button type="submit" class="btn btn-primary">Onay</button>
+              </div>
+            </div>
+          </div>
+        </div>
+</form>
 
 
 </div>
+
 
 
 {% endblock %}

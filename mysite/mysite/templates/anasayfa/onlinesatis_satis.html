@@ -1,0 +1,84 @@
+{% extends "anasayfa/base.html" %}
+{% block content %}
+<script>
+var btn_ileri_geri=function(){
+            window.history.back();
+        }
+</script>
+
+
+
+
+<div class="container">
+    <div class="row left">
+        <div class="col-sm" style="margin-top:20px;">
+            {% if urun.img %}
+                <img src="{{urun.img.url}}" class="rounded float-start" style="width:300px; height:300px; margin-right:20px;"><br>
+            {% endif %}
+            <h3>{{urun.urunadi}}</h3> <br>
+            <h3>{{urun.urunfiyat}} tl</h3><br>
+        </div>
+        <div class="col-sm">
+
+
+        </div>
+    </div>
+    <div class="row">
+        <form method="post" action="" class="row g-3" style="margin-top:30px; width:500px;">
+            <input type="hidden" name="urunid" value="{{urun.id}}">
+            {% csrf_token %}
+
+            {{ errors }}
+
+            {{ form.non_field_errors }}
+                <div class="mb-3">
+                    <label class="form-label">Ad Soyad</label>
+                    <input type="text" class="form-control" name="adsoyad" >
+
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Telefon</label>
+                    <input type="text" class="form-control" name="tel" pattern="[0-9]{4}[0-9]{3}[0-9]{4}" placeholder="0(___)(___)(____)" >
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Email address</label>
+                    <input type="email" class="form-control" name="eposta" id="exampleInputEmail1">
+                </div>
+                <div class="input-group">
+                    <label class="input-group-text">Adres</label>
+                    <textarea class="form-control"  name="adres" aria-label="With textarea"></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <div><label class="form-label">Kredi Kartı Bilgileri</label></div>
+                    <div>
+                        <label class="form-label">Kredi Kartı Numarası</label>
+                        <input type="text" class="form-control kkno" name="kkno">
+                    </div>
+                    <div>
+                        <label class="form-label">Kart Üzerindeki Ad Soyad</label>
+                        <input type="text" class="form-control" name="kkad">
+                    </div>
+                    <div>
+                        <label class="form-label">Kredi Kartı Son Kullanma Tarihi</label>
+                        <input type="text" class="form-control kksonkt " name="kksonkt">
+                    </div>
+                    <div>
+                        <label class="form-label">Güvenlik Kodu</label>
+                        <input type="text" class="form-control kkcvv " name="kkcvv">
+                    </div>
+
+                </div>
+
+              <button type="submit" class="btn btn-primary" style="width:200px;">Satış İşlemini Tamamla</button>
+        </form>
+
+
+    </div>
+
+
+
+</div>
+
+{% endblock %}
+

@@ -14,7 +14,7 @@ class Solutions(models.Model):
     durum = models.BooleanField(blank=True, null=True, verbose_name='Aktif')
     dosya = models.FileField(blank=True, null=True, )
     sira = models.PositiveSmallIntegerField(blank=True)
-    aciklama=models.CharField(max_length=150, verbose_name='Açıklama', blank=True)
+    aciklama=models.CharField(max_length=500, verbose_name='Açıklama', blank=True)
 
 
 class Egitim(models.Model):
@@ -78,3 +78,29 @@ class OnlineRandevu(models.Model):
     adisoyadi = models.CharField(max_length=100, verbose_name='Adı Soyadı')
     eposta = models.EmailField(verbose_name='e-posta')
     tel = models.IntegerField(verbose_name='Telefon')
+
+class Urun(models.Model):
+    id=models.IntegerField(primary_key=True)
+    urunadi=models.CharField(max_length=100, verbose_name='Ürün Adı')
+    urunfiyat=models.CharField(max_length=100, verbose_name='Ürün Fiyatı')
+    aciklama=RichTextField(verbose_name="Tanıtım", null=True, blank=True)
+    img = models.ImageField(blank=True, null=True, )
+
+class Siparis(models.Model):
+    adsoyad=models.CharField(max_length=100, verbose_name='Adı Soyadı')
+    tel=models.IntegerField(verbose_name='Telefon')
+    eposta = models.EmailField(verbose_name='E Posta')
+    adres = models.CharField(max_length=500, verbose_name='Adres')
+    urunid= models.IntegerField()
+    kkno = models.CharField(max_length=100, verbose_name='Kredi Kartı Numarası')
+    kkad = models.CharField(max_length=100, verbose_name='Kredi Kartı Üzerinde ki Ad Soyad')
+    kksonkt = models.CharField(max_length=100, verbose_name='Son Kullanma Tarihi')
+    kkcvv = models.IntegerField(verbose_name='Güvenlik Kodu')
+
+class Menu(models.Model):
+    menuadi = models.CharField(max_length=100, verbose_name='Menu Adi')
+    ustmenuadi = models.CharField(max_length=100, verbose_name='Bağlantı Yapılacak Menü Adı', blank=True, null=True)
+    editor = RichTextField(verbose_name="Sayfa İçeriği", null=True, blank=True)
+    sira = models.IntegerField(verbose_name="Alt Menu Sırası", null=True, blank=True)
+
+

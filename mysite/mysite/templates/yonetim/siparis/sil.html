@@ -1,0 +1,49 @@
+{% extends "yonetim/base.html" %}
+<script>
+        var onay=function()
+        {
+            return window.comfirm("Alt menu kaydını silmek istiyor musunuz?");
+        }
+        function btn_geri()
+        {
+		    window.history.back();
+        }
+     </script>
+{% block baslik %}Ürün Sil{% endblock %}
+
+{% block content %}
+
+<form onsubmit="return onay()" method="post">
+    {% csrf_token %}
+
+    <div>
+        <table class="blueTable">
+            <thead>
+                <tr><th colspan="2" style=" text-transform: uppercase">{{ urun.urunad }}</th></tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td style="width:25%;">Fiyatı</td>
+                <td style="width:75%;">{{ urun.urunfiyat }}</td>
+            </tr>
+            <tr>
+                <td style="width:25%;">Tanıtım</td>
+                <td style="width:75%;">{{ urun.aciklama|safe }}</td>
+            </tr>
+
+             <tr>
+                <td style="width:25%;">Resim</td>
+                <td style="width:75%;">{% if urun.img %}<img width="60" height="60" src="{{urun.img.url}}" alt="{{urun.urunad}}" >{% endif %} </td>
+            </tr>
+
+            </tbody>
+        </table>
+    <div>&nbsp;&nbsp;</div>
+    <div class="sag">
+        <button type="submit" onclick="onay()" class="push button red"> Sil </button>
+        <button type="button" class="push button red" onclick="btn_geri()">Geri</button>
+    </div>
+    </div>
+
+</form>
+{% endblock %}

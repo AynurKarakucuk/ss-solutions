@@ -44,11 +44,11 @@
 </div>
 <div class="sag" style="font-weight: bold; color: #1D3557; margin-top:20px;">
     {% if request.user.is_superuser %}
-        <label >Hoş Geldiniz Yönetici:</label>
-        <label style="text-transform: uppercase;"> {{request.user.username}} </label>
+        <label style="font-size:20px;" >Hoş Geldiniz Yönetici:</label>
+        <label style="text-transform: uppercase; font-size:20px;"> {{request.user.username}} </label>
     {% else %}
-        <label >Hoş Geldiniz Kullanıcı:</label>
-        <label style="text-transform: uppercase;">{{request.user.username}} </label>
+        <label style="font-size:20px;" >Hoş Geldiniz Kullanıcı:</label>
+        <label style="text-transform: uppercase; font-size:20px;">{{request.user.username}} </label>
     {% endif %}
 
 </div>
@@ -61,6 +61,8 @@
             <tr><th><a href="/yonetim/onlinetakvim/">Online Takvim</a></th></tr>
             <tr><th><a href="/sifre/">Şifre İşlemleri</a></th></tr>
             <tr><th><a href = "/yonetim/kullanici">Kullanıcılar</a> </th></tr>
+            <tr><th><a href = "/yonetim/urun">Ürünler</a> </th></tr>
+
 
     </table>
     <div>

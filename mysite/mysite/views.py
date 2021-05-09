@@ -3,6 +3,7 @@ from ckeditor.widgets import CKEditorWidget
 from django.contrib.auth.mixins import UserPassesTestMixin, AccessMixin
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import render
+from django.core.mail import EmailMultiAlternatives
 from django.db import models
 from django.template import RequestContext
 
@@ -19,9 +20,9 @@ from django.core.paginator import Paginator
 from django.urls import reverse
 from django.views import generic
 from . import forms
-from datetime import datetime
+from datetime import datetime, time
 
-from .models import Solutions, OnlineTakvim, OnlineRandevu
+from .models import Solutions, OnlineTakvim, OnlineRandevu, Ekip, Urun, Siparis
 
 """
 Yönetim Sayfaları başlangıç
@@ -59,7 +60,6 @@ def login_view(request):
             login(request, user)
             return render(request, 'yonetim/ana_sayfa.html')
 
-
     context = {
         "hata": True if request.POST else False,
     }
@@ -85,9 +85,6 @@ def yetki_yok(request):
 """ 
 Login bitiş
 """
-
-
-
 
 """
 solutions
@@ -167,7 +164,6 @@ def solutions_sil(request, pk: int):
 solutions Son
 """
 
-
 """
 ekip başlangıç
 """
@@ -193,7 +189,7 @@ def ekip_ekle(request, pk: int = None):
         if f.is_valid():
             f.save()
 
-            return redirect('yonetim/ekip/')
+            return redirect('/yonetim/ekip/')
 
     else:
 
@@ -273,11 +269,10 @@ def onlinetakvim_liste(request):
     onlinetakvim = OnlineTakvim.objects.all()
 
     context = {
-                'onlinetakvim': onlinetakvim,
-               }
+        'onlinetakvim': onlinetakvim,
+    }
 
     return render(request, 'yonetim/online/liste.html', context)
-
 
 
 @login_required(login_url=settings.LOGIN_URL)
@@ -294,6 +289,7 @@ def onlinetakvim_sil(request, pk: int):
     }
 
     return render(request, 'yonetim/online/sil.html', context)
+
 
 """ KULLANICILAR VİEWS"""
 
@@ -360,7 +356,6 @@ def kullanici_sil(request, pk: int):
 
 
 def anasayfa_home(request):
-
     hizmetler = Solutions.objects.filter(altmenuadi="hizmetler", durum=True).order_by('sira')
     duyurular = Solutions.objects.filter(altmenuadi="duyurular", durum=True).order_by('sira')
     iletisim = Solutions.objects.filter(altmenuadi="iletisim").first()
@@ -382,6 +377,7 @@ def anasayfa_home(request):
     }
     return render(request, 'anasayfa/anasayfa.html', context)
 
+
 def solutions_goster(request, baslik, pk: int):
     bilgi = Solutions.objects.filter(id=pk, durum=True).first()
 
@@ -400,29 +396,36 @@ def solutions_goster(request, baslik, pk: int):
         }
         return render(request, 'anasayfa/solutions_detay.html', context)
 
+
 def iletisim(request):
     bilgi = Solutions.objects.filter(altmenuadi="iletisim").first()
     return solutions_goster(request, "İLETİŞİM", bilgi.id)
+
 
 def hakkimizda(request):
     bilgi = Solutions.objects.filter(altmenuadi="hakkimizda").first()
     return solutions_goster(request, "HAKKIMIZDA", bilgi.id)
 
+
 def sss(request):
     bilgi = Solutions.objects.filter(altmenuadi="sss").first()
     return solutions_goster(request, "SIKÇA SORULAN SORULAR", bilgi.id)
+
 
 def gizlilik(request):
     bilgi = Solutions.objects.filter(altmenuadi="gizlilik").first()
     return solutions_goster(request, "GİZLİLİK POLİTİKASI", bilgi.id)
 
+
 def blog(request):
     bilgi = Solutions.objects.filter(altmenuadi="blog").first()
     return solutions_goster(request, "BLOG", bilgi.id)
 
+
 def koc(request):
     bilgi = Solutions.objects.filter(altmenuadi="kocluk").first()
     return solutions_goster(request, "KOÇLUK", bilgi.id)
+
 
 def hizmet_goster(request, pk: int = None):
     if pk:
@@ -445,23 +448,211 @@ def hizmet_goster(request, pk: int = None):
 
         return render(request, 'anasayfa/solutions_liste.html', context)
 
-def takvim_goster(request, pk: int = None):
-    if pk:
-        bilgi = OnlineTakvim.objects.get(id=pk)
-        kisi = OnlineRandevu.objects.all()
-        context = {
-            'bilgi': bilgi,
-            'kisi' : kisi,
-            'baslik': "ONLİNE RANDEVU AL",
-        }
-        return render(request, 'anasayfa/onlinerandevu_ekle.html', context)
-    else:
-        bilgi1 = OnlineTakvim.objects.filter(durum=True)
-        bilgi = bilgi1.order_by('tarih')
-        context = {
-            'bilgi': bilgi,
-            'baslik': "ONLİNE RANDEVU",
-            'tarih.id': bilgi[0].id,
-        }
-        return render(request, 'anasayfa/onlinerandevu.html', context)
 
+def takvim_goster(request):
+    bilgi1 = OnlineTakvim.objects.filter(durum=True)
+    bilgi = bilgi1.order_by('tarih')
+    context = {
+        'bilgi': bilgi,
+        'baslik': "ONLİNE RANDEVU",
+        'tarih.id': bilgi[0].id,
+    }
+    return render(request, 'anasayfa/onlinerandevu.html', context)
+
+
+def onlinerandevu_ekle(request, pk: int, saat: str):
+    bilgi = OnlineTakvim.objects.get(id=pk)
+    context = {
+        'bilgi': bilgi,
+        'saat': saat,
+        'baslik': "RANDEVU AL",
+        'errors': '',
+        'onlinetakvimid': bilgi.id,
+    }
+
+    if request.method == 'POST':
+        f = forms.OnlineRandevuForm(request.POST, request.FILES)
+
+        if f.is_valid():
+            data = f.cleaned_data
+            data.update({"tarih": bilgi.tarih.date()})
+            o = OnlineRandevu(**data)
+            o.save()
+
+            for i in range(8):
+                fname = "saat{}".format(i)
+                print(fname, getattr(bilgi, fname))
+                if saat in str(getattr(bilgi, fname)):
+                    setattr(bilgi, fname, None)
+                    bilgi.save()
+                    print(getattr(bilgi, fname))
+                    break
+
+            # skarakucuk @ sssolutioncoaching.com
+
+            subject, from_email, to = 'Randevunuz', 'aynur@karakucuk.net', '{eposta}'.format(eposta=o.eposta)
+            text_content = "Sayın {ad}, {tarih} tarihinde saat: {saat} randevunuz alınmıştır.".format(ad=o.adisoyadi,
+                                                                                                      tarih=o.tarih,
+                                                                                                      saat=o.saat)
+            # o.adisoyadi, 'adlı kişi', o.tarih, 'tarihinde saat', o.saat, 'randevu almıştır.', o.eposta, o.tel,
+            # html_content = '<p>This is an <strong>important</strong> message.</p>'
+            msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
+            # msg.attach_alternative(html_content, "text/html")
+            msg.send()
+
+            # return redirect('/onlinedeneme/', adisoyadi=o.adisoyadi)
+            # return redirect(reverse('/onlinedeneme/', kwargs={'adisoyadi': o.adisoyadi}))
+            randevus = OnlineRandevu.objects.filter(adisoyadi=o.adisoyadi)
+
+            context = {'randevus': randevus}
+
+            return render(request, 'anasayfa/onlinebilgi.html', context)
+
+        else:
+            context.update({'errors': f.errors})
+
+    return render(request, 'anasayfa/onlinerandevu_ekle.html', context)
+
+
+"""Ürünler"""
+
+
+@login_required
+def urun_detay(request, pk: int):
+    urun = Urun.objects.get(id=pk)
+
+    context = {
+        'urun': urun,
+    }
+
+    return render(request, 'yonetim/urun/detay.html', context)
+
+
+@login_required(login_url=settings.LOGIN_URL)
+def urun_ekle(request, pk: int = None):
+    urun = Urun.objects.get(id=pk) if pk else None
+    if request.method == 'POST':
+        f = forms.UrunForm(request.POST, request.FILES, instance=urun)
+
+        if f.is_valid():
+            f.save()
+
+            return redirect('/yonetim/urun/')
+
+    else:
+
+        f = forms.UrunForm(instance=urun)
+
+    context = {
+        'baslik': 'Ürün Düzenle' if pk else 'Ürün Ekle',
+        'form': f,
+    }
+
+    return render(request, 'yonetim/urun/duzenle.html', context)
+
+
+@login_required(login_url=settings.LOGIN_URL)
+def urun_liste(request):
+    urun = Urun.objects.all()
+
+    context = {'urun': urun}
+
+    return render(request, 'yonetim/urun/liste.html', context)
+
+
+@login_required(login_url=settings.LOGIN_URL)
+def urun_sil(request, pk: int):
+    urun = Urun.objects.get(id=pk)
+
+    if request.method == 'POST':
+        urun.delete()
+
+        return redirect('/yonetim/urun/')
+
+    context = {
+        'urun': urun,
+    }
+
+    return render(request, 'yonetim/urun/sil.html', context)
+
+
+""" Anasayfa Online Satış"""
+
+
+def onlinesatis_list(request, pk: int = None):
+    if pk:
+        urun = Urun.objects.get(id=pk)
+        context = {
+            'urun': urun,
+        }
+        return render(request, 'anasayfa/onlinesatis_detay.html', context)
+    else:
+        urun1 = Urun.objects.all()
+        urun = urun1.order_by('urunfiyat')
+
+        context = {
+            'urun': urun,
+            'baslik': "Eğitimlerimiz",
+        }
+
+        return render(request, 'anasayfa/onlinesatis.html', context)
+
+
+""" Sipariş"""
+
+
+@login_required(login_url=settings.LOGIN_URL)
+def siparis_ekle(request, pk: int = None):
+    urun = Urun.objects.get(id=pk) if pk else None
+    errors = ''
+
+    if request.method == 'POST':
+        f = forms.SiparisForm(request.POST, request.FILES)
+
+        if f.is_valid():
+            data = f.cleaned_data
+            f.save()
+
+            context = {
+
+                'adsoyad': data.get("adsoyad"),
+                'urun': urun,
+            }
+
+            return render(request, 'anasayfa/onlinesatis_satislist.html', context)
+
+        errors = f.errors
+
+    else:
+
+        f = forms.SiparisForm()
+
+    context = {
+        # 'urunid': urun.id,
+        'form': f,
+        'urun': urun,
+        'errors': errors,
+    }
+
+    return render(request, 'anasayfa/onlinesatis_satis.html', context)
+
+
+def onlinesatis_satis(request, pk: int):
+    if pk:
+        urun = Urun.objects.get(id=pk)
+        siparis = Siparis.objects.all()
+
+        context = {
+            'urun': urun,
+        }
+        return render(request, 'anasayfa/onlinesatis_detay.html', context)
+    else:
+        urun1 = Urun.objects.all()
+        urun = urun1.order_by('urunfiyat')
+
+        context = {
+            'urun': urun,
+            'baslik': "Eğitimlerimiz",
+        }
+
+        return render(request, 'anasayfa/onlinesatis.html', context)

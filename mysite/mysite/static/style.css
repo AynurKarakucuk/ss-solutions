@@ -1,5 +1,5 @@
 body {
-	font: normal .8em/1.5em Arial, Helvetica, sans-serif;
+	font: normal 1em/1.5em Arial, Helvetica, sans-serif;
 	background: #F0F4FA;
 	width: 80%;
 	margin: 20px auto;
@@ -353,7 +353,7 @@ table.blueTable td, table.blueTable th {
   padding: 3px 2px;
 }
 table.blueTable tbody td {
-  font-size: 13px;
+  font-size: 15px;
 }
 
 table.blueTable tr:nth-child(even) {

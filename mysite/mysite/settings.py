@@ -162,3 +162,25 @@ USE_I18N = True
 
 LOGIN_URL = '/login/'
 YETKI_HATA_URL = '/hata_yetki/'
+
+# Mail Komutları
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# Host for sending e-mail.
+#EMAIL_HOST = 'localhost'
+
+# Port for sending e-mail.
+#EMAIL_PORT = 1025
+
+# Optional SMTP authentication information for EMAIL_HOST.
+#EMAIL_HOST_USER = ''
+#EMAIL_HOST_PASSWORD = ''
+#EMAIL_USE_TLS = False
+
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'aynur@karakucuk.net'
+EMAIL_HOST_PASSWORD = 'tosunpasa'

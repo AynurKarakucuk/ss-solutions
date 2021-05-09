@@ -1,0 +1,40 @@
+{% extends "yonetim/base.html" %}
+
+{% block baslik %}Ürün Detay{% endblock %}
+
+{% block content %}
+
+<script>
+var btn_geri = function(){
+      window.history.back();
+}
+</script>
+
+    <div>
+        <table class="blueTable">
+            <thead>
+                <tr><th colspan="2" style=" text-transform: uppercase">{{ urun.urunad }}</th></tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td style="width:25%;">Fiyat</td>
+                <td style="width:75%;">{{ urun.urunfiyat }}</td>
+            </tr>
+            <tr>
+                <td style="width:25%;">Tanıtım</td>
+                <td style="width:75%;">{{ urun.aciklama|safe }}</td>
+            </tr>
+            <tr>
+                <td style="width:25%;">Resim</td>
+                <td style="width:75%;">{% if urun.img %}<img width="60" height="60" src="{{Urun.img.url}}" alt="{{urun.urunad}}" >{% endif %} </td>
+            </tr>
+
+            </tbody>
+        </table>
+    <div>&nbsp;&nbsp;</div>
+    <div class="sag">
+        <button type="button" class="push button red" onclick="btn_geri()">Geri</button>
+    </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "anasayfa/base.html" %}
+
+{% block content %}
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+        <tr><th colspan="5"><h3>Online Randevunuz Kaydedilmiştir...</h3></th></tr>
+        </thead>
+        <tbody>
+            <tr>
+            {% for randevu in randevus  %}
+                <td>{{randevu.tarih.date}}</td>
+                <td>{{randevu.saat}}</td>
+                <td>{{randevu.adisoyadi}}</td>
+                <td>{{randevu.eposta}}</td>
+                <td>{{randevu.tel}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+
+</div>
+{% endblock %}

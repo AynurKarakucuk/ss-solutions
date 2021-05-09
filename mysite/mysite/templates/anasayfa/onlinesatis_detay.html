@@ -1,0 +1,38 @@
+{% extends "anasayfa/base.html" %}
+{% block content %}
+<script>
+var btn_ileri_geri=function(){
+            window.history.back();
+        }
+</script>
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col" style="margin-top:20px;">
+            {% if urun.img %}
+                <img src="{{urun.img.url}}" class="col-md-6 float-md-end mb-3 ms-md-3">
+            {% endif %}
+            <br>
+
+        </div>
+
+        <div class="col" style="margin-top:20px;">
+             <h2>{{urun.urunadi}}</h2> <br>
+            <h2>{{urun.urunfiyat}} tl..</h2><br>
+            <a href="/onlinesatis_satis/{{urun.id}}" type="button" class="btn btn-outline-danger">Satın Al</a>
+        </div>
+    </div>
+    <div class="row" style="margin-top:20px;">
+        <div class="clo-4">
+            <p style="margin-top:20px;">{{urun.aciklama|safe}}</p>
+        </div>
+
+
+    </div>
+
+</div>
+
+{% endblock %}
+

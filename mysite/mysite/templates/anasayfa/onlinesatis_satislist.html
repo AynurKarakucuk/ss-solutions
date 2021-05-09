@@ -1,0 +1,31 @@
+{% extends "anasayfa/base.html" %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col" style="margin-top:20px;">
+            {% if urun.img %}
+                <img src="{{urun.img.url}}" class="col-md-6 float-md-end mb-3 ms-md-3">
+            {% endif %}
+            <br>
+
+        </div>
+
+        <div class="col" style="margin-top:20px;">
+             <h2>{{urun.urunadi}}</h2> <br>
+             <h2>{{urun.urunfiyat}} tl..</h2><br>
+        </div>
+    </div>
+    <div class="row" style="margin-top:20px;">
+        <div class="clo-4">
+            <p style="margin-top:20px;">Sayın {{adsoyad}} </p><br>
+            <p style="margin-top:20px;">Hizmet alımı sağlanmıştır.. </p>
+        </div>
+
+
+    </div>
+
+</div>
+
+{% endblock %}
+
