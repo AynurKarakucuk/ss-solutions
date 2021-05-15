@@ -79,6 +79,16 @@ var btn_ileri_geri=function(){
 
 
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.js"></script>
+<script>
 
+$(document).ready(function(){
+$('.kkno').mask('0000/0000/0000/0000',{placeholder: "____/____/____/____"});
+$('.kksonkt').mask('00/00',{placeholder: "__/__"});
+$('.kkcvv').mask('000',{placeholder: "___"});
+});
+
+</script>
 {% endblock %}
 

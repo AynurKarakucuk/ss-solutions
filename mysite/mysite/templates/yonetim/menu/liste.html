@@ -1,0 +1,75 @@
+{% extends "yonetim/base.html" %}
+
+{% block baslik %}MENULER{% endblock %}
+
+
+{% block content %}
+
+
+<script>
+var btn_git	=function(){
+		window.location = "/yonetim/menu/duzenle";
+}
+
+var btn_cik=function(){
+    window.location = "/logout";
+}
+
+</script>
+<div class="sol">
+    {% if request.user.is_superuser %}
+        <button type="button" onclick="btn_git()" class="push_button blue">Ekle</button>
+    {% else %}
+        <p></p>
+    {% endif %}
+
+
+</div>
+<div>
+&nbsp;
+    &nbsp;
+</div>
+
+<table class="blueTable" style="margin-top: 50px;">
+    <thead>
+    <tr>
+        <th>Menu Adı</th>
+        <th>Ust Menu Adi Fiyatı</th>
+        <th>Durum</th>
+        <th>Detay</th>
+        <th>Düzenle</th>
+        <th>Sil</th>
+    </tr>
+    </thead>
+    <tfoot>
+    <td colspan="6" style="height:30px; color:#1D3557">Menuler</td>
+    </tfoot>
+    <tbody>
+    <tr>
+        {% for menu in menu %}
+        <td>{{menu.menuadi}}</td>
+        <td>{{menu.ustmenuadi}}</td>
+        <td>{% if menu.durum %}Aktif{% else %}Pasif{% endif %}</td>
+        <td>
+            <a href="/yonetim/menu/detay/{{ menu.id }}"><button>Detay</button></a>
+        </td>
+        <td>
+            <a href="/yonetim/menu/duzenle/{{ menu.id }}"><button>Düzenle</button></a>
+        </td>
+
+         {% if request.user.is_superuser %}
+        <td>
+            <a href="/yonetim/menu/sil/{{ menu.id }}"><button>Sil</button></a>
+        </td>
+        {% else %}
+        <td>
+            <a href="/yonetim/menu/sil/{{ menu.id }}" ><button disabled="disabled">Sil</button></a>
+        </td>
+        {% endif %}
+
+
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -102,5 +102,7 @@ class Menu(models.Model):
     ustmenuadi = models.CharField(max_length=100, verbose_name='Bağlantı Yapılacak Menü Adı', blank=True, null=True)
     editor = RichTextField(verbose_name="Sayfa İçeriği", null=True, blank=True)
     sira = models.IntegerField(verbose_name="Alt Menu Sırası", null=True, blank=True)
+    durum = models.BooleanField(blank=True, null=True, verbose_name='Aktif')
+    dosya = models.FileField(blank=True, null=True, )
 
 

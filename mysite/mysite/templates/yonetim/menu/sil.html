@@ -1,0 +1,56 @@
+{% extends "yonetim/base.html" %}
+<script>
+        var onay=function()
+        {
+            return window.comfirm("Alt menu kaydını silmek istiyor musunuz?");
+        }
+        function btn_geri()
+        {
+		    window.history.back();
+        }
+     </script>
+{% block baslik %}Menu Sil{% endblock %}
+
+{% block content %}
+
+<form onsubmit="return onay()" method="post">
+    {% csrf_token %}
+
+    <div>
+        <table class="blueTable">
+            <thead>
+                <tr><th colspan="2" style=" text-transform: uppercase">{{ menu.menuadi }}</th></tr>
+            </thead>
+            <tbody>
+               <tr>
+                <td style="width:25%;">Üst Menu Adi</td>
+                <td style="width:75%;">{{ menu.ustmenuadi }}</td>
+            </tr>
+            <tr>
+                <td style="width:25%;">Editör</td>
+                <td style="width:75%;">{{ menu.editor|safe }}</td>
+            </tr>
+            <tr>
+                <td style="width:25%;">Dosya</td>
+                 <td style="width:75%;">{% if menu.dosya %}<a href="{{menu.dosya.url}}">{{menu.dosya}} </a> {% endif %} </td>
+            </tr>
+             <tr>
+                <td style="width:25%;">Sıra</td>
+                <td style="width:75%;">{{ menu.sira }}</td>
+            </tr>
+             <tr>
+                <td style="width:25%;">Durum</td>
+                <td style="width:75%;">{% if menu.durum %}Aktif{% else %}Pasif{% endif %} </td>
+            </tr>
+
+            </tbody>
+        </table>
+    <div>&nbsp;&nbsp;</div>
+    <div class="sag">
+        <button type="submit" onclick="onay()" class="push button red"> Sil </button>
+        <button type="button" class="push button red" onclick="btn_geri()">Geri</button>
+    </div>
+    </div>
+
+</form>
+{% endblock %}

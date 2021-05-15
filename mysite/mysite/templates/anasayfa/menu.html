@@ -1,31 +1,55 @@
-<ul id="nav">
-    <li class="current"><a href="/">Ana Sayfa</a></li>
-    <li><a href="#">Bölüm</a>
-        <ul>
-            <li><a href="/hakkinda/">Hakkında</a></li>
-            <li><a href="/misyon_vizyon/">Misyon Vizyon</a></li>
-            <li><a href="/iletisim/">İletişim</a></li>
-        </ul>
-    </li>
-    <li><a href="#">Personel</a>
-        <ul>
-            <li><a href="/idari_personel">İdari Personel</a></li>
-            <li><a href="/akademik_personel/">Akademik Personel</a></li>
-        </ul>
-    </li>
-    <li><a href="#">Eğitim</a>
-        <ul>
-            <li><a href="/genel_bilgi/">Genel Bilgi</a></li>
-            <li><a href="/ogretim_plani/">Öğretim Planı</a></li>
-            <li><a href="/ders_icerik/">Ders İçerikleri</a></li>
-        </ul>
 
+<nav class="main-nav" role="navigation">
 
-    </li>
-    <li><a href="#">Öğrenci</a>
-        <ul>
-            <li><a href="/bilgi_sistemi/">Öğrenci Bilgi Sistemi</a></li>
-        </ul>
-    </li>
-    <li><a href="/iletisim/">İletişim</a></li>
-</ul>
+   <!-- &lt;!&ndash; Mobile menu toggle button (hamburger/x icon) &ndash;&gt; -->
+    <input id="main-menu-state" type="checkbox"/>
+    <label class="main-menu-btn" for="main-menu-state">
+        <span class="main-menu-btn-icon"></span> Toggle main menu visibility
+    </label>
+
+   <h2 class="nav-brand"><a href="/"><i class="fas fa-home"></i> &nbsp;Solutions</a></h2>
+   <!-- &lt;!&ndash; Sample menu definition &ndash;&gt; -->
+    <ul id="main-menu" class="sm sm-mint">
+        <li><a href="/">Anasayfa</a></li>
+        <li><a href="#">Solutions & Coaching</a>
+            <ul>
+                <li><a href="#">Hakkımızda</a></li>
+                <li><a href="#">Çözüm Ortakları</a></li>
+                <li><a href="#">SSS</a></li>
+                <li><a href="#">Duyurular</a></li>
+                <li><a href="#">Gizlilik Politikası</a></li>
+                <li><a href="#">Bize Ulaşın</a></li>
+            </ul>
+        </li>
+        <li><a href="#">Eğitimler</a></li>
+        <li><a href="#">BLOG</a>
+            <ul>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">YouTube</a></li>
+            </ul>
+        </li>
+        <li><a href="#">İletişim</a></li>
+        <li><a href="/onlinerandevu/">Online Randevu</a></li>
+        <li><a href="/onlinesatis/">Online Hizmet Satışı</a></li>
+        {% for a_menuanasayfa in menuanasayfa %}
+        <li><a href="/menuicerik/{{a_menuanasayfa.id}}" >{{a_menuanasayfa.menuadi}}</a>
+            {% for menu in menuler %}
+
+                    {% if menu.ustmenuadi == a_menuanasayfa.menuadi %}
+                    <ul>
+                            <li><a href="/menuicerik/{{menu.id}}">{{menu.menuadi}}</a>
+                                {% for altmenu in menuler %}
+                                    {% if altmenu.ustmenuadi == menu.menuadi %}
+                                        <ul><li><a href="/menuicerik/{{altmenu.id}}">{{altmenu.menuadi}}</a></li></ul>
+                                    {% endif %}
+                                {% endfor %}
+                            </li>
+                    </ul>
+                    {% endif %}
+
+            {% endfor %}
+            </li>
+        {% endfor %}
+    </ul>
+</nav>
+

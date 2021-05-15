@@ -1,6 +1,8 @@
+from django.views.generic import TemplateView
+from django.views.generic.base import ContextMixin
 from mysite.models import *
 from ckeditor.widgets import CKEditorWidget
-from django.contrib.auth.mixins import UserPassesTestMixin, AccessMixin
+from django.contrib.auth.mixins import UserPassesTestMixin, AccessMixin, LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import render
 from django.core.mail import EmailMultiAlternatives
@@ -22,7 +24,16 @@ from django.views import generic
 from . import forms
 from datetime import datetime, time
 
-from .models import Solutions, OnlineTakvim, OnlineRandevu, Ekip, Urun, Siparis
+from .models import Solutions, OnlineTakvim, OnlineRandevu, Ekip, Urun, Siparis, Menu
+
+
+
+class ViewMixin(ContextMixin):
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context.update(common_var='some common value', user=self.request.user)
+        return context
 
 """
 Yönetim Sayfaları başlangıç
@@ -352,6 +363,67 @@ def kullanici_sil(request, pk: int):
     return render(request, 'yonetim/kullanici/sil.html', context)
 
 
+@login_required
+def menu_detay(request, pk: int):
+    menu = Menu.objects.get(id=pk)
+
+    context = {
+        'menu': menu,
+    }
+
+    return render(request, 'yonetim/menu/detay.html', context)
+
+
+@login_required(login_url=settings.LOGIN_URL)
+def menu_ekle(request, pk: int = None):
+    menu = Menu.objects.get(id=pk) if pk else None
+    if request.method == 'POST':
+        f = forms.MenuForm(request.POST, request.FILES, instance=menu)
+
+        if f.is_valid():
+            f.save()
+
+            return redirect('/yonetim/menu/')
+
+    else:
+
+        f = forms.MenuForm(instance=menu)
+
+    context = {
+        'baslik': 'Menü Düzenle' if pk else 'Menü Ekle',
+        'form': f,
+    }
+
+    return render(request, 'yonetim/menu/duzenle.html', context)
+
+
+@login_required(login_url=settings.LOGIN_URL)
+def menu_liste(request):
+    menu = Menu.objects.all()
+
+    context = {'menu': menu}
+
+    return render(request, 'yonetim/menu/liste.html', context)
+
+
+@login_required(login_url=settings.LOGIN_URL)
+def menu_sil(request, pk: int):
+    menu = Menu.objects.get(id=pk)
+
+    if request.method == 'POST':
+        menu.delete()
+
+        return redirect('/yonetim/menu/')
+
+    context = {
+        'menu': menu,
+    }
+
+    return render(request, 'yonetim/menu/sil.html', context)
+
+
+
+
 """ WEB SAYFASI"""
 
 
@@ -360,6 +432,8 @@ def anasayfa_home(request):
     duyurular = Solutions.objects.filter(altmenuadi="duyurular", durum=True).order_by('sira')
     iletisim = Solutions.objects.filter(altmenuadi="iletisim").first()
     gizlilik = Solutions.objects.filter(altmenuadi="gizlilik").first()
+    menuler = Menu.objects.filter(durum=True).exclude(ustmenuadi="Anasayfa").order_by('sira')
+    menuanasayfa = Menu.objects.filter(ustmenuadi="Anasayfa", durum=True)
 
     ds = []
     i = 0
@@ -369,13 +443,34 @@ def anasayfa_home(request):
         ds.append(_d)
         i += 1
 
+
     context = {
         'hizmetler': hizmetler,
         'duyurular': ds,
         'iletisim': iletisim,
         'gizlilik': gizlilik,
+        'menuler': menuler,
+        'menuanasayfa': menuanasayfa,
+        'title': "SS Solutions Coaching",
     }
     return render(request, 'anasayfa/anasayfa.html', context)
+
+
+def menuicerik_goster(request, pk:int):
+    menuicerik = Menu.objects.filter(id=pk, durum=True).first()
+
+    if menuicerik is None:
+        context = {'baslik': "Güncelleniyor",
+                   'menuicerik': menuicerik,
+                   }
+
+        return render(request, 'anasayfa/menuicerik.html', context)
+    else:
+
+        context = {
+            'menuicerik': menuicerik,
+        }
+        return render(request, 'anasayfa/menuicerik.html', context)
 
 
 def solutions_goster(request, baslik, pk: int):
@@ -656,3 +751,5 @@ def onlinesatis_satis(request, pk: int):
         }
 
         return render(request, 'anasayfa/onlinesatis.html', context)
+
+

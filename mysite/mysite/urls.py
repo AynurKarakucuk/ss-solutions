@@ -25,7 +25,7 @@ urlpatterns = (
         [
             #ANASAYFA
             path('admin/', admin.site.urls),
-            path('', views.anasayfa_home),
+            path('', views.AnasayfaView.as_view()),
             path('hakkimizda/', views.hakkimizda),
             path('sss/', views.sss),
             path('gizlilik/', views.gizlilik),
@@ -36,6 +36,8 @@ urlpatterns = (
             path('onlinesatis/', views.onlinesatis_list),
             path('onlinesatis/<int:pk>/', views.onlinesatis_list),
             path('onlinesatis_satis/<int:pk>/', views.siparis_ekle),
+            path('menuicerik/<int:pk>/', views.menuicerik_goster),
+            # path('menu', views.menu_goster),
 
             path('hizmet/<int:pk>', views.hizmet_goster),
             path('hizmet/', views.hizmet_goster),
@@ -93,6 +95,13 @@ urlpatterns = (
             path('yonetim/urun/sil/<int:pk>/', views.urun_sil),
             path('yonetim/urun/detay/<int:pk>/', views.urun_detay),
 
+            #MENU
+            path('yonetim/menu/', views.menu_liste),
+            path('yonetim/menu/<int:pk>/', views.menu_detay),
+            path('yonetim/menu/duzenle', views.menu_ekle),
+            path('yonetim/menu/duzenle/<int:pk>/', views.menu_ekle),
+            path('yonetim/menu/sil/<int:pk>/', views.menu_sil),
+            path('yonetim/menu/detay/<int:pk>/', views.menu_detay),
 
             # ckeditor
             path('ckeditor/', include('ckeditor_uploader.urls')),

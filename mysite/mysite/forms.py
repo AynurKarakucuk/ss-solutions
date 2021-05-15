@@ -10,6 +10,8 @@ from django.contrib.auth.models import User
 from datetime import datetime
 import mysite.models
 
+from mysite.models import Menu
+
 """ Solutions Form"""
 
 
@@ -154,4 +156,26 @@ class SiparisForm(forms.ModelForm):
     class Meta:
         model = mysite.models.Siparis
         fields = ['adsoyad', 'tel', 'eposta', 'adres', 'urunid', 'kkno', 'kkad', 'kksonkt', 'kkcvv']
+
+
+class MenuForm(forms.ModelForm):
+    editor = RichTextUploadingFormField(
+        # config_name="my-custom-toolbar",
+        label="Editör",
+        required=False,
+
+    )
+    menuler = Menu.objects.all()
+
+    ustmenuadi = forms.ChoiceField(
+        choices=[
+                #("anasayfa", "Anasayfa"),
+                ("{id}".format(id=menu.menuadi), menu.menuadi) for menu in menuler
+        ],
+    )
+
+    class Meta:
+        model = mysite.models.Menu
+        fields = ['menuadi', 'ustmenuadi', 'editor', 'dosya', 'sira', 'durum']
+
 
