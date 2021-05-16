@@ -422,193 +422,6 @@ def menu_sil(request, pk: int):
     return render(request, 'yonetim/menu/sil.html', context)
 
 
-
-
-""" WEB SAYFASI"""
-
-
-def anasayfa_home(request):
-    hizmetler = Solutions.objects.filter(altmenuadi="hizmetler", durum=True).order_by('sira')
-    duyurular = Solutions.objects.filter(altmenuadi="duyurular", durum=True).order_by('sira')
-    iletisim = Solutions.objects.filter(altmenuadi="iletisim").first()
-    gizlilik = Solutions.objects.filter(altmenuadi="gizlilik").first()
-    menuler = Menu.objects.filter(durum=True).exclude(ustmenuadi="Anasayfa").order_by('sira')
-    menuanasayfa = Menu.objects.filter(ustmenuadi="Anasayfa", durum=True)
-
-    ds = []
-    i = 0
-    for d in duyurular:
-        _d = d.__dict__
-        _d.update({"active": i == 0, "sira": str(i)})
-        ds.append(_d)
-        i += 1
-
-
-    context = {
-        'hizmetler': hizmetler,
-        'duyurular': ds,
-        'iletisim': iletisim,
-        'gizlilik': gizlilik,
-        'menuler': menuler,
-        'menuanasayfa': menuanasayfa,
-        'title': "SS Solutions Coaching",
-    }
-    return render(request, 'anasayfa/anasayfa.html', context)
-
-
-def menuicerik_goster(request, pk:int):
-    menuicerik = Menu.objects.filter(id=pk, durum=True).first()
-
-    if menuicerik is None:
-        context = {'baslik': "Güncelleniyor",
-                   'menuicerik': menuicerik,
-                   }
-
-        return render(request, 'anasayfa/menuicerik.html', context)
-    else:
-
-        context = {
-            'menuicerik': menuicerik,
-        }
-        return render(request, 'anasayfa/menuicerik.html', context)
-
-
-def solutions_goster(request, baslik, pk: int):
-    bilgi = Solutions.objects.filter(id=pk, durum=True).first()
-
-    if bilgi is None:
-        context = {'baslik': "Güncelleniyor",
-                   'bilgi': bilgi,
-                   }
-
-        return render(request, 'anasayfa/solutions_detay.html', context)
-    else:
-
-        context = {
-            'bilgi': bilgi,
-            'baslik': baslik,
-            # 'post.title': alan,
-        }
-        return render(request, 'anasayfa/solutions_detay.html', context)
-
-
-def iletisim(request):
-    bilgi = Solutions.objects.filter(altmenuadi="iletisim").first()
-    return solutions_goster(request, "İLETİŞİM", bilgi.id)
-
-
-def hakkimizda(request):
-    bilgi = Solutions.objects.filter(altmenuadi="hakkimizda").first()
-    return solutions_goster(request, "HAKKIMIZDA", bilgi.id)
-
-
-def sss(request):
-    bilgi = Solutions.objects.filter(altmenuadi="sss").first()
-    return solutions_goster(request, "SIKÇA SORULAN SORULAR", bilgi.id)
-
-
-def gizlilik(request):
-    bilgi = Solutions.objects.filter(altmenuadi="gizlilik").first()
-    return solutions_goster(request, "GİZLİLİK POLİTİKASI", bilgi.id)
-
-
-def blog(request):
-    bilgi = Solutions.objects.filter(altmenuadi="blog").first()
-    return solutions_goster(request, "BLOG", bilgi.id)
-
-
-def koc(request):
-    bilgi = Solutions.objects.filter(altmenuadi="kocluk").first()
-    return solutions_goster(request, "KOÇLUK", bilgi.id)
-
-
-def hizmet_goster(request, pk: int = None):
-    if pk:
-        bilgi = Solutions.objects.get(id=pk)
-        context = {
-            'bilgi': bilgi,
-            'veri': "hizmet",
-        }
-        return render(request, 'anasayfa/solutions_detay.html', context)
-    else:
-        bilgi1 = Solutions.objects.filter(durum=True, altmenuadi="hizmetler")
-        bilgi = bilgi1.order_by('sira')
-
-        context = {
-            'bilgi': bilgi,
-            'baslik': "HİZMETLERİMİZ",
-            'veri.id': bilgi[0].id,
-
-        }
-
-        return render(request, 'anasayfa/solutions_liste.html', context)
-
-
-def takvim_goster(request):
-    bilgi1 = OnlineTakvim.objects.filter(durum=True)
-    bilgi = bilgi1.order_by('tarih')
-    context = {
-        'bilgi': bilgi,
-        'baslik': "ONLİNE RANDEVU",
-        'tarih.id': bilgi[0].id,
-    }
-    return render(request, 'anasayfa/onlinerandevu.html', context)
-
-
-def onlinerandevu_ekle(request, pk: int, saat: str):
-    bilgi = OnlineTakvim.objects.get(id=pk)
-    context = {
-        'bilgi': bilgi,
-        'saat': saat,
-        'baslik': "RANDEVU AL",
-        'errors': '',
-        'onlinetakvimid': bilgi.id,
-    }
-
-    if request.method == 'POST':
-        f = forms.OnlineRandevuForm(request.POST, request.FILES)
-
-        if f.is_valid():
-            data = f.cleaned_data
-            data.update({"tarih": bilgi.tarih.date()})
-            o = OnlineRandevu(**data)
-            o.save()
-
-            for i in range(8):
-                fname = "saat{}".format(i)
-                print(fname, getattr(bilgi, fname))
-                if saat in str(getattr(bilgi, fname)):
-                    setattr(bilgi, fname, None)
-                    bilgi.save()
-                    print(getattr(bilgi, fname))
-                    break
-
-            # skarakucuk @ sssolutioncoaching.com
-
-            subject, from_email, to = 'Randevunuz', 'aynur@karakucuk.net', '{eposta}'.format(eposta=o.eposta)
-            text_content = "Sayın {ad}, {tarih} tarihinde saat: {saat} randevunuz alınmıştır.".format(ad=o.adisoyadi,
-                                                                                                      tarih=o.tarih,
-                                                                                                      saat=o.saat)
-            # o.adisoyadi, 'adlı kişi', o.tarih, 'tarihinde saat', o.saat, 'randevu almıştır.', o.eposta, o.tel,
-            # html_content = '<p>This is an <strong>important</strong> message.</p>'
-            msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
-            # msg.attach_alternative(html_content, "text/html")
-            msg.send()
-
-            # return redirect('/onlinedeneme/', adisoyadi=o.adisoyadi)
-            # return redirect(reverse('/onlinedeneme/', kwargs={'adisoyadi': o.adisoyadi}))
-            randevus = OnlineRandevu.objects.filter(adisoyadi=o.adisoyadi)
-
-            context = {'randevus': randevus}
-
-            return render(request, 'anasayfa/onlinebilgi.html', context)
-
-        else:
-            context.update({'errors': f.errors})
-
-    return render(request, 'anasayfa/onlinerandevu_ekle.html', context)
-
-
 """Ürünler"""
 
 
@@ -671,14 +484,250 @@ def urun_sil(request, pk: int):
     return render(request, 'yonetim/urun/sil.html', context)
 
 
+
+""" WEB SAYFASI"""
+
+
+def anasayfa_home(request):
+    hizmetler = Solutions.objects.filter(altmenuadi="hizmetler", durum=True).order_by('sira')
+    duyurular = Solutions.objects.filter(altmenuadi="duyurular", durum=True).order_by('sira')
+    iletisim = Solutions.objects.filter(altmenuadi="iletisim").first()
+    gizlilik = Solutions.objects.filter(altmenuadi="gizlilik").first()
+    menuler = Menu.objects.filter(durum=True).exclude(ustmenuadi="Anasayfa").order_by('sira')
+    menuanasayfa = Menu.objects.filter(ustmenuadi="Anasayfa", durum=True)
+
+    ds = []
+    i = 0
+    for d in duyurular:
+        _d = d.__dict__
+        _d.update({"active": i == 0, "sira": str(i)})
+        ds.append(_d)
+        i += 1
+
+
+    context = {
+        'hizmetler': hizmetler,
+        'duyurular': ds,
+        'iletisim': iletisim,
+        'gizlilik': gizlilik,
+        'menuler': menuler,
+        'menuanasayfa': menuanasayfa,
+        'title': "SS Solutions Coaching",
+    }
+    return render(request, 'anasayfa/anasayfa.html', context)
+
+
+def menuicerik_goster(request, pk:int):
+    menuicerik = Menu.objects.filter(id=pk, durum=True).first()
+    menuler = Menu.objects.filter(durum=True).exclude(ustmenuadi="Anasayfa").order_by('sira')
+    menuanasayfa = Menu.objects.filter(ustmenuadi="Anasayfa", durum=True)
+
+    if menuicerik is None:
+        context = {'baslik': "Güncelleniyor",
+                   'menuicerik': menuicerik,
+                   'menuler': menuler,
+                   'menuanasayfa': menuanasayfa,
+                   }
+
+        return render(request, 'anasayfa/menuicerik.html', context)
+    else:
+
+        context = {
+            'menuicerik': menuicerik,
+            'menuler': menuler,
+            'menuanasayfa': menuanasayfa,
+        }
+        return render(request, 'anasayfa/menuicerik.html', context)
+
+
+def solutions_goster(request, baslik, pk: int):
+    bilgi = Solutions.objects.filter(id=pk, durum=True).first()
+    menuler = Menu.objects.filter(durum=True).exclude(ustmenuadi="Anasayfa").order_by('sira')
+    menuanasayfa = Menu.objects.filter(ustmenuadi="Anasayfa", durum=True)
+
+    if bilgi is None:
+        context = {'baslik': "Güncelleniyor",
+                   'bilgi': bilgi,
+                   'menuler': menuler,
+                   'menuanasayfa': menuanasayfa,
+                   }
+
+        return render(request, 'anasayfa/solutions_detay.html', context)
+    else:
+
+        context = {
+            'bilgi': bilgi,
+            'baslik': baslik,
+            'menuler': menuler,
+            'menuanasayfa': menuanasayfa,
+            # 'post.title': alan,
+        }
+        return render(request, 'anasayfa/solutions_detay.html', context)
+
+
+def iletisim(request):
+    bilgi = Solutions.objects.filter(altmenuadi="iletisim").first()
+    return solutions_goster(request, "İLETİŞİM", bilgi.id)
+
+
+def hakkimizda(request):
+    bilgi = Solutions.objects.filter(altmenuadi="hakkimizda").first()
+    return solutions_goster(request, "HAKKIMIZDA", bilgi.id)
+
+
+def sss(request):
+    bilgi = Solutions.objects.filter(altmenuadi="sss").first()
+    return solutions_goster(request, "SIKÇA SORULAN SORULAR", bilgi.id)
+
+
+def gizlilik(request):
+    bilgi = Solutions.objects.filter(altmenuadi="gizlilik").first()
+    return solutions_goster(request, "GİZLİLİK POLİTİKASI", bilgi.id)
+
+
+def blog(request):
+    bilgi = Solutions.objects.filter(altmenuadi="blog").first()
+    return solutions_goster(request, "BLOG", bilgi.id)
+
+
+def koc(request):
+    bilgi = Solutions.objects.filter(altmenuadi="kocluk").first()
+    return solutions_goster(request, "KOÇLUK", bilgi.id)
+
+
+def hizmet_goster(request, pk: int = None):
+    menuler = Menu.objects.filter(durum=True).exclude(ustmenuadi="Anasayfa").order_by('sira')
+    menuanasayfa = Menu.objects.filter(ustmenuadi="Anasayfa", durum=True)
+
+    if pk:
+        bilgi = Solutions.objects.get(id=pk)
+        context = {
+            'bilgi': bilgi,
+            'veri': "hizmet",
+            'menuler': menuler,
+            'menuanasayfa': menuanasayfa,
+        }
+        return render(request, 'anasayfa/solutions_detay.html', context)
+    else:
+        bilgi1 = Solutions.objects.filter(durum=True, altmenuadi="hizmetler")
+        bilgi = bilgi1.order_by('sira')
+
+        context = {
+            'bilgi': bilgi,
+            'baslik': "HİZMETLERİMİZ",
+            'veri.id': bilgi[0].id,
+            'menuler': menuler,
+            'menuanasayfa': menuanasayfa,
+
+        }
+
+        return render(request, 'anasayfa/solutions_liste.html', context)
+
+
+
+def egitim_goster(request, pk: int):
+    menuler = Menu.objects.filter(durum=True).exclude(ustmenuadi="Anasayfa").order_by('sira')
+    menuanasayfa = Menu.objects.filter(ustmenuadi="Anasayfa", durum=True)
+    bilgi = Solutions.objects.filter(altmenuadi="egitim", durum=True, sira=pk).first()
+    context = {
+            'bilgi': bilgi,
+            'menuler': menuler,
+            'menuanasayfa': menuanasayfa,
+    }
+    return render(request, 'anasayfa/solutions_detay.html', context)
+
+
+def takvim_goster(request):
+    bilgi1 = OnlineTakvim.objects.filter(durum=True)
+    bilgi = bilgi1.order_by('tarih')
+    menuler = Menu.objects.filter(durum=True).exclude(ustmenuadi="Anasayfa").order_by('sira')
+    menuanasayfa = Menu.objects.filter(ustmenuadi="Anasayfa", durum=True)
+
+    context = {
+        'bilgi': bilgi,
+        'baslik': "ONLİNE RANDEVU",
+        'tarih.id': bilgi[0].id,
+        'menuler': menuler,
+        'menuanasayfa': menuanasayfa,
+    }
+    return render(request, 'anasayfa/onlinerandevu.html', context)
+
+
+def onlinerandevu_ekle(request, pk: int, saat: str):
+    bilgi = OnlineTakvim.objects.get(id=pk)
+    menuler = Menu.objects.filter(durum=True).exclude(ustmenuadi="Anasayfa").order_by('sira')
+    menuanasayfa = Menu.objects.filter(ustmenuadi="Anasayfa", durum=True)
+
+    context = {
+        'bilgi': bilgi,
+        'saat': saat,
+        'baslik': "RANDEVU AL",
+        'errors': '',
+        'onlinetakvimid': bilgi.id,
+        'menuler': menuler,
+        'menuanasayfa': menuanasayfa,
+    }
+
+    if request.method == 'POST':
+        f = forms.OnlineRandevuForm(request.POST, request.FILES)
+
+        if f.is_valid():
+            data = f.cleaned_data
+            data.update({"tarih": bilgi.tarih.date()})
+            o = OnlineRandevu(**data)
+            o.save()
+
+            for i in range(8):
+                fname = "saat{}".format(i)
+                print(fname, getattr(bilgi, fname))
+                if saat in str(getattr(bilgi, fname)):
+                    setattr(bilgi, fname, None)
+                    bilgi.save()
+                    print(getattr(bilgi, fname))
+                    break
+
+            # skarakucuk @ sssolutioncoaching.com
+
+            subject, from_email, to = 'Randevunuz', 'aynur@karakucuk.net', '{eposta}'.format(eposta=o.eposta)
+            text_content = "Sayın {ad}, {tarih} tarihinde saat: {saat} randevunuz alınmıştır.".format(ad=o.adisoyadi,
+                                                                                                      tarih=o.tarih,
+                                                                                                      saat=o.saat)
+            # o.adisoyadi, 'adlı kişi', o.tarih, 'tarihinde saat', o.saat, 'randevu almıştır.', o.eposta, o.tel,
+            # html_content = '<p>This is an <strong>important</strong> message.</p>'
+            msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
+            # msg.attach_alternative(html_content, "text/html")
+            msg.send()
+
+            # return redirect('/onlinedeneme/', adisoyadi=o.adisoyadi)
+            # return redirect(reverse('/onlinedeneme/', kwargs={'adisoyadi': o.adisoyadi}))
+            randevus = OnlineRandevu.objects.filter(adisoyadi=o.adisoyadi)
+
+            context = {'randevus': randevus,
+                       'menuler': menuler,
+                       'menuanasayfa': menuanasayfa,
+                       }
+
+            return render(request, 'anasayfa/onlinebilgi.html', context)
+
+        else:
+            context.update({'errors': f.errors})
+
+    return render(request, 'anasayfa/onlinerandevu_ekle.html', context)
+
+
+
 """ Anasayfa Online Satış"""
 
 
 def onlinesatis_list(request, pk: int = None):
+    menuler = Menu.objects.filter(durum=True).exclude(ustmenuadi="Anasayfa").order_by('sira')
+    menuanasayfa = Menu.objects.filter(ustmenuadi="Anasayfa", durum=True)
     if pk:
         urun = Urun.objects.get(id=pk)
         context = {
             'urun': urun,
+            'menuler': menuler,
+            'menuanasayfa': menuanasayfa,
         }
         return render(request, 'anasayfa/onlinesatis_detay.html', context)
     else:
@@ -688,6 +737,8 @@ def onlinesatis_list(request, pk: int = None):
         context = {
             'urun': urun,
             'baslik': "Eğitimlerimiz",
+            'menuler': menuler,
+            'menuanasayfa': menuanasayfa,
         }
 
         return render(request, 'anasayfa/onlinesatis.html', context)
@@ -700,6 +751,8 @@ def onlinesatis_list(request, pk: int = None):
 def siparis_ekle(request, pk: int = None):
     urun = Urun.objects.get(id=pk) if pk else None
     errors = ''
+    menuler = Menu.objects.filter(durum=True).exclude(ustmenuadi="Anasayfa").order_by('sira')
+    menuanasayfa = Menu.objects.filter(ustmenuadi="Anasayfa", durum=True)
 
     if request.method == 'POST':
         f = forms.SiparisForm(request.POST, request.FILES)
@@ -712,6 +765,8 @@ def siparis_ekle(request, pk: int = None):
 
                 'adsoyad': data.get("adsoyad"),
                 'urun': urun,
+                'menuler': menuler,
+                'menuanasayfa': menuanasayfa,
             }
 
             return render(request, 'anasayfa/onlinesatis_satislist.html', context)
@@ -727,18 +782,25 @@ def siparis_ekle(request, pk: int = None):
         'form': f,
         'urun': urun,
         'errors': errors,
+        'menuler': menuler,
+        'menuanasayfa': menuanasayfa,
     }
 
     return render(request, 'anasayfa/onlinesatis_satis.html', context)
 
 
 def onlinesatis_satis(request, pk: int):
+    menuler = Menu.objects.filter(durum=True).exclude(ustmenuadi="Anasayfa").order_by('sira')
+    menuanasayfa = Menu.objects.filter(ustmenuadi="Anasayfa", durum=True)
+
     if pk:
         urun = Urun.objects.get(id=pk)
         siparis = Siparis.objects.all()
 
         context = {
             'urun': urun,
+            'menuler': menuler,
+            'menuanasayfa': menuanasayfa,
         }
         return render(request, 'anasayfa/onlinesatis_detay.html', context)
     else:
@@ -748,6 +810,8 @@ def onlinesatis_satis(request, pk: int):
         context = {
             'urun': urun,
             'baslik': "Eğitimlerimiz",
+            'menuler': menuler,
+            'menuanasayfa': menuanasayfa,
         }
 
         return render(request, 'anasayfa/onlinesatis.html', context)

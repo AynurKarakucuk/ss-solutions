@@ -25,7 +25,7 @@ urlpatterns = (
         [
             #ANASAYFA
             path('admin/', admin.site.urls),
-            path('', views.AnasayfaView.as_view()),
+            path('', views.anasayfa_home),
             path('hakkimizda/', views.hakkimizda),
             path('sss/', views.sss),
             path('gizlilik/', views.gizlilik),
@@ -39,11 +39,11 @@ urlpatterns = (
             path('menuicerik/<int:pk>/', views.menuicerik_goster),
             # path('menu', views.menu_goster),
 
-            path('hizmet/<int:pk>', views.hizmet_goster),
+            path('hizmet/<int:pk>/', views.hizmet_goster),
             path('hizmet/', views.hizmet_goster),
             path('onlinerandevu/', views.takvim_goster),
             #path('duyuru/<int:pk>', views.duyuru),
-            #path('egitim/<int:pk>', views.egitim),
+            path('egitim/<int:pk>/', views.egitim_goster),
             #path('blog/<int:pk>', views.blog),
 
             # ADMIN GİRİŞ
