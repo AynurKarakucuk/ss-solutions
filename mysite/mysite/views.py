@@ -649,6 +649,7 @@ def takvim_goster(request):
         'tarih.id': bilgi[0].id,
         'menuler': menuler,
         'menuanasayfa': menuanasayfa,
+        'gunler': ['Pazar','Pazar2','Pazar3','Pazar2423']
     }
     return render(request, 'anasayfa/onlinerandevu.html', context)
 

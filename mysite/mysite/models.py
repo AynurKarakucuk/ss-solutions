@@ -17,15 +17,15 @@ class Solutions(models.Model):
     aciklama=models.CharField(max_length=500, verbose_name='Açıklama', blank=True)
 
 
-class Egitim(models.Model):
-    id = models.IntegerField(primary_key=True)
-    altmenuadi = models.CharField(max_length=100, verbose_name='Menü Adi')
-    baslik = models.CharField(max_length=100, verbose_name='Başlık')
-    icerik = RichTextField(verbose_name="içerik", null=True, blank=True)
-    img = models.ImageField(blank=True, null=True, )
-    durum = models.BooleanField(blank=True, null=True, verbose_name='Aktif')
-    dosya = models.FileField(blank=True, null=True, )
-    sira = models.IntegerField(blank=True)
+# class Egitim(models.Model):
+#     id = models.IntegerField(primary_key=True)
+#     altmenuadi = models.CharField(max_length=100, verbose_name='Menü Adi')
+#     baslik = models.CharField(max_length=100, verbose_name='Başlık')
+#     icerik = RichTextField(verbose_name="içerik", null=True, blank=True)
+#     img = models.ImageField(blank=True, null=True, )
+#     durum = models.BooleanField(blank=True, null=True, verbose_name='Aktif')
+#     dosya = models.FileField(blank=True, null=True, )
+#     sira = models.IntegerField(blank=True)
 
 
 class Ekip(models.Model):
@@ -40,16 +40,16 @@ class Ekip(models.Model):
     tel = models.CharField(max_length=100, verbose_name='Telefon')
     eposta = models.EmailField(verbose_name='e-posta')
 
-
-class Blog(models.Model):
-    id = models.IntegerField(primary_key=True)
-    blogad = models.CharField(max_length=100, verbose_name='Menü Adi')
-    baslik = models.CharField(max_length=100, verbose_name='Başlık')
-    icerik = RichTextField(verbose_name="içerik", null=True, blank=True)
-    img = models.ImageField(blank=True, null=True, )
-    durum = models.BooleanField(blank=True, null=True, verbose_name='Aktif')
-    dosya = models.FileField(blank=True, null=True, )
-    sira = models.IntegerField(blank=True)
+#
+# class Blog(models.Model):
+#     id = models.IntegerField(primary_key=True)
+#     blogad = models.CharField(max_length=100, verbose_name='Menü Adi')
+#     baslik = models.CharField(max_length=100, verbose_name='Başlık')
+#     icerik = RichTextField(verbose_name="içerik", null=True, blank=True)
+#     img = models.ImageField(blank=True, null=True, )
+#     durum = models.BooleanField(blank=True, null=True, verbose_name='Aktif')
+#     dosya = models.FileField(blank=True, null=True, )
+#     sira = models.IntegerField(blank=True)
 
 
 class OnlineTakvim(models.Model):

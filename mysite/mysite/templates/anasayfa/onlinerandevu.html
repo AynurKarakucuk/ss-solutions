@@ -1,45 +1,54 @@
 {% extends "anasayfa/base.html" %}
-   {% block baslik %}
-    <div class="container">
-    {{baslik}}
-    </div>
 
-
-
-{% endblock %}
 {% block content %}
 <div class="container">
 
+<div class="card text-dark mb-3" style="max-width: 35rem; ">
+  <div class="card-header text-center" style="background-color: #e685b5;">
+      <h5>{{baslik}}</h5>
+  </div>
+  <div class="card-body" style="background-color: #f7d6e6">
+
    {% for bilgi in bilgi %}
       <p style="margin-top:20px;">
-          <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapse{{bilgi.id}}" role="button" aria-expanded="false" aria-controls="collapse{{bilgi.id}}">
-              {{bilgi.tarih.date}}
+          <a class="btn btn-primary card-title" data-bs-toggle="collapse" href="#collapse{{bilgi.id}}" role="button" aria-expanded="false" aria-controls="collapse{{bilgi.id}}">
+              {{bilgi.tarih.date}}&nbsp; &nbsp; {{bilgi.tarih|date:"Y M d l"}}
+
           </a>
       </p>
+      <p class="card-text">
         <div class="row">
             <div class="col">
                 <div class="collapse" id="collapse{{bilgi.id}}">
                   <div class="card card-body" style="width:500px;">
-                      <table class="table table-striped table-hover" style="width:400px;">
+                      <table class="table table-bordered" style="width:400px;">
                           <tr >
-                              <td><a href="/onlinerandevu/{{bilgi.id}}/{{bilgi.saat0}}">{% if bilgi.saat0 %}{{bilgi.saat0}}{% else %}{% endif %}</a></td>
-                              <td><a href="/onlinerandevu/{{bilgi.id}}/{{bilgi.saat1}}">{% if bilgi.saat1 %}{{bilgi.saat1}}{% else %}{% endif %}</a></td>
-                              <td><a href="/onlinerandevu/{{bilgi.id}}/{{bilgi.saat2}}">{% if bilgi.saat2 %}{{bilgi.saat2}}{% else %}{% endif %}</a></td>
-                              <td><a href="/onlinerandevu/{{bilgi.id}}/{{bilgi.saat3}}">{% if bilgi.saat3 %}{{bilgi.saat3}}{% else %}{% endif %}</a></td>
+                              <td><a href="/onlinerandevu/{{bilgi.id}}/{{bilgi.saat0}}">{% if bilgi.saat0 %}{{bilgi.saat0}}{% else %}<a  class="btn disabled" href="#" >{{bilgi.saat0}}</a>{% endif %}</a></td>
+                              <td><a href="/onlinerandevu/{{bilgi.id}}/{{bilgi.saat1}}">{% if bilgi.saat1 %}{{bilgi.saat1}}{% else %}<a  class="btn disabled" href="#" >{{bilgi.saat1}}</a>{% endif %}</a></td>
+                              <td><a href="/onlinerandevu/{{bilgi.id}}/{{bilgi.saat2}}">{% if bilgi.saat2 %}{{bilgi.saat2}}{% else %}<a  class="btn disabled" href="#" >{{bilgi.saat2}}</a>{% endif %}</a></td>
+                          </tr>
+                          <tr>
+                            <td><a href="/onlinerandevu/{{bilgi.id}}/{{bilgi.saat3}}">{% if bilgi.saat3 %}{{bilgi.saat3}}{% else %}<a  class="btn disabled" href="#" >{{bilgi.saat3}}</a>{% endif %}</a></td>
+                            <td><a href="/onlinerandevu/{{bilgi.id}}/{{bilgi.saat4}}">{% if bilgi.saat4 %}{{bilgi.saat4}}{% else %}<a  class="btn disabled" href="^#" >{{bilgi.saat4}}</a>{% endif %}</a></td>
+                            <td><a href="/onlinerandevu/{{bilgi.id}}/{{bilgi.saat5}}">{% if bilgi.saat5 %}{{bilgi.saat5}}{% else %}<a  class="btn disabled" href="^^" >{{bilgi.saat5}}</a>{% endif %}</a></td>
                           </tr>
                           <tr >
-                              <td><a href="/onlinerandevu/{{bilgi.id}}/{{bilgi.saat4}}">{% if bilgi.saat4 %}{{bilgi.saat4}}{% else %}{% endif %}</a></td>
-                              <td><a href="/onlinerandevu/{{bilgi.id}}/{{bilgi.saat5}}">{% if bilgi.saat5 %}{{bilgi.saat5}}{% else %}{% endif %}</a></td>
-                              <td><a href="/onlinerandevu/{{bilgi.id}}/{{bilgi.saat6}}">{% if bilgi.saat6 %}{{bilgi.saat6}}{% else %}{% endif %}</a></td>
-                              <td><a href="/onlinerandevu/{{bilgi.id}}/{{bilgi.saat7}}">{% if bilgi.saat7 %}{{bilgi.saat7}}{% else %}{% endif %}</a></td>
+
+                              <td><a href="/onlinerandevu/{{bilgi.id}}/{{bilgi.saat6}}">{% if bilgi.saat6 %}{{bilgi.saat6}}{% else %}<a  class="btn disabled" href="#" >{{bilgi.saat6}}</a>{% endif %}</a></td>
+                              <td><a href="/onlinerandevu/{{bilgi.id}}/{{bilgi.saat7}}">{% if bilgi.saat7 %}{{bilgi.saat7}}{% else %}<a  class="btn disabled" href="#" >{{bilgi.saat7}}</a>{% endif %}</a></td>
+                                <td></td>
                           </tr>
                       </table>
                   </div>
                 </div>
             </div>
         </div>
-
+      </p>
   {% endfor %}
+
+  </div>
+</div>
+
 </div>
 {% endblock %}
 
