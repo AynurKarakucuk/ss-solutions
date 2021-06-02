@@ -37,6 +37,7 @@ urlpatterns = (
             path('onlinesatis/<int:pk>/', views.onlinesatis_list),
             path('onlinesatis_satis/<int:pk>/', views.siparis_ekle),
             path('menuicerik/<int:pk>/', views.menuicerik_goster),
+            path('form/', views.form_post),
             # path('menu', views.menu_goster),
 
             path('hizmet/<int:pk>/', views.hizmet_goster),

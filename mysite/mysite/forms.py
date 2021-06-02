@@ -10,8 +10,6 @@ from django.contrib.auth.models import User
 from datetime import datetime
 import mysite.models
 
-from mysite.models import Menu
-
 """ Solutions Form"""
 
 
@@ -112,6 +110,7 @@ class OnlineRandevuForm(forms.ModelForm):
     #         return []
     #     super().validate(value)
 
+
 """ Şifre İşlemleri """
 
 
@@ -131,6 +130,7 @@ class YoneticiSifreForms(PasswordChangeForm):
 class AdminSifreResetForms(SetPasswordForm):
     pass
 
+
 """ URUN FORMS"""
 
 
@@ -146,11 +146,11 @@ class UrunForm(forms.ModelForm):
         model = mysite.models.Urun
         fields = ['urunadi', 'urunfiyat', 'aciklama', 'img']
 
+
 """ Satış Form"""
 
 
 class SiparisForm(forms.ModelForm):
-
     urunid = forms.IntegerField(required=False)
 
     class Meta:
@@ -165,12 +165,12 @@ class MenuForm(forms.ModelForm):
         required=False,
 
     )
-    menuler = Menu.objects.all()
+    menuler = mysite.models.Menu.objects.all()
 
     ustmenuadi = forms.ChoiceField(
         choices=[
-                #("anasayfa", "Anasayfa"),
-                ("{id}".format(id=menu.menuadi), menu.menuadi) for menu in menuler
+            # ("anasayfa", "Anasayfa"),
+            ("{id}".format(id=menu.menuadi), menu.menuadi) for menu in menuler
         ],
     )
 
@@ -179,3 +179,23 @@ class MenuForm(forms.ModelForm):
         fields = ['menuadi', 'ustmenuadi', 'editor', 'dosya', 'sira', 'durum']
 
 
+class FormForm(forms.ModelForm):
+    olus_tarih = forms.DateTimeField(required=False)
+    #konu = forms.ChoiceField(
+     #   choices=[
+     #       ("konu_0", "Konu_0"),
+     #       ("konu_1", "Konu_1"),
+     #   ],
+    #)
+
+    class Meta:
+        model = mysite.models.Form
+        fields = ['adsoyad', 'tel', 'eposta', 'konu', 'mesaj', 'olus_tarih']
+    #
+    # def olus_tarih(self):
+    #     return datetime.now()
+
+class YorumForm(forms.ModelForm):
+    class Meta:
+        model = mysite.models.Yorum
+        fields = ['adsoyad', 'tel', 'eposta', 'konu', 'mesaj', 'olus_tarih', 'onay']

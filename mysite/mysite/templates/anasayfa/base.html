@@ -98,11 +98,105 @@
 
 
 
-<div style="margin-top:50px;">
+<div style="margin-top:30px;">
     <h1 style="color: #2D6275">{%block baslik%}{% endblock%}</h1>
     {% block content %}{% endblock %}
 </div>
 
+<footer >
+        <!-- Button trigger modal -->
+
+        <a href="#" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+           <img src="/static/img/18861_1.jpg" class="card-img rounded"  alt="..." style="width:150;height:150;">
+        </a>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-center" id="exampleModalLabel">Başvuru Formu</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Başvuru Formu -->
+
+
+                        <form action="/form/" method="post" class="row g-3">
+                            {% csrf_token %}
+                            {{ form.non_field_errors }}
+
+
+                            <div class="col-12">
+                                <input type="text" class="form-control" name="adsoyad" placeholder="Adınız Soyadınız">
+                            </div>
+                            <div class="col-12">
+                                <input type="text" class="form-control" name="tel" placeholder="Telefon Numaranız">
+                            </div>
+                            <div class="col-md-12">
+                                <input type="email" class="form-control" name="eposta" placeholder="e-posta" aria-label="email"  aria-describedby="emailHelp">
+                            </div>
+                             <div class="col-md-12">
+                                    <select name="konu" class="form-select" >
+                                        <option selected>Kurum ve Yönetici Koçluğu</option>
+                                        <option>Bireysel Koçluk</option>
+                                    </select>
+                             </div>
+                            <div class="col-md-12">
+                                 <textarea class="form-control" name="mesaj" rows="3" placeholder="Mesajınız" ></textarea>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary text-center">Gönder</button>
+                            </div>
+
+                        </form>
+
+                        <p>İlginiz için teşekkür ederiz.</p>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+
+
+
+</footer>
+
+
+
+<div class="container">
+<div style="margin-top:50px;"></div>
+<div class="card bg-dark border-0">
+  <img src="/static/img/6810.jpg" class="card-img" alt="...">
+  <div class="card-img-overlay">
+      <div class="table-responsive-sm">
+      <table class="table-light align-top">
+          <thead>
+          <tr class="row">
+              <th class="col-3"> <h5 class="card-title">SS Solutions Coaching</h5></th>
+              <th class="col-3"> <h5 class="card-title">Kategoriler</h5></th>
+              <th class="col-3"> <h5 class="card-title">Gizlilik Politikası</h5></th>
+              <th class="col-3"> <h5 class="card-title">Bize Ulaşın</h5></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr class="row" >
+              <td class="col-3"><p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+              </td>
+              <td class="col-3">    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+              </td>
+              <td class="col-3">    <p class="card-text">Last updated 3 mins ago</p>
+              </td>
+              <td class="col-3">    <p class="card-text">Last updated 3 mins ago</p>
+              </td>
+          </tr>
+          </tbody>
+      </table>
+      </div>
+  </div>
+</div>
+</div>
 
     <!-- JavaScript Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>

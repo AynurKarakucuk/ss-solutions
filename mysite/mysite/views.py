@@ -24,7 +24,7 @@ from django.views import generic
 from . import forms
 from datetime import datetime, time
 
-from .models import Solutions, OnlineTakvim, OnlineRandevu, Ekip, Urun, Siparis, Menu
+from .models import Solutions, OnlineTakvim, OnlineRandevu, Ekip, Urun, Siparis, Menu, Form
 
 
 
@@ -816,5 +816,46 @@ def onlinesatis_satis(request, pk: int):
         }
 
         return render(request, 'anasayfa/onlinesatis.html', context)
+
+
+def form_post(request):
+    formlar = Form.objects.all()
+    menuler = Menu.objects.filter(durum=True).exclude(ustmenuadi="Anasayfa").order_by('sira')
+    menuanasayfa = Menu.objects.filter(ustmenuadi="Anasayfa", durum=True)
+    context = {'deneme': "deneme"}
+    if request.method == 'POST':
+        f = forms.FormForm(request.POST, request.FILES)
+        if f.is_valid():
+            data = f.cleaned_data
+            data['olus_tarih'] = datetime.now()
+            o = Form(**data)
+            o.save()
+
+            # skarakucuk @ sssolutioncoaching.com
+            #f_id = Form.objects.get(id=o.id)
+            subject, from_email, to = 'Başvuru Formu', 'aynur@karakucuk.net', '{eposta}'.format(eposta=o.eposta)
+            text_content = "Adı Soyadı: {ad}, " \
+                           "E-posta: {eposta}," \
+                           "Telefon: {tel}," \
+                           "Konu: {konu}," \
+                           "Mesaj: {mesaj}," \
+                           "Tarih: {tarih}".format(ad=o.adsoyad, eposta=o.eposta, tel=o.tel, konu=o.konu, mesaj=o.mesaj, tarih=o.olus_tarih)
+            msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
+            msg.send()
+
+            context = {'formlar': o,
+                       'menuler': menuler,
+                       'menuanasayfa': menuanasayfa,
+                       }
+
+            return render(request, 'anasayfa/form.html', context)
+
+        else:
+            context = {'errors': f.errors,
+                       'f': f,
+                      
+                       }
+
+    return render(request, 'anasayfa/deneme1.html', context)
 
 

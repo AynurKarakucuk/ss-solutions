@@ -1,0 +1,26 @@
+{% extends "anasayfa/base.html" %}
+
+{% block content %}
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+        <tr><th colspan="6"><h3>Formunuz alınmıştır. İlginiz için teşekkür ederiz.</h3></th></tr>
+        </thead>
+        <tbody>
+            <tr>
+            {% for form in formlar  %}
+                <td>{{form.adsoyad}}</td>
+                <td>{{form.tel}}</td>
+                <td>{{form.eposta}}</td>
+                <td>{{form.konu}}</td>
+                <td>{{form.mesaj}}</td>
+                <td>{{form.olus_tarih}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+
+</div>
+{% endblock %}

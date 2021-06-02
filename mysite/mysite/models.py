@@ -106,3 +106,24 @@ class Menu(models.Model):
     dosya = models.FileField(blank=True, null=True, )
 
 
+class Form(models.Model):
+    formNo = models.IntegerField(verbose_name="Sıra Numarası", null=True, blank=True)
+    adsoyad = models.CharField(max_length=100, verbose_name="Ad Soyad")
+    eposta = models.EmailField()
+    tel = models.CharField(max_length=100, verbose_name="Telefon Numarası")
+    konu = models.CharField(max_length=100, verbose_name="Konu")
+    mesaj = models.CharField(max_length=100, verbose_name="Mesaj")
+    olus_tarih = models.DateTimeField()
+
+
+class Yorum(models.Model):
+    adsoyad = models.CharField(max_length=100, verbose_name="Ad Soyad")
+    eposta = models.EmailField()
+    tel = models.CharField(max_length=100, verbose_name="Telefon Numarası")
+    konu = models.CharField(max_length=100, verbose_name="Konu")
+    mesaj = models.CharField(max_length=100, verbose_name="Mesaj")
+    olus_tarih = models.DateTimeField()
+    durum = models.BooleanField(blank=True, null=True, verbose_name='Aktif')
+    onay = models.BooleanField(blank=True, null=True, verbose_name='Aktif')
+
+
