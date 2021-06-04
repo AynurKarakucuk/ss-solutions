@@ -1,0 +1,48 @@
+{% extends "yonetim/base.html" %}
+
+{% block baslik %}Form Detay{% endblock %}
+
+{% block content %}
+
+<script>
+var btn_geri = function(){
+      window.history.back();
+}
+</script>
+
+    <div>
+        <table class="blueTable">
+            <thead>
+                <tr><th colspan="2" style=" text-transform: uppercase">{{ form.adsoyad }}</th></tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td style="width:25%;">Telefon</td>
+                <td style="width:75%;">{{ form.tel }}</td>
+            </tr>
+            <tr>
+                <td style="width:25%;">e-posta</td>
+                <td style="width:75%;">{{ form.eposta }}</td>
+            </tr>
+            <tr>
+                <td style="width:25%;">Konu</td>
+                <td style="width:75%;">{{ form.konu }}</td>
+            </tr>
+            <tr>
+                <td style="width:25%;">Mesaj</td>
+                <td style="width:75%;">{{ form.mesaj|safe }}</td>
+            </tr>
+            <tr>
+                <td style="width:25%;">Gönderim Tarihi</td>
+                <td style="width:75%;">{{ form.olus_tarih }}</td>
+            </tr>
+
+            </tbody>
+        </table>
+    <div>&nbsp;&nbsp;</div>
+    <div class="sag">
+        <button type="button" class="push button red" onclick="btn_geri()">Geri</button>
+    </div>
+    </div>
+
+{% endblock %}

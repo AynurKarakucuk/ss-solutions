@@ -38,6 +38,9 @@ urlpatterns = (
             path('onlinesatis_satis/<int:pk>/', views.siparis_ekle),
             path('menuicerik/<int:pk>/', views.menuicerik_goster),
             path('form/', views.form_post),
+            path('blog/', views.blog_goster),
+            path('blog/<int:pk>/', views.blog_goster),
+
             # path('menu', views.menu_goster),
 
             path('hizmet/<int:pk>/', views.hizmet_goster),
@@ -103,6 +106,12 @@ urlpatterns = (
             path('yonetim/menu/duzenle/<int:pk>/', views.menu_ekle),
             path('yonetim/menu/sil/<int:pk>/', views.menu_sil),
             path('yonetim/menu/detay/<int:pk>/', views.menu_detay),
+
+            # Form
+            path('yonetim/form/', views.form_liste),
+            path('yonetim/form/<int:pk>/', views.form_detay),
+            path('yonetim/form/sil/<int:pk>/', views.form_sil),
+            path('yonetim/form/detay/<int:pk>/', views.form_detay),
 
             # ckeditor
             path('ckeditor/', include('ckeditor_uploader.urls')),

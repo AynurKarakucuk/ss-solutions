@@ -4,36 +4,54 @@
 var btn_ileri_geri=function(){
             window.history.back();
         }
+
+
+            $('#myCollapsible').on('hidden.bs.collapse', function () {
+
+})
+
 </script>
 
-
-
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-4" style="margin-top:20px;">
-             <h2>{{bilgi.baslik}}</h2>
-        </div>
-    </div>
-	<div class="clearfix" style="margin-top:20px;">
-        {% if bilgi.img %}
-            <img src="{{bilgi.img.url}}" class="col-md-6 float-md-end mb-3 ms-md-3">
+    {% for blog in blogs %}
+         {% if forloop.counter|divisibleby:2 %}
+            <div class="row" style="padding-top:20px;padding-bottom:20px;">
+                <div class="col">
+                    <h2>{{blog.baslik}}</h2>
+                    <p>{{blog.aciklama}}...</p>
+                    <a href="/blog/{{ blog.id }}"><button class="btn btn-info">Detay..</button></a>
+                </div>
+                <div class="col">
+                    {% if blog.img %}
+                        <img width="300" height="300" class="img-thumbnail" src="{{blog.img.url}}" alt="{{blog.baslik}}" >
+                    {% endif %}
+                </div>
+            </div>
+            <hr style="height:1px;border-width:0;color:#ff0000;background-color:#ff0000">
+            <hr style="height:1px;width:75%;border-width:0;color:#ff0000;background-color:#ff0000">
+        {% else %}
+            <div class="row" style="padding-top:20px;padding-bottom:20px;">
+                <div class="col">
+                    {% if blog.img %}
+                        <img width="300" height="300" class="img-thumbnail" src="{{blog.img.url}}" alt="{{blog.baslik}}" >
+                    {% endif %}
+
+                </div>
+                <div class="col">
+                    <h2>{{blog.baslik}}</h2>
+                    <p>{{blog.aciklama}}...</p>
+                    <a href="/blog/{{ blog.id }}"><button class="btn btn-info">Detay..</button></a>
+
+                </div>
+            </div>
+            <hr style="height:1px;border-width:0;color:#ff0000;background-color:#ff0000">
+            <hr style="height:1px;width:75%;border-width:0;color:#ff0000;background-color:#ff0000">
+
         {% endif %}
-        <p>{{bilgi.icerik|safe}}</p>
-    </div>
-    <div class="row">
-        <div class="col-md-6 offset-md-3">
-            <label>
-                {% if bilgi.dosya %}
-                    <a href="{{bilgi.dosya.url}}">{{bilgi.dosya}} </a>
-                {% endif %}
-            </label>
-        </div>
-    </div>
+    {% endfor %}
 
-        <label class="sag" style="color:#1D3557">
-            <a href = "#" style="text-decoration:overline; color: #1D3557" onclick="btn_ileri_geri()"> Geri </a>
-
-        </label>
 </div>
+
+
 {% endblock %}
 

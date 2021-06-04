@@ -181,19 +181,11 @@ class MenuForm(forms.ModelForm):
 
 class FormForm(forms.ModelForm):
     olus_tarih = forms.DateTimeField(required=False)
-    #konu = forms.ChoiceField(
-     #   choices=[
-     #       ("konu_0", "Konu_0"),
-     #       ("konu_1", "Konu_1"),
-     #   ],
-    #)
 
     class Meta:
         model = mysite.models.Form
         fields = ['adsoyad', 'tel', 'eposta', 'konu', 'mesaj', 'olus_tarih']
-    #
-    # def olus_tarih(self):
-    #     return datetime.now()
+
 
 class YorumForm(forms.ModelForm):
     class Meta:

@@ -484,6 +484,47 @@ def urun_sil(request, pk: int):
     return render(request, 'yonetim/urun/sil.html', context)
 
 
+"""
+form başlangıç
+"""
+
+
+@login_required
+def form_detay(request, pk: int):
+    form = Form.objects.get(id=pk)
+
+    context = {
+        'form': form,
+    }
+
+    return render(request, 'yonetim/form/detay.html', context)
+
+
+
+@login_required(login_url=settings.LOGIN_URL)
+def form_liste(request):
+    form = Form.objects.all().order_by('olus_tarih')
+
+    context = {'form': form}
+
+    return render(request, 'yonetim/form/liste.html', context)
+
+
+@login_required(login_url=settings.LOGIN_URL)
+def form_sil(request, pk: int):
+    form = Form.objects.get(id=pk)
+
+    if request.method == 'POST':
+        form.delete()
+
+        return redirect('/yonetim/form/')
+
+    context = {
+        'form': form,
+    }
+
+    return render(request, 'yonetim/form/sil.html', context)
+
 
 """ WEB SAYFASI"""
 
@@ -585,9 +626,30 @@ def gizlilik(request):
     return solutions_goster(request, "GİZLİLİK POLİTİKASI", bilgi.id)
 
 
-def blog(request):
-    bilgi = Solutions.objects.filter(altmenuadi="blog").first()
-    return solutions_goster(request, "BLOG", bilgi.id)
+def blog_goster(request,pk: int = None):
+    menuler = Menu.objects.filter(durum=True).exclude(ustmenuadi="Anasayfa").order_by('sira')
+    menuanasayfa = Menu.objects.filter(ustmenuadi="Anasayfa", durum=True)
+
+    if pk:
+        blog = Solutions.objects.get(id=pk)
+        context = {
+            'blogs': blog,
+            'menuler': menuler,
+            'menuanasayfa': menuanasayfa,
+
+        }
+        return render(request, 'anasayfa/blog_detay.html', context)
+    else:
+        blog = Solutions.objects.filter(durum=True, altmenuadi="blog").order_by('sira')
+
+        context = {
+            'blogs': blog,
+            'menuler': menuler,
+            'menuanasayfa': menuanasayfa,
+
+        }
+
+        return render(request, 'anasayfa/blog.html', context)
 
 
 def koc(request):
@@ -828,11 +890,13 @@ def form_post(request):
         if f.is_valid():
             data = f.cleaned_data
             data['olus_tarih'] = datetime.now()
+
             o = Form(**data)
             o.save()
 
+           # print(o)
             # skarakucuk @ sssolutioncoaching.com
-            #f_id = Form.objects.get(id=o.id)
+           # f_id = o.objects.filter(adsoyad=data['adsoyad'], tel=data['tel'], eposta=data['eposta'], konu=data['konu'], mesaj=data['mesaj'], olus_tarih=data['olus_tarih'])
             subject, from_email, to = 'Başvuru Formu', 'aynur@karakucuk.net', '{eposta}'.format(eposta=o.eposta)
             text_content = "Adı Soyadı: {ad}, " \
                            "E-posta: {eposta}," \

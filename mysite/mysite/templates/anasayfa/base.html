@@ -111,6 +111,7 @@
         </a>
 
         <!-- Modal -->
+
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -119,31 +120,33 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <!-- Başvuru Formu -->
+                         <!--Başvuru Formu -->
 
 
-                        <form action="/form/" method="post" class="row g-3">
+                        <form action="/form/" method="post" class="row g-3" >
                             {% csrf_token %}
                             {{ form.non_field_errors }}
 
+                            <div class="col-12">
+                                <input type="text" class="form-control" name="adsoyad" id="validationDefault01" placeholder="Adınız Soyadınız" aria-describedby="adsoyadHelp" required>
 
-                            <div class="col-12">
-                                <input type="text" class="form-control" name="adsoyad" placeholder="Adınız Soyadınız">
                             </div>
-                            <div class="col-12">
-                                <input type="text" class="form-control" name="tel" placeholder="Telefon Numaranız">
+                            <div class="form-group col-12">
+
+                                <input type="text" class="form-control" id="validationDefault02" aria-describedby="emailHelp" name="tel" placeholder="Telefon Numaranız" required >
+
                             </div>
                             <div class="col-md-12">
-                                <input type="email" class="form-control" name="eposta" placeholder="e-posta" aria-label="email"  aria-describedby="emailHelp">
+                                <input type="email" class="form-control" id="validationDefault03" name="eposta" placeholder="e-posta" aria-label="email"  aria-describedby="emailHelp" required>
                             </div>
                              <div class="col-md-12">
-                                    <select name="konu" class="form-select" >
+                                    <select name="konu" id="validationDefault04" class="form-select" required>
                                         <option selected>Kurum ve Yönetici Koçluğu</option>
                                         <option>Bireysel Koçluk</option>
                                     </select>
                              </div>
                             <div class="col-md-12">
-                                 <textarea class="form-control" name="mesaj" rows="3" placeholder="Mesajınız" ></textarea>
+                                 <textarea class="form-control" id="validationDefault05" name="mesaj" rows="3" placeholder="Mesajınız" required></textarea>
                             </div>
                             <div class="col-12">
                                 <button type="submit" class="btn btn-primary text-center">Gönder</button>
@@ -157,9 +160,6 @@
                 </div>
             </div>
         </div>
-
-
-
 
 </footer>
 

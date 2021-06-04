@@ -1,0 +1,68 @@
+{% extends "yonetim/base.html" %}
+
+{% block baslik %}Formlar{% endblock %}
+
+
+{% block content %}
+
+
+<script>
+
+var btn_cik=function(){
+    window.location = "/logout";
+}
+
+</script>
+<div class="sol">
+    {% if request.user.is_superuser %}
+        <button type="button" onclick="btn_git()" class="push_button blue">Ekle</button>
+    {% else %}
+        <p></p>
+    {% endif %}
+
+
+</div>
+<div>
+&nbsp;
+    &nbsp;
+</div>
+<div>
+    <!--<a href="/yonetim/form/sil/{{ ekip.id }}"><button>Sil</button></a>-->
+</div>
+<table class="blueTable" style="margin-top: 50px;">
+    <thead>
+    <tr>
+        <th>Sıra No</th>
+        <th>Adı Soyadı</th>
+        <th>Telefon</th>
+        <th>E-posta</th>
+        <th>Konu</th>
+        <th>Mesaj</th>
+        <th>Gönderim Tarihi</th>
+        <th>Sil</th>
+       <!-- <th>Detay</th>-->
+    </tr>
+    </thead>
+    <tfoot>
+    <td colspan="9" style="height:30px; color:#1D3557">Gönderilen Formlar</td>
+    </tfoot>
+    <tbody>
+    <tr>
+
+        {% for formlar in form %}
+        <td>{{forloop.counter}}</td>
+        <td>{{formlar.adsoyad}}</td>
+        <td>{{formlar.tel}}</td>
+        <td>{{formlar.eposta}}</td>
+        <td>{{formlar.konu}}</td>
+        <td>{{formlar.mesaj|safe}}</td>
+        <td>{{formlar.olus_tarih}}</td>
+        <td><a href="/yonetim/form/sil/{{ formlar.id }}"><button class="push_button blue">Sil</button></a> </td>
+     <!--   <td><a href="/yonetim/form/detay/{{ formlar.id }}"><button class="push_button blue">Detay</button></a> </td>-->
+
+        {% endfor %}
+    </tr>
+
+    </tbody>
+</table>
+{% endblock %}
