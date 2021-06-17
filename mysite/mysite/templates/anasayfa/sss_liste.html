@@ -1,0 +1,44 @@
+{% extends "anasayfa/base.html" %}
+{% block title %}{{post.title}}{% endblock %}
+{% block content %}
+<script>
+var btn_ileri_geri=function(){
+            window.history.back();
+        }
+
+
+            $('#myCollapsible').on('hidden.bs.collapse', function () {
+
+})
+
+</script>
+
+
+
+
+<h1>&nbsp;</h1>
+
+<div class="container">
+
+<div class="accordion" id="accordionFlushSolutions">
+{% for bilgi in bilgiler %}
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="flush-heading{{bilgi.id}}">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse{{bilgi.id}}" aria-expanded="false" aria-controls="flush-collapse{{bilgi.id}}">
+        {{bilgi.baslik}}
+      </button>
+    </h2>
+    <div id="flush-collapse{{bilgi.id}}" class="accordion-collapse collapse" aria-labelledby="flush-heading{{bilgi.id}}" data-bs-parent="#accordionFlushSolutions">
+      <div class="accordion-body">
+            <p style="text-decoration:none; color: #2F6275; hover:{color:#fff;}">
+                            {{bilgi.icerik|safe}}...
+                        </p>
+
+      </div>
+    </div>
+  </div>
+{% endfor %}
+</div>
+
+{% endblock %}
+

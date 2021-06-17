@@ -1,4 +1,5 @@
 {% extends "anasayfa/base.html" %}
+{½ {{post.title}} ½}
 {% block content %}
 <script>
 var btn_ileri_geri=function(){
@@ -34,6 +35,68 @@ var btn_ileri_geri=function(){
             <a href = "#" style="text-decoration:overline; color: #1D3557" onclick="btn_ileri_geri()"> Geri </a>
 
         </label>
+        <hr style="height:1px;border-width:0;color:#ff0000;background-color:#ff0000">
+        <hr style="height:1px;width:75%;border-width:0;color:#ff0000;background-color:#ff0000">
+    <div class="container">
+        {% if onay %}
+
+                <h3 style="margin-top:20px;">Yorumlar</h3>
+                {% for yorum in yorumlar %}
+                    {% if yorum.onay %}
+                        <div class="card" style="width: 70%;margin-top:20px;">
+                            <div class="card-body">
+                                <h5 class="card-title">{{yorum.adsoyad}}</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">{{yorum.olus_tarih}}</h6>
+                                <p class="card-text">{{yorum.mesaj}}</p>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+
+
+        {% endif %}
+    </div>
+        <!-- Youmlar Buraya Gelecek -->
+
+                    <div class="container" style="margin-top:50px;">
+                         <!--Başvuru Formu -->
+                        <div>
+                           <h3 >Bir Cevap Yazın</h3>
+                        </div>
+                        <div class="text-center">
+                            <hr style="height:1px;width:25%;border-width:0;color:#ff0000;background-color:#ff0000">
+                        </div>
+
+                        <form action="/yorum/{{blogs.id}}/" method="post" class="row g-3" style="width:70%">
+                            {% csrf_token %}
+                            {{ form.non_field_errors }}
+                            <label class="form-label">E-posta hesabınız yayımlanmayacaktır. Gerekli alanlar -*- işareti ile işaretlenmiştir. </label>
+
+                            <div class="col-md-12">
+                                <textarea class="form-control" name="mesaj" rows="6" placeholder="Yorumunuz *" required></textarea>
+                            </div>
+                            <div class="col-12">
+                                <input type="text" class="form-control" name="adsoyad"  placeholder="Adınız Soyadınız *" aria-describedby="adsoyadHelp" required>
+
+                            </div>
+                            <div class="col-md-12">
+                                <input type="email" class="form-control" name="eposta" placeholder="e-posta *" aria-label="email"  aria-describedby="emailHelp" required>
+                            </div>
+                            <p>İlginiz için teşekkür ederiz.</p>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary text-center">Gönder</button>
+                            </div>
+
+                        </form>
+
+
+                    </div>
+
+
+
+
+
+
 </div>
 {% endblock %}
 

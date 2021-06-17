@@ -1,12 +1,11 @@
-/*
- * SmartMenus jQuery v1.1.1
+/*!
+ * SmartMenus jQuery Plugin - v1.1.1 - July 23, 2020
  * http://www.smartmenus.org/
  *
  * Copyright Vasil Dinkov, Vadikom Web Ltd.
- * http://vadikom.com/
+ * http://vadikom.com
  *
- * Released under the MIT license:
- * http://www.opensource.org/licenses/MIT
+ * Licensed MIT
  */
 
 (function(factory) {
@@ -1120,7 +1119,7 @@
 				if (!('onorientationchange' in window) || e.type == 'orientationchange') {
 					var collapsible = this.isCollapsible();
 					// if it was collapsible before resize and still is, don't do it
-					if (!(this.wasCollapsible && collapsible)) {
+					if (!(this.wasCollapsible && collapsible)) { 
 						if (this.activatedItems.length) {
 							this.activatedItems[this.activatedItems.length - 1][0].blur();
 						}

@@ -123,7 +123,7 @@ class Yorum(models.Model):
     konu = models.CharField(max_length=100, verbose_name="Konu")
     mesaj = models.CharField(max_length=100, verbose_name="Mesaj")
     olus_tarih = models.DateTimeField()
-    durum = models.BooleanField(blank=True, null=True, verbose_name='Aktif')
-    onay = models.BooleanField(blank=True, null=True, verbose_name='Aktif')
+    durum = models.BooleanField(blank=True, null=True, verbose_name='Durum')
+    onay = models.BooleanField(blank=True, null=True, verbose_name='Onay')
 
 

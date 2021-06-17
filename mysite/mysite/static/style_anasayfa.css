@@ -168,3 +168,93 @@ body {
 .nav-brand:hover {
     color: #333;
 }
+
+/*  REsmi büyütmek */
+
+.buyuyenresim {
+margin-top:100px;
+margin-left:20px;
+-webkit-transform: scale(1, 1);
+-ms-transform: scale(1, 1);
+transform: scale(1, 1);
+transition-duration: 0.3s;
+-webkit-transition-duration: 0.3s;
+}
+
+.buyuyenresim:hover {
+cursor: pointer;
+-webkit-transform: scale(1.2, 1.2);
+-ms-transform: scale(1.2, 1.2);
+transform: scale(1.2, 1.2);
+transition-duration: 0.3s;
+-webkit-transition-duration: 0.3s;
+box-shadow: 10px 10px 5px #888888;
+z-index: 2;
+position:relative;
+}
+
+/* ... */
+
+/*   menü düzenleme  */
+.arkaplan-rengi{
+            background:#ffff!important;
+            color:#555!important;
+        }
+
+@media (min-width: 992px){
+.dropdown-menu {
+   /* margin-top: 20px!important; /* menü ile aralığı */
+    background: #ff0000!important;
+    border-top-left-radius: 5px!important;
+    border-top-right-radius: 5px!important;
+    margin-left: -30px!important;
+ /*opacity: 0.5!important;*/
+    color:#ff0000!important;
+
+}}
+.dropdown-menu {
+ background: #1c6071!important; /* alt menü arka rengi */
+ /*opacity: 0.5!important;*/
+ color:#ff0000!important;
+
+}
+a.dropdown-item:hover {
+ background: #1c6071!important;
+ color:#ffff!important;
+ /*opacity: 0.3!important; /* mausun üstünde gezinirken rengi */
+}
+/* Açılır Menü yapmak için */
+
+
+
+
+
+/*   GÖLGELENDİRMELİ MENÜ  */
+/*
+
+
+@media (min-width: 992px){
+.dropdown-menu {
+    margin-top: 20px!important;
+    background: #0000!important;
+    border-top-left-radius: 5px!important;
+    border-top-right-radius: 5px!important;
+    margin-left: -30px!important;
+ /*opacity: 0.9!important;*/
+
+/*
+}}
+.dropdown-menu {
+ background: #1c6071!important; /
+ /*opacity: 0.8!important;*/
+/*
+  color: white;
+
+}
+a.dropdown-item:hover {
+
+opacity: 0.3!important; /* mausun Ã¼stÃ¼nde gezinirken rengi */
+/*
+}
+
+*/

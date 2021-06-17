@@ -188,6 +188,8 @@ class FormForm(forms.ModelForm):
 
 
 class YorumForm(forms.ModelForm):
+    olus_tarih = forms.DateTimeField(required=False)
+    konu = forms.CharField(required=False)
     class Meta:
         model = mysite.models.Yorum
-        fields = ['adsoyad', 'tel', 'eposta', 'konu', 'mesaj', 'olus_tarih', 'onay']
+        fields = ['adsoyad', 'eposta', 'konu', 'mesaj', 'olus_tarih', 'onay', 'durum']

@@ -26,29 +26,30 @@ urlpatterns = (
             #ANASAYFA
             path('admin/', admin.site.urls),
             path('', views.anasayfa_home),
-            path('hakkimizda/', views.hakkimizda),
-            path('sss/', views.sss),
-            path('gizlilik/', views.gizlilik),
-            path('iletisim/', views.iletisim),
-            path('koc/', views.koc),
+
             path('onlinerandevu/<int:pk>/<str:saat>', views.onlinerandevu_ekle),
             path('onlinebilgi/', views.onlinerandevu_ekle),
             path('onlinesatis/', views.onlinesatis_list),
             path('onlinesatis/<int:pk>/', views.onlinesatis_list),
             path('onlinesatis_satis/<int:pk>/', views.siparis_ekle),
-            path('menuicerik/<int:pk>/', views.menuicerik_goster),
+            path('onlinerandevu/', views.takvim_goster),
             path('form/', views.form_post),
+            path('yorum/<int:pk>/', views.yorum_post),
+
+            #SOLUTİONS
+            path('hakkimizda/', views.hakkimizda),
+            path('sss/', views.sss),
+            path('gizlilik/', views.gizlilik),
+            path('iletisim/', views.iletisim),
+            path('koc/', views.koc),
             path('blog/', views.blog_goster),
             path('blog/<int:pk>/', views.blog_goster),
-
-            # path('menu', views.menu_goster),
-
-            path('hizmet/<int:pk>/', views.hizmet_goster),
-            path('hizmet/', views.hizmet_goster),
-            path('onlinerandevu/', views.takvim_goster),
-            #path('duyuru/<int:pk>', views.duyuru),
+            path('hizmetler/<int:pk>/', views.hizmet_goster),
+            path('hizmetler/', views.hizmet_goster),
+            path('duyurular/<int:pk>', views.duyuru),
+            path('duyurular/', views.duyuru),
             path('egitim/<int:pk>/', views.egitim_goster),
-            #path('blog/<int:pk>', views.blog),
+
 
             # ADMIN GİRİŞ
             path('login/', views.login_view),
@@ -112,6 +113,11 @@ urlpatterns = (
             path('yonetim/form/<int:pk>/', views.form_detay),
             path('yonetim/form/sil/<int:pk>/', views.form_sil),
             path('yonetim/form/detay/<int:pk>/', views.form_detay),
+
+            # Yorum
+            path('yonetim/yorum/', views.yorum_liste),
+            path('yonetim/yorum/sil/<int:pk>/', views.yorum_sil),
+            path('yonetim/yorum/duzenle/<int:pk>/', views.yorum_duzenle),
 
             # ckeditor
             path('ckeditor/', include('ckeditor_uploader.urls')),

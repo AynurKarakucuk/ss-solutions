@@ -24,8 +24,7 @@ from django.views import generic
 from . import forms
 from datetime import datetime, time
 
-from .models import Solutions, OnlineTakvim, OnlineRandevu, Ekip, Urun, Siparis, Menu, Form
-
+from .models import Solutions, OnlineTakvim, OnlineRandevu, Ekip, Urun, Siparis, Menu, Form, Yorum
 
 
 class ViewMixin(ContextMixin):
@@ -526,6 +525,70 @@ def form_sil(request, pk: int):
     return render(request, 'yonetim/form/sil.html', context)
 
 
+
+"""
+yorum başlangıç
+"""
+@login_required(login_url=settings.LOGIN_URL)
+def yorum_duzenle(request, pk: int):
+    yorum = Yorum.objects.get(id=pk)
+
+    if yorum.onay :
+        yorum.onay = False
+        yorum.save()
+    else:
+        yorum.onay = True
+        yorum.save()
+
+    return redirect('/yonetim/yorum/')
+
+    #if request.method == 'POST':
+    #    f = forms.YorumForm(request.POST, request.FILES, instance=yorum)
+
+    #    if f.is_valid():
+    #        f.save()
+
+     #       return redirect('/yonetim/yorum/')
+
+    #else:
+
+     #   f = forms.YorumForm(instance=yorum)
+
+    #context = {
+    #    'baslik': 'Ekip Düzenle',
+    #    'form': f,
+    #}
+
+    #return render(request, 'yonetim/yorum/duzenle.html', context)
+
+
+@login_required(login_url=settings.LOGIN_URL)
+def yorum_liste(request):
+    yorum = Yorum.objects.all().order_by('olus_tarih')
+
+    context = {'yorumlar': yorum}
+
+    return render(request, 'yonetim/yorum/liste.html', context)
+
+
+@login_required(login_url=settings.LOGIN_URL)
+def yorum_sil(request, pk: int):
+    yorum = Yorum.objects.get(id=pk)
+
+    if request.method == 'POST':
+        yorum.delete()
+
+        return redirect('/yonetim/yorum/')
+
+    context = {
+        'yorum': yorum,
+    }
+
+    return render(request, 'yonetim/yorum/sil.html', context)
+
+
+
+
 """ WEB SAYFASI"""
 
 
@@ -534,183 +597,182 @@ def anasayfa_home(request):
     duyurular = Solutions.objects.filter(altmenuadi="duyurular", durum=True).order_by('sira')
     iletisim = Solutions.objects.filter(altmenuadi="iletisim").first()
     gizlilik = Solutions.objects.filter(altmenuadi="gizlilik").first()
-    menuler = Menu.objects.filter(durum=True).exclude(ustmenuadi="Anasayfa").order_by('sira')
-    menuanasayfa = Menu.objects.filter(ustmenuadi="Anasayfa", durum=True)
 
-    ds = []
-    i = 0
-    for d in duyurular:
-        _d = d.__dict__
-        _d.update({"active": i == 0, "sira": str(i)})
-        ds.append(_d)
-        i += 1
+
+    #ds = []
+    #i = 0
+    # for d in duyurular:
+    #     _d = d.__dict__
+    #     _d.update({"active": i == 0, "sira": str(i)})
+    #     ds.append(_d)
+    #     i += 1
 
 
     context = {
         'hizmetler': hizmetler,
-        'duyurular': ds,
+        'duyurular': duyurular,
         'iletisim': iletisim,
         'gizlilik': gizlilik,
-        'menuler': menuler,
-        'menuanasayfa': menuanasayfa,
-        'title': "SS Solutions Coaching",
+        'title': "SS Solutions & Coaching",
     }
     return render(request, 'anasayfa/anasayfa.html', context)
 
 
-def menuicerik_goster(request, pk:int):
-    menuicerik = Menu.objects.filter(id=pk, durum=True).first()
-    menuler = Menu.objects.filter(durum=True).exclude(ustmenuadi="Anasayfa").order_by('sira')
-    menuanasayfa = Menu.objects.filter(ustmenuadi="Anasayfa", durum=True)
+def solutions_goster(request, baslik: str, menuadi: str, pk: int = None):
 
-    if menuicerik is None:
-        context = {'baslik': "Güncelleniyor",
-                   'menuicerik': menuicerik,
-                   'menuler': menuler,
-                   'menuanasayfa': menuanasayfa,
-                   }
+    if pk is None:
+        if menuadi == "sss":
 
-        return render(request, 'anasayfa/menuicerik.html', context)
-    else:
+            bilgi = Solutions.objects.filter(altmenuadi=menuadi, durum=True)
 
-        context = {
-            'menuicerik': menuicerik,
-            'menuler': menuler,
-            'menuanasayfa': menuanasayfa,
-        }
-        return render(request, 'anasayfa/menuicerik.html', context)
+            context = {
+                'baslik': baslik,
+                'bilgiler': bilgi,
+                'post.title': menuadi,
+            }
 
+            return render(request, 'anasayfa/sss_liste.html', context)
+        if menuadi == "blog":
+            blog = Solutions.objects.filter(durum=True, altmenuadi="blog").order_by('sira')
 
-def solutions_goster(request, baslik, pk: int):
-    bilgi = Solutions.objects.filter(id=pk, durum=True).first()
-    menuler = Menu.objects.filter(durum=True).exclude(ustmenuadi="Anasayfa").order_by('sira')
-    menuanasayfa = Menu.objects.filter(ustmenuadi="Anasayfa", durum=True)
+            context = {
+                'blogs': blog,
+                'post.title': menuadi,
+            }
 
-    if bilgi is None:
-        context = {'baslik': "Güncelleniyor",
-                   'bilgi': bilgi,
-                   'menuler': menuler,
-                   'menuanasayfa': menuanasayfa,
-                   }
+            return render(request, 'anasayfa/blog.html', context)
 
-        return render(request, 'anasayfa/solutions_detay.html', context)
-    else:
+        bilgi = Solutions.objects.filter(altmenuadi=menuadi, durum=True)
 
         context = {
-            'bilgi': bilgi,
+                    'baslik': baslik,
+                    'bilgiler': bilgi,
+                    'post.title': menuadi,
+                   }
+
+        return render(request, 'anasayfa/solutions_liste.html', context)
+    else:
+        if menuadi == "blog":
+            blog = Solutions.objects.get(id=pk)
+            yorumlar = Yorum.objects.filter(konu=blog.baslik).order_by('olus_tarih')
+            onay = False
+            for i in yorumlar:
+                if i.onay == True:
+                    onay = True
+
+
+            context = {
+                'blogs': blog,
+                'post.title': menuadi,
+                'yorumlar': yorumlar,
+                'onay': onay,
+            }
+            return render(request, 'anasayfa/blog_detay.html', context)
+
+
+        bilgi = Solutions.objects.get(id=pk)
+
+        context = {
+            'bilgiler': bilgi,
             'baslik': baslik,
-            'menuler': menuler,
-            'menuanasayfa': menuanasayfa,
-            # 'post.title': alan,
+            'post.title': menuadi,
         }
         return render(request, 'anasayfa/solutions_detay.html', context)
 
 
 def iletisim(request):
-    bilgi = Solutions.objects.filter(altmenuadi="iletisim").first()
-    return solutions_goster(request, "İLETİŞİM", bilgi.id)
+    bilgi = Solutions.objects.get(altmenuadi="iletisim")
+    return solutions_goster(request, "İLETİŞİM", "iletisim", bilgi.id,)
 
 
 def hakkimizda(request):
-    bilgi = Solutions.objects.filter(altmenuadi="hakkimizda").first()
-    return solutions_goster(request, "HAKKIMIZDA", bilgi.id)
+    bilgi = Solutions.objects.get(altmenuadi="hakkimizda")
+    return solutions_goster(request, "HAKKIMIZDA","hakkimizda", bilgi.id, )
 
 
-def sss(request):
-    bilgi = Solutions.objects.filter(altmenuadi="sss").first()
-    return solutions_goster(request, "SIKÇA SORULAN SORULAR", bilgi.id)
+def sss(request, pk: int = None):
+    if pk:
+
+        return solutions_goster(request, "SIKÇA SORULAN SORULAR", "sss", pk)
+    else:
+
+        return solutions_goster(request, "SIKÇA SORULAN SORULAR", "sss", pk=None)
+
 
 
 def gizlilik(request):
-    bilgi = Solutions.objects.filter(altmenuadi="gizlilik").first()
-    return solutions_goster(request, "GİZLİLİK POLİTİKASI", bilgi.id)
-
-
-def blog_goster(request,pk: int = None):
-    menuler = Menu.objects.filter(durum=True).exclude(ustmenuadi="Anasayfa").order_by('sira')
-    menuanasayfa = Menu.objects.filter(ustmenuadi="Anasayfa", durum=True)
-
-    if pk:
-        blog = Solutions.objects.get(id=pk)
-        context = {
-            'blogs': blog,
-            'menuler': menuler,
-            'menuanasayfa': menuanasayfa,
-
-        }
-        return render(request, 'anasayfa/blog_detay.html', context)
-    else:
-        blog = Solutions.objects.filter(durum=True, altmenuadi="blog").order_by('sira')
-
-        context = {
-            'blogs': blog,
-            'menuler': menuler,
-            'menuanasayfa': menuanasayfa,
-
-        }
-
-        return render(request, 'anasayfa/blog.html', context)
+    bilgi = Solutions.objects.get(altmenuadi="gizlilik")
+    return solutions_goster(request, "GİZLİLİK POLİTİKASI","gizlilik", bilgi.id, )
 
 
 def koc(request):
     bilgi = Solutions.objects.filter(altmenuadi="kocluk").first()
-    return solutions_goster(request, "KOÇLUK", bilgi.id)
+    return solutions_goster(request, "KOÇLUK", bilgi.id, )
+
+
+def hizmet(request, pk: int = None):
+    return solutions_goster(request, "HİZMETLER", "hizmetler", pk, )
+
+
+def duyuru(request, pk: int = None):
+    return solutions_goster(request, "DUYURULAR", "duyurular", pk, )
+
+
+def egitim(request, pk: int):
+
+    bilgi = Solutions.objects.filter(altmenuadi="egitim", durum=True, id=pk).first()
+    return render(request, 'Eğitimler', bilgi.id)
 
 
 def hizmet_goster(request, pk: int = None):
-    menuler = Menu.objects.filter(durum=True).exclude(ustmenuadi="Anasayfa").order_by('sira')
-    menuanasayfa = Menu.objects.filter(ustmenuadi="Anasayfa", durum=True)
+    return solutions_goster(request, "HİZMETLER", "hizmetler", pk, )
+    #if pk:
+    #    bilgi = Solutions.objects.get(id=pk)
+    #    context = {
+    #        'bilgi': bilgi,
+    #        'veri': "hizmet",
 
-    if pk:
-        bilgi = Solutions.objects.get(id=pk)
-        context = {
-            'bilgi': bilgi,
-            'veri': "hizmet",
-            'menuler': menuler,
-            'menuanasayfa': menuanasayfa,
-        }
-        return render(request, 'anasayfa/solutions_detay.html', context)
-    else:
-        bilgi1 = Solutions.objects.filter(durum=True, altmenuadi="hizmetler")
-        bilgi = bilgi1.order_by('sira')
-
-        context = {
-            'bilgi': bilgi,
-            'baslik': "HİZMETLERİMİZ",
-            'veri.id': bilgi[0].id,
-            'menuler': menuler,
-            'menuanasayfa': menuanasayfa,
-
-        }
-
-        return render(request, 'anasayfa/solutions_liste.html', context)
+    #    }
+    #    return render(request, 'anasayfa/solutions_detay.html', context)
+    #else:
+    #    bilgi = Solutions.objects.filter(durum=True, altmenuadi="hizmetler").order_by('sira')
 
 
+    #    context = {
+    #        'bilgi': bilgi,
+    #        'baslik': "HİZMETLERİMİZ",
+    #        'veri.id': bilgi[0].id,
 
-def egitim_goster(request, pk: int):
-    menuler = Menu.objects.filter(durum=True).exclude(ustmenuadi="Anasayfa").order_by('sira')
-    menuanasayfa = Menu.objects.filter(ustmenuadi="Anasayfa", durum=True)
+    #    }
+
+     #   return render(request, 'anasayfa/solutions_liste.html', context)
+
+
+def blog_goster(request, pk: int = None):
+
+    return solutions_goster(request, "BLOG", "blog", pk, )
+
+
+def egitim_goster(request, pk: int = None):
     bilgi = Solutions.objects.filter(altmenuadi="egitim", durum=True, sira=pk).first()
-    context = {
-            'bilgi': bilgi,
-            'menuler': menuler,
-            'menuanasayfa': menuanasayfa,
-    }
-    return render(request, 'anasayfa/solutions_detay.html', context)
+    return solutions_goster(request, "EĞİTİMLERİMİZ", "egitim", bilgi.id, )
+
+
+   # context = {
+   #         'bilgi': bilgi,
+   # }
+   # return render(request, 'anasayfa/solutions_detay.html', context)
 
 
 def takvim_goster(request):
     bilgi1 = OnlineTakvim.objects.filter(durum=True)
     bilgi = bilgi1.order_by('tarih')
-    menuler = Menu.objects.filter(durum=True).exclude(ustmenuadi="Anasayfa").order_by('sira')
-    menuanasayfa = Menu.objects.filter(ustmenuadi="Anasayfa", durum=True)
 
     context = {
         'bilgi': bilgi,
         'baslik': "ONLİNE RANDEVU",
         'tarih.id': bilgi[0].id,
-        'menuler': menuler,
-        'menuanasayfa': menuanasayfa,
+
         'gunler': ['Pazar','Pazar2','Pazar3','Pazar2423']
     }
     return render(request, 'anasayfa/onlinerandevu.html', context)
@@ -718,8 +780,6 @@ def takvim_goster(request):
 
 def onlinerandevu_ekle(request, pk: int, saat: str):
     bilgi = OnlineTakvim.objects.get(id=pk)
-    menuler = Menu.objects.filter(durum=True).exclude(ustmenuadi="Anasayfa").order_by('sira')
-    menuanasayfa = Menu.objects.filter(ustmenuadi="Anasayfa", durum=True)
 
     context = {
         'bilgi': bilgi,
@@ -727,8 +787,7 @@ def onlinerandevu_ekle(request, pk: int, saat: str):
         'baslik': "RANDEVU AL",
         'errors': '',
         'onlinetakvimid': bilgi.id,
-        'menuler': menuler,
-        'menuanasayfa': menuanasayfa,
+
     }
 
     if request.method == 'POST':
@@ -766,8 +825,7 @@ def onlinerandevu_ekle(request, pk: int, saat: str):
             randevus = OnlineRandevu.objects.filter(adisoyadi=o.adisoyadi)
 
             context = {'randevus': randevus,
-                       'menuler': menuler,
-                       'menuanasayfa': menuanasayfa,
+
                        }
 
             return render(request, 'anasayfa/onlinebilgi.html', context)
@@ -783,14 +841,12 @@ def onlinerandevu_ekle(request, pk: int, saat: str):
 
 
 def onlinesatis_list(request, pk: int = None):
-    menuler = Menu.objects.filter(durum=True).exclude(ustmenuadi="Anasayfa").order_by('sira')
-    menuanasayfa = Menu.objects.filter(ustmenuadi="Anasayfa", durum=True)
+
     if pk:
         urun = Urun.objects.get(id=pk)
         context = {
             'urun': urun,
-            'menuler': menuler,
-            'menuanasayfa': menuanasayfa,
+
         }
         return render(request, 'anasayfa/onlinesatis_detay.html', context)
     else:
@@ -800,8 +856,7 @@ def onlinesatis_list(request, pk: int = None):
         context = {
             'urun': urun,
             'baslik': "Eğitimlerimiz",
-            'menuler': menuler,
-            'menuanasayfa': menuanasayfa,
+
         }
 
         return render(request, 'anasayfa/onlinesatis.html', context)
@@ -814,8 +869,6 @@ def onlinesatis_list(request, pk: int = None):
 def siparis_ekle(request, pk: int = None):
     urun = Urun.objects.get(id=pk) if pk else None
     errors = ''
-    menuler = Menu.objects.filter(durum=True).exclude(ustmenuadi="Anasayfa").order_by('sira')
-    menuanasayfa = Menu.objects.filter(ustmenuadi="Anasayfa", durum=True)
 
     if request.method == 'POST':
         f = forms.SiparisForm(request.POST, request.FILES)
@@ -828,8 +881,7 @@ def siparis_ekle(request, pk: int = None):
 
                 'adsoyad': data.get("adsoyad"),
                 'urun': urun,
-                'menuler': menuler,
-                'menuanasayfa': menuanasayfa,
+
             }
 
             return render(request, 'anasayfa/onlinesatis_satislist.html', context)
@@ -845,8 +897,7 @@ def siparis_ekle(request, pk: int = None):
         'form': f,
         'urun': urun,
         'errors': errors,
-        'menuler': menuler,
-        'menuanasayfa': menuanasayfa,
+
     }
 
     return render(request, 'anasayfa/onlinesatis_satis.html', context)
@@ -862,8 +913,7 @@ def onlinesatis_satis(request, pk: int):
 
         context = {
             'urun': urun,
-            'menuler': menuler,
-            'menuanasayfa': menuanasayfa,
+
         }
         return render(request, 'anasayfa/onlinesatis_detay.html', context)
     else:
@@ -873,8 +923,7 @@ def onlinesatis_satis(request, pk: int):
         context = {
             'urun': urun,
             'baslik': "Eğitimlerimiz",
-            'menuler': menuler,
-            'menuanasayfa': menuanasayfa,
+
         }
 
         return render(request, 'anasayfa/onlinesatis.html', context)
@@ -882,8 +931,7 @@ def onlinesatis_satis(request, pk: int):
 
 def form_post(request):
     formlar = Form.objects.all()
-    menuler = Menu.objects.filter(durum=True).exclude(ustmenuadi="Anasayfa").order_by('sira')
-    menuanasayfa = Menu.objects.filter(ustmenuadi="Anasayfa", durum=True)
+
     context = {'deneme': "deneme"}
     if request.method == 'POST':
         f = forms.FormForm(request.POST, request.FILES)
@@ -908,8 +956,7 @@ def form_post(request):
             msg.send()
 
             context = {'formlar': o,
-                       'menuler': menuler,
-                       'menuanasayfa': menuanasayfa,
+
                        }
 
             return render(request, 'anasayfa/form.html', context)
@@ -923,3 +970,51 @@ def form_post(request):
     return render(request, 'anasayfa/deneme1.html', context)
 
 
+
+def yorum_post(request, pk:int):
+    print(request.method)
+    #yorumlar = Yorum.objects.all()
+    blogs = Solutions.objects.get(id=pk)
+
+    if request.method == 'POST':
+        f = forms.YorumForm(request.POST, request.FILES)
+        if f.is_valid():
+            data = f.cleaned_data
+            data['olus_tarih'] = datetime.now()
+            data['konu'] = blogs.baslik
+
+            data['durum'] = True
+            data['onay'] = False
+
+            o = Yorum(**data)
+            o.save()
+
+
+            # skarakucuk @ sssolutioncoaching.com
+            # f_id = o.objects.filter(adsoyad=data['adsoyad'], tel=data['tel'], eposta=data['eposta'], konu=data['konu'], mesaj=data['mesaj'], olus_tarih=data['olus_tarih'])
+            subject, from_email, to = 'Yorum', 'aynur@karakucuk.net', '{eposta}'.format(eposta=o.eposta)
+            text_content = "Adı Soyadı: {ad}, " \
+                           "E-posta: {eposta}," \
+                           "Telefon: {tel}," \
+                           "Konu: {konu}," \
+                           "Mesaj: {mesaj}," \
+                           "Tarih: {tarih}".format(ad=o.adsoyad, eposta=o.eposta, tel=o.tel, konu=o.konu, mesaj=o.mesaj,
+                                                   tarih=o.olus_tarih)
+            msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
+            msg.send()
+
+            context = {'formlar': o,
+
+                       }
+
+
+            return render(request, 'anasayfa/form.html', context)
+
+        else:
+            context = {'errors': f.errors,
+                       'f': f,
+
+                       }
+            print(f.errors)
+
+    return render(request, 'anasayfa/deneme1.html', context)
