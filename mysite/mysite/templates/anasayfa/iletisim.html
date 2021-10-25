@@ -16,45 +16,68 @@ var btn_ileri_geri=function(){
 <div class="container">
     <div class="row">
         <div class="col-sm-9">
-    {% for bilgi in bilgiler %}
-         {% if forloop.counter|divisibleby:2 %}
-            <div class="row" style="padding-top:20px;padding-bottom:20px;">
-                <div class="col">
-                    <h2>{{bilgi.baslik}}</h2>
-                    <p>{{bilgi.aciklama}}...</p>
-                    <a href="/{{ post.title }}/{{ bilgi.id }}"><button class="btn btn-info">Detay..</button></a>
-                </div>
-                <div class="col">
-                    {% if bilgi.img %}
-                        <img width="300" height="300" class="img-thumbnail" src="{{bilgi.img.url}}" alt="{{bilgi.baslik}}" >
-                    {% endif %}
-                </div>
-            </div>
-            <hr style="height:1px;border-width:0;color:#ff0000;background-color:#ff0000">
-            <hr style="height:1px;width:75%;border-width:0;color:#ff0000;background-color:#ff0000">
-        {% else %}
-            <div class="row" style="padding-top:20px;padding-bottom:20px;">
-                <div class="col">
-                    {% if bilgi.img %}
-                        <img width="300" height="300" class="img-thumbnail" src="{{bilgi.img.url}}" alt="{{bilgi.baslik}}" >
-                    {% endif %}
+           <div class="row" style="padding-top:20px;padding-bottom:20px;">
+               <div class="col">
+                    <div class="card mb-3 border-0" style="max-width: 540px;">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <img src="/static/icons/icons8-email-open-64.png"  width="50" height="50">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">E-Posta</h5>
+                                    <p class="card-text">seval@karakucuk.net</p>
 
-                </div>
-                <div class="col">
-                    <h2>{{bilgi.baslik}}</h2>
-                    <p>{{bilgi.aciklama}}...</p>
-                    <a href="/{{ bilgi.altmenuadi}}/{{ bilgi.id }}"><button class="btn btn-info">Detay..</button></a>
 
-                </div>
-            </div>
-            <hr style="height:1px;border-width:0;color:#ff0000;background-color:#ff0000">
-            <hr style="height:1px;width:75%;border-width:0;color:#ff0000;background-color:#ff0000">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+               </div>
+               <div class="col">
+                   <div class="card mb-3 border-0" style="max-width: 540px;">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <img src="/static/icons/icons8-telephone-64.png"  width="50" height="50">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">Telefon</h5>
+                                    <p class="card-text">0212 506 21 13</p>
+                                    <p class="card-text">0212 506 21 13</p>
+                                    <p class="card-text">0212 506 21 13</p>
 
-        {% endif %}
-    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+               </div>
+               <div class="col">
+                   <div class="card mb-3 border-0" style="max-width: 540px;">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <img src="/static/icons/icons8-address-64.png"  width="50" height="50">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">Adres</h5>
+                                    <p class="card-text">0212 506 21 13</p>
+                                    <p class="card-text">0212 506 21 13</p>
+                                    <p class="card-text">0212 506 21 13</p>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+               </div>
+
+           </div>
+
+
         </div>
         <div class="col-sm">
-            <div class="col-sm">
             <div class="card" style="margin-left:20px;">
             <div class="card-body bg-light">
                 <h6 class="card-title">Bizimle İletişime Geçin</h6>
@@ -112,7 +135,6 @@ var btn_ileri_geri=function(){
                 </div>
             </div>
 
-        </div>
         </div>
     </div>
 </div>

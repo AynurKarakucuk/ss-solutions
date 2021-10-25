@@ -22,7 +22,7 @@
 
 <div class="container" style="margin-top:100px;">
     <div>
-        <h3 class="text-center" style="color: #D8AF54; margin-top:30px;">Hizmetlerimiz</h3>
+        <h1 class="text-center" style="color: #000; margin-top:30px;">HİZMETLERİMİZ</h1>
     </div>
     <!-- HİZMETLER SHADOW SEÇENEĞİ -->
     <!--<div class="row row-cols-8">
@@ -67,23 +67,23 @@
 <div class="container" style="margin-top:50px;">
     <h3 class="text-center" style="color: #D8AF54; margin-top:50px;">
         <a href="/hizmetler/" class="text-center">
-            <button type="button" class="btn btn-outline-warning fs-3">Tüm Hizmetlerimiz</button>
+            <button type="button" class="btn btn-outline-warning fs-5">Tüm Hizmetlerimiz</button>
         </a>
     </h3>
 </div>
 
 <!-- DUYURULAR -->
 <div class="container" >
-    <h2 class="text-center" style="color: #D8AF54; margin-top: 100px;">Duyurular</h2>
+    <h2 class="text-center" style="color:#000; margin-top:100px;">DUYURULAR</h2>
     <!-- CARD -->
 
-     <div class="row row-cols-8">
+     <div class="row row-cols-8" >
     {% for duyuru in duyurular %}
-         <div class="col ">
+         <div class="col">
              <a href="/duyurular/{{duyuru.id}}">
-                <div class="card bg-dark text-white" style="width:300px; height:200px;">
+                <div class="card bg-dark text-white buyuyenresim" style="width:300px; height:200px;">
                     {% if duyuru.img %}
-                        <img src="{{duyuru.img.url}}" class="card-img" style="opacity: 0.5" alt="...{{ duyuru.img }}...">
+                        <img src="{{duyuru.img.url}}" class="card-img " style="opacity: 0.5" alt="...{{ duyuru.img }}...">
                     {% endif %}
                     <div class="card-img-overlay">
                         <h5 class="card-title">{{duyuru.baslik}}</h5>
@@ -102,7 +102,7 @@
 <div class="container" style="margin-top:50px;">
     <h3 class="text-center" style="color: #D8AF54; margin-top:50px;">
         <a href="/duyurular/" class="text-center">
-            <button type="button" class="btn btn-outline-warning fs-3">Tüm Duyurular</button>
+            <button type="button" class="btn btn-outline-warning fs-5">Tüm Duyurular</button>
         </a>
     </h3>
 </div>
@@ -151,5 +151,9 @@
         </button>
     </div>
     -->
+
+<!--   Blog -->
+<!-- Youtube -->
+
 
 {% endblock %}

@@ -14,6 +14,8 @@ var btn_ileri_geri=function(){
 </script>
 
 <div class="container">
+    <div class="row">
+        <div class="col-sm-9">
     {% for blog in blogs %}
          {% if forloop.counter|divisibleby:2 %}
             <div class="row" style="padding-top:20px;padding-bottom:20px;">
@@ -50,7 +52,68 @@ var btn_ileri_geri=function(){
 
         {% endif %}
     {% endfor %}
+        </div>
+        <!-- Form -->
+        <div class="col-sm">
+            <div class="card" style="margin-left:20px;">
+            <div class="card-body bg-light">
+                <h6 class="card-title">Bizimle İletişime Geçin</h6>
+                 <form action="/form/" method="post" class="row g-3 bg-light" >
+                            {% csrf_token %}
+                            {{ form.non_field_errors }}
 
+                            <div class="col-12">
+                                <input type="text" class="form-control" name="adsoyad" id="validationDefault01" placeholder="Adınız Soyadınız" aria-describedby="adsoyadHelp" required>
+
+                            </div>
+                            <div class="form-group col-12">
+
+                                <input type="text" class="form-control" id="validationDefault02" aria-describedby="emailHelp" name="tel" placeholder="Telefon Numaranız" required >
+
+                            </div>
+                            <div class="col-md-12">
+                                <input type="email" class="form-control" id="validationDefault03" name="eposta" placeholder="e-posta" aria-label="email"  aria-describedby="emailHelp" required>
+                            </div>
+                             <div class="col-md-12">
+                                    <select name="konu" id="validationDefault04" class="form-select" required>
+                                        <option selected>Kurum ve Yönetici Koçluğu</option>
+                                        <option>Bireysel Koçluk</option>
+                                    </select>
+                             </div>
+                            <div class="col-md-12">
+                                 <textarea class="form-control" id="validationDefault05" name="mesaj" rows="3" placeholder="Mesajınız" required></textarea>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary text-center">Gönder</button>
+                            </div>
+
+                        </form>
+
+            </div>
+        </div>
+            <div class="card" style="margin-left:20px; margin-top:10px;">
+                <div class="card-body bg-light">
+                    <h6 class="card-title">Kurumsal Eğitimler</h6>
+                </div>
+            </div>
+            <div class="card" style="margin-left:20px; margin-top:10px;">
+                <div class="card-body bg-light">
+                    <h6 class="card-title">Koçluk</h6>
+                </div>
+            </div>
+            <div class="card" style="margin-left:20px; margin-top:10px;">
+                <div class="card-body bg-light">
+                    <h6 class="card-title">Hizmetlerimiz</h6>
+                </div>
+            </div>
+            <div class="card" style="margin-left:20px; margin-top:10px;">
+                <div class="card-body bg-light">
+                    <h6 class="card-title">Blog Yazılarımız</h6>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>
 
 

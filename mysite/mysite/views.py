@@ -668,7 +668,14 @@ def solutions_goster(request, baslik: str, menuadi: str, pk: int = None):
                 'onay': onay,
             }
             return render(request, 'anasayfa/blog_detay.html', context)
+        if menuadi == "iletisim":
+            iletisim = Solutions.objects.get(id=pk)
+            context = {
+                'iletisim': iletisim,
+                'post.title': menuadi,
 
+            }
+            return render(request, 'anasayfa/iletisim.html', context)
 
         bilgi = Solutions.objects.get(id=pk)
 
@@ -762,6 +769,25 @@ def egitim_goster(request, pk: int = None):
    #         'bilgi': bilgi,
    # }
    # return render(request, 'anasayfa/solutions_detay.html', context)
+
+def ekip_goster(request, pk: int = None):
+    if pk:
+        ekip=Ekip.objects.get(id=pk)
+        context = {
+            'ekip': ekip,
+
+            'title' : "cozumortaklari",
+        }
+        return render(request, 'anasayfa/solutions_detay.html', context)
+    else:
+        ekips=Ekip.objects.filter(durum=True).order_by('sira')
+        context = {
+            'ekips': ekips,
+            'baslik': 'ÇÖZÜM ORTAKLARI',
+            'title': 'cozumortaklari',
+        }
+        return render(request, 'anasayfa/ekip_list.html', context)
+
 
 
 def takvim_goster(request):

@@ -172,8 +172,8 @@ body {
 /*  REsmi büyütmek */
 
 .buyuyenresim {
-margin-top:100px;
-margin-left:20px;
+margin-top:50px;
+margin-left:5px;
 -webkit-transform: scale(1, 1);
 -ms-transform: scale(1, 1);
 transform: scale(1, 1);
@@ -226,7 +226,24 @@ a.dropdown-item:hover {
 /* Açılır Menü yapmak için */
 
 
+ /*iç boşluğu nav-itemden çıkarın ve havada asılı durması için biraz boşluk bırakın */
+.navbar .nav-item {
+  padding:.5rem .5rem;
+  margin:0 .25rem;
+}
 
+.navbar .dropdown-menu {
+/*  nav-item yüksekliği  */
+  top:45px;
+
+}
+
+  /* fareyle üzerine gelindiğinde açılır menüyü gösterir */
+.navbar .dropdown:hover .dropdown-menu, .navbar .dropdown .dropdown-menu:hover {
+  display:block;
+  visibility: visible;
+  opacity: 1;
+}
 
 
 /*   GÖLGELENDİRMELİ MENÜ  */

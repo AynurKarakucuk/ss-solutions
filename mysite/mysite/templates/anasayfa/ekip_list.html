@@ -1,5 +1,6 @@
 {% extends "anasayfa/base.html" %}
-{½ {{post.title}} ½}
+{% block title %}{{ title }}{% endblock %}
+
 {% block content %}
 <script>
 var btn_ileri_geri=function(){
@@ -16,45 +17,30 @@ var btn_ileri_geri=function(){
 <div class="container">
     <div class="row">
         <div class="col-sm-9">
-    {% for bilgi in bilgiler %}
-         {% if forloop.counter|divisibleby:2 %}
-            <div class="row" style="padding-top:20px;padding-bottom:20px;">
-                <div class="col">
-                    <h2>{{bilgi.baslik}}</h2>
-                    <p>{{bilgi.aciklama}}...</p>
-                    <a href="/{{ post.title }}/{{ bilgi.id }}"><button class="btn btn-info">Detay..</button></a>
-                </div>
-                <div class="col">
-                    {% if bilgi.img %}
-                        <img width="300" height="300" class="img-thumbnail" src="{{bilgi.img.url}}" alt="{{bilgi.baslik}}" >
+            {% for ekip in ekips %}
+
+            <div class="row" style="padding-top:10px;padding-bottom:10px;">
+                <div class="col-sm-4 ">
+                    {% if ekip.img %}
+
+                       <a href="/ekip/{{ ekip.id }}">
+                           <img width="200" height="200" class="rounded-circle border border-4 shadow-lg p-3 mb-5 bg-body rounded" src="{{ekip.img.url}}" alt="{{ekip.adisoyadi}}">
+                       </a>
+
                     {% endif %}
                 </div>
+                <div class="col-sm">
+                    <h2>{{ekip.adisoyadi}}</h2>
+                    <p>{{ekip.unvan}}...</p>
+                    <a href="/ekip/{{ ekip.id }}"><button class="btn btn-info">Öz Geçmiş</button></a>
+                </div>
+
             </div>
             <hr style="height:1px;border-width:0;color:#ff0000;background-color:#ff0000">
             <hr style="height:1px;width:75%;border-width:0;color:#ff0000;background-color:#ff0000">
-        {% else %}
-            <div class="row" style="padding-top:20px;padding-bottom:20px;">
-                <div class="col">
-                    {% if bilgi.img %}
-                        <img width="300" height="300" class="img-thumbnail" src="{{bilgi.img.url}}" alt="{{bilgi.baslik}}" >
-                    {% endif %}
-
-                </div>
-                <div class="col">
-                    <h2>{{bilgi.baslik}}</h2>
-                    <p>{{bilgi.aciklama}}...</p>
-                    <a href="/{{ bilgi.altmenuadi}}/{{ bilgi.id }}"><button class="btn btn-info">Detay..</button></a>
-
-                </div>
-            </div>
-            <hr style="height:1px;border-width:0;color:#ff0000;background-color:#ff0000">
-            <hr style="height:1px;width:75%;border-width:0;color:#ff0000;background-color:#ff0000">
-
-        {% endif %}
-    {% endfor %}
+            {% endfor %}
         </div>
         <div class="col-sm">
-            <div class="col-sm">
             <div class="card" style="margin-left:20px;">
             <div class="card-body bg-light">
                 <h6 class="card-title">Bizimle İletişime Geçin</h6>
@@ -112,7 +98,6 @@ var btn_ileri_geri=function(){
                 </div>
             </div>
 
-        </div>
         </div>
     </div>
 </div>

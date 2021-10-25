@@ -35,6 +35,8 @@ urlpatterns = (
             path('onlinerandevu/', views.takvim_goster),
             path('form/', views.form_post),
             path('yorum/<int:pk>/', views.yorum_post),
+            path('ekip/', views.ekip_goster),
+            path('ekip/<int:pk>/', views.ekip_goster),
 
             #SOLUTİONS
             path('hakkimizda/', views.hakkimizda),

@@ -179,6 +179,9 @@ class MenuForm(forms.ModelForm):
         fields = ['menuadi', 'ustmenuadi', 'editor', 'dosya', 'sira', 'durum']
 
 
+
+
+
 class FormForm(forms.ModelForm):
     olus_tarih = forms.DateTimeField(required=False)
 
