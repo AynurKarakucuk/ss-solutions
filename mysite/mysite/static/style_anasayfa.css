@@ -198,7 +198,7 @@ position:relative;
 /*   menü düzenleme  */
 .arkaplan-rengi{
             background:#ffff!important;
-            color:#555!important;
+            color:#002FB7!important;
         }
 
 @media (min-width: 992px){
@@ -213,15 +213,15 @@ position:relative;
 
 }}
 .dropdown-menu {
- background: #1c6071!important; /* alt menü arka rengi */
+ background: #68A2B9!important; /* alt menü arka rengi */
  /*opacity: 0.5!important;*/
  color:#ff0000!important;
 
 }
 a.dropdown-item:hover {
- background: #1c6071!important;
+ background: #002FB7!important;
  color:#ffff!important;
- /*opacity: 0.3!important; /* mausun üstünde gezinirken rengi */
+ opacity: 0.3!important; /* mausun üstünde gezinirken rengi */
 }
 /* Açılır Menü yapmak için */
 
